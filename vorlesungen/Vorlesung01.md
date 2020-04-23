@@ -1,4 +1,15 @@
-## Was ist ein Eingebettetes System
+# Was ist ein Eingebettetes System
+## Aufgaben
+### Bitte beschreiben Sie kurz was ein eingebettetes System ist.
+Ein eingebettetes System ist ein Rechnersystem, bei dem alle Komponenten hochintegriert und eng miteinander verbunden sind. Es wurden ja schon FPGAs erwähnt, ich denke da ist von einem eingebetteten System die Rede, wenn auf einem Chip sowohl ein Prozessorkern als auch diverse (evtl Applikationsspezifische) Peripherie untergebracht ist. Ein Eingebettetes System kann auch ein Microcontroller mit fest verbundenem Speicher und Peripherie sein.
+
+Die charakteristischen Eigenschaft eines eingebetteten Systems ist die enge Verknüpfung eines Prozessors mit Peripherie, welche ein sehr Anwendungsspezifisches Computersystem realisiert.
+
+Eingebettete Systeme bieten durch die enge Integration Vorteile wie Energieeffizienz und reduzierte Herstellungskosten, oder erhöhte Performance durch wegfallen von generischen Schnittstellen, bringen aber den Nachteil der geringeren Flexibilität (außer im oben genannten FPGA Beispiel z.B.).
+
+Ein eingebettetes System kann aber auch ein klassischer PC sein, der z.B. durch besonders kleine Bauform in andere Anwendungen integriert ist, z.B. in industriellen Steuerungsanlagen oder Maschinen. Hier bezieht sich "eingebettet" auf den Kontext des Systems und nicht auf die einzelnen Rechnerkomponenten.
+
+## Vorlesungsnotizen
 ### Zeitleiste
 * ABS beim Flugzeug
  * Verhindern des Blockieren der Räder beim Landen auf nasser Piste
