@@ -69,7 +69,7 @@ Port spezifikation enthält auch Ausgänge `out` und Ein/Ausgänge `inout`.
 entity Name is
   port (i1, i2, i3: in Bit;
         o1, o2:     out Bit;
-        io1:        inout Bit;
+        io1:        inout Bit
        );
 end;
 ```
@@ -114,6 +114,36 @@ end configuration
 ```
 
 ## Verhalten
+Das Konzept `process` kapselt algorithmisches Verhalten.
+
+Beispiel Multiplexer:
+```VHDL
+MX: process (a,b,s)
+Begin
+
+  if s='1' then
+    o<=a;
+  else
+    o<=b;
+  endif;
+
+end process;
+```
+Auch Schleifenkonstrukte wie `for`, `while` sind möglich.
+
+Ein `process` spezifiziert beliebige Algorithmen.
+
+Auch auf der Registertransferebene lässt sich Verhalten spezifizieren:
+```VHDL
+architecture...
+begin
+
+o<=a when s='1' else
+   b
+
+end...
+```
+Dies ist eine Datenflussbeschreibung.
 
 ## Struktur
 
