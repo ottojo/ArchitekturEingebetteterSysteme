@@ -163,6 +163,52 @@ nand1: NAND portmap(t, s, o)
 ```
 
 ## Datentypen
+* Numerische Datentypen
+  * Integer, Real
+* Boolean `true`/`false`
+* Character
+* String
+* Time (fps oder s,h)
+* Bit `'1'`/`'0'`
+* Bit_Vector `"10001"`
+
+### IEEE
+* std_logic
+  * Mehr logische Werte: `U, X, 0, 1, Z, L, H, W, -`
+* std_ulogic
+* std_logic_vector
+
+### Userdefiniert
+```VHDL
+type int0 is range 0 to 100;
+type int1 is range -100 to 1000;
+```
+
+### Subtypes
+"Vererbung":
+```VHDL
+subtype int5 is Integer range -5 to 5;
+```
+
+### Aufzählungen
+```VHDL
+tyep state is (locked, unlocked, ...);
+```
+
+### Komplexere Datentypen
+4-bit breiter Bus:
+```VHDL
+typ BUS is array(0 to 3) of bit;
+```
+
+Äquivalent zu c-struct:
+```VHDL
+type INTERFACE is record
+  bus: BUS;
+  ctrl: BIT;
+  date: BUS;
+end record;
+```
 
 ## Simulationssemantik
 
