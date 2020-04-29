@@ -146,6 +146,21 @@ end...
 Dies ist eine Datenflussbeschreibung.
 
 ## Struktur
+Spezifizieren einer Komponente aus Bibliothek:
+```VHDL
+component NAND
+  port (
+    a,b: in  bit;
+    c:   out bit
+  );
+end component;
+```
+
+Aufrufen der Komponente:
+```VHDL
+nand1: NAND portmap(t, s, o)
+                   (a=>t, b=>s, c=>o)
+```
 
 ## Datentypen
 
