@@ -229,8 +229,3 @@ Dabei werden Verzögerungen für jedes Gatter angenommen.
 
 Bei sequentiellen Schaltungen werden zum Auflösen von Rückkopplungen künstliche
 Zeitschritte mit "delta-Zeitschritten" angegeben.
-
-## Beispiel
-
-## Zusammenfassung
-
