@@ -192,13 +192,13 @@ subtype int5 is Integer range -5 to 5;
 
 ### Aufzählungen
 ```VHDL
-tyep state is (locked, unlocked, ...);
+type state is (locked, unlocked, ...);
 ```
 
 ### Komplexere Datentypen
 4-bit breiter Bus:
 ```VHDL
-typ BUS is array(0 to 3) of bit;
+type BUS is array(0 to 3) of bit;
 ```
 
 Äquivalent zu c-struct:
