@@ -211,6 +211,24 @@ end record;
 ```
 
 ## Simulationssemantik
+In der Realität treten Effekte wie Verzögerungszeiten auf.
+Diese können modelliert werden:
+```VHDL
+x <= Not In after 10ns
+x <= Regejt 10ns Inertial Not In after 10ns
+```
+```VHDL
+x <= Reject 0ns Inertial Not In after 10ns
+x <= Transport Not In after 10ns
+```
+Diese Konstrukte können nur für die Modellierung, nicht bei der Synthetisierung
+verwendet werden.
+
+Die Transaktionsliste gibt die Zustände aller Signale zu jedem Zeitschritt an.
+Dabei werden Verzögerungen für jedes Gatter angenommen.
+
+Bei sequentiellen Schaltungen werden zum Auflösen von Rückkopplungen künstliche
+Zeitschritte mit "delta-Zeitschritten" angegeben.
 
 ## Beispiel
 
