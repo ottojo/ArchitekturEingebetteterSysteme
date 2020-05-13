@@ -4,7 +4,11 @@ compile:
 
 .PHONY: run
 run: compile
-	ghdl -r --workdir=ghdl_work testbench
+	ghdl -r --workdir=ghdl_work testbench --vcd=ghdl_work/testbench.vcd
+
+.PHONY: wave
+wave: run
+	gtkwave ghdl_work/testbench.vcd
 
 .PHONY: clean
 clean:

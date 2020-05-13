@@ -1,99 +1,61 @@
 -- Testbench of Multiplexer
 
-library IEEE;
-use IEEE.std_logic_1164.all;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
 
-entity testbench is
+ENTITY testbench IS
     -- empty
-end testbench;
+END testbench;
 
-architecture tb of testbench is
+ARCHITECTURE tb OF testbench IS
 
     -- DUT component
-    component mux is
-        port(
-            in0, in1, sel: in std_logic;
-             out0: out std_logic
-         );
-    end component;
+    COMPONENT mux IS
+        PORT (
+            in0, in1 : IN std_logic_vector (7 DOWNTO 0);
+            sel : IN std_logic;
+            out0 : OUT std_logic_vector (7 DOWNTO 0)
+        );
+    END COMPONENT;
 
-    signal tb_in0, tb_in1, tb_sel, tb_out0: std_logic;
+    SIGNAL tb_in0, tb_in1, tb_out0 : std_logic_vector (7 DOWNTO 0);
+    SIGNAL tb_sel : std_logic;
 
-begin
+BEGIN
 
     -- Connect DUT
-    DUT: mux port map (tb_in0, tb_in1, tb_sel, tb_out0);
+    DUT : mux PORT MAP(tb_in0, tb_in1, tb_sel, tb_out0);
 
-    process
-    begin
+    PROCESS
+    BEGIN
 
-        assert false report "Running testbench" severity note;
+        ASSERT false REPORT "Running testbench" SEVERITY note;
 
         -- Clear inputs
-        tb_in0 <= '0';
-        tb_in1 <= '0';
+        tb_in0 <= x"00";
+        tb_in1 <= x"00";
         tb_sel <= '0';
-        wait for 1 ns;
+        WAIT FOR 1 ns;
 
-        -- Test case: 0, 0, sel=0
-        tb_in0 <= '0';
-        tb_in1 <= '0';
-        tb_sel <= '0';
-        wait for 1 ns;
-        assert(tb_out0 = '0') report "Test Case 0, 0, sel=0 failed" severity error;
+        FOR in0 IN 16#0# TO 16#ff# LOOP
+            FOR in1 IN 16#0# TO 16#ff# LOOP
+                tb_in0 <= std_logic_vector(to_unsigned(in0, tb_in0'length));
+                tb_in1 <= std_logic_vector(to_unsigned(in1, tb_in1'length));
+                tb_sel <= '0';
+                WAIT FOR 1 ns;
+                ASSERT(tb_out0 = std_logic_vector(to_unsigned(in0, tb_in0'length)))
+                REPORT "Test Case " & INTEGER'IMAGE(in0) & ", " & INTEGER'IMAGE(in1) & ", sel=0 failed" SEVERITY error;
 
-        -- Test case: 1, 0, sel=0
-        tb_in0 <= '1';
-        tb_in1 <= '0';
-        tb_sel <= '0';
-        wait for 1 ns;
-        assert(tb_out0 = '1') report "Test Case 1, 0, sel=0 failed" severity error;
+                tb_sel <= '1';
+                WAIT FOR 1 ns;
+                ASSERT(tb_out0 = std_logic_vector(to_unsigned(in1, tb_in0'length)))
+                REPORT "Test Case " & INTEGER'IMAGE(in0) & ", " & INTEGER'IMAGE(in1) & ", sel=1 failed" SEVERITY error;
+            END LOOP;
+        END LOOP;
+        ASSERT false REPORT "Test done." SEVERITY note;
+        WAIT;
 
-        -- Test case: 0, 1, sel=0
-        tb_in0 <= '0';
-        tb_in1 <= '1';
-        tb_sel <= '0';
-        wait for 1 ns;
-        assert(tb_out0 = '0') report "Test Case 0, 1, sel=0 failed" severity error;
+    END PROCESS;
 
-        -- Test case: 1, 0, sel=0
-        tb_in0 <= '1';
-        tb_in1 <= '1';
-        tb_sel <= '0';
-        wait for 1 ns;
-        assert(tb_out0 = '1') report "Test Case 1, 1, sel=0 failed" severity error;
-
-        -- Test case: 1, 0, sel=0
-        tb_in0 <= '0';
-        tb_in1 <= '0';
-        tb_sel <= '1';
-        wait for 1 ns;
-        assert(tb_out0 = '0') report "Test Case 0, 0, sel=1 failed" severity error;
-
-        -- Test case: 1, 0, sel=0
-        tb_in0 <= '1';
-        tb_in1 <= '0';
-        tb_sel <= '1';
-        wait for 1 ns;
-        assert(tb_out0 = '0') report "Test Case 1, 0, sel=1 failed" severity error;
-
-        -- Test case: 1, 0, sel=0
-        tb_in0 <= '0';
-        tb_in1 <= '1';
-        tb_sel <= '1';
-        wait for 1 ns;
-        assert(tb_out0 = '1') report "Test Case 0, 1, sel=1 failed" severity error;
-
-        -- Test case: 1, 0, sel=0
-        tb_in0 <= '1';
-        tb_in1 <= '1';
-        tb_sel <= '1';
-        wait for 1 ns;
-        assert(tb_out0 = '1') report "Test Case 1, 1, sel=1 failed" severity error;
-
-        assert false report "Test done." severity note;
-        wait;
-
-    end process;
-
-end tb;
+END tb;
