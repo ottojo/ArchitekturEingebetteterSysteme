@@ -29,3 +29,22 @@ Beispiel Flugzeug:
 * Klappen
 * Triebwerke
 * z.B. Elektrischer Motor
+
+## Bauteile
+### Operationsverstärker
+* Verstärkt Differenzspannung
+* Eingangswiderstand unendlich -> Eingangsstrom = 0
+* Meist rückgekoppelte Beschaltung, damit Realisierung verschiedener mathematischer Operationen
+
+### Komparator
+* Ausgang = sgn(Eingang)
+
+## Verstärkerschaltungen
+* Invertierende und Nichtinvertierende Verstärker
+* Integrierer, Differenzierer
+* Addierer, Subtrahierer
+
+## Brückenschaltung
+* Häufiges Problem: Genaue Messung eines veränderlichen Widerstands (Sensor)
+* Wheatstone Brücke wandelt Widerstandsänderung in größere Spannungsdifferenz um als einfache Spannungsteiler-Schaltung.
+* Auslesen der Wheatstone Brücke mit OPV möglich
