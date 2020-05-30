@@ -12,7 +12,7 @@ jobs:
       - run: echo "::set-env name=FILELIST::$(cat pandoc_list.txt | tr '\n' ' ')"
       - uses: docker://pandoc/core:latest
         with:
-          args: ${{ env.FILELIST }} -o index.html -s --toc -w html5 --css=styling.css
+          args: ${{ env.FILELIST }} -o output/index.html -s --toc -w html5 --css=styling.css
       - uses: maxheld83/ghpages@v0.3.0
         env:
           BUILD_DIR: "output/"
