@@ -13,3 +13,8 @@ Die Notizen in diesem Dokument können mit [pandoc](https://pandoc.org) zu einem
 ```bash
 make pdf
 ```
+HTML geht auch, mit dem [panam style von Benjamin Woodruff
+](https://benjam.info/panam/):
+```bash
+make html
+```
