@@ -1,5 +1,5 @@
-# Logic Fabrics
-## Entwurfsprozess
+## Logic Fabrics
+### Entwurfsprozess
 * Y-Diagramm
   * Achsen Struktur, Verhalten, Geometrie
 * Festlegen der Algorithmen: Verhalten
@@ -14,7 +14,7 @@
     * Kann getestet werden mit Testbench, die anhand der Verhaltensbeschreibung konstruiert wird
   * -> Schrittweise Verfeinerung
 
-## Synthese digitaler Schaltungen
+### Synthese digitaler Schaltungen
 * Verhalten -> Boolsche Gleichung
   * RTL Synthese
 * Boolsche Gleichung -> Gatter Netzliste
@@ -23,29 +23,29 @@
 * Silicon Synthese
   * Automatische Erzeugung des Layouts
 
-## Chip Technologie
-### Full-Custom-Entwurf
+### Chip Technologie
+#### Full-Custom-Entwurf
 * Layout und Schaltung spezifiziert
-# Semi-Custom-Entwurf
+## Semi-Custom-Entwurf
 * Nutzen von Standardzellen (z.B. Addierer als fertige Komponente)
 * ASIC
 * Gate Arrays / Sea of Gates
 * FPGA
 
-## ASIC Entwurf
-### Standardzellenentwurf
+### ASIC Entwurf
+#### Standardzellenentwurf
 * Komponenten aus Bibliotheken (vorgefertigte Layouts)
 * Bibliotheken enthalten auch Verhaltensbeschreibungen zur Simulation
-### Gate Array
+#### Gate Array
 * Array von Logikgattern
 * Durch entsprechende Verdrahtungen (mittels Layoutsynthese) entstehen Schaltungen
 * Braucht mehr Fläche als Full-Custom-Entwurf
-### Sea of Gates
+#### Sea of Gates
 * Metallisierung nicht zwischen Gates, sondern beliebig über Gates
-### Zusammenfassung
+#### Zusammenfassung
 * Tradeoff Fläche<->Komplexität
 
-## FPGAs
+### FPGAs
 Field Programmable Gate Array
 * Zusammengesetzt aus Arraystrukturen
 * In Arrayelementen befindet sich programmierbare Schaltung

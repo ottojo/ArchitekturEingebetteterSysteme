@@ -1,4 +1,4 @@
-# Sensoren und Aktoren I
+## Sensoren und Aktoren I
 Beispiel Flugzeug:
 * Sensoren
 * ADC
@@ -6,7 +6,7 @@ Beispiel Flugzeug:
 * DAC
 * Aktoren
 
-## Sensoren
+### Sensoren
 * z.B. Gyroskop um Lage und Drehbeschleunigung eines Objektes zu messen
 * z.B. Staurohr für Airspeed Messung
 * Wandelt physikalische in elektrische Größe um (Strom, Spannung)
@@ -25,26 +25,26 @@ Beispiel Flugzeug:
 * Messumformer, Messverstärker -> OPV
 * Messumsetzer: ADC
 
-## Aktoren
+### Aktoren
 * Klappen
 * Triebwerke
 * z.B. Elektrischer Motor
 
-## Bauteile
-### Operationsverstärker
+### Bauteile
+#### Operationsverstärker
 * Verstärkt Differenzspannung
 * Eingangswiderstand unendlich -> Eingangsstrom = 0
 * Meist rückgekoppelte Beschaltung, damit Realisierung verschiedener mathematischer Operationen
 
-### Komparator
+#### Komparator
 * Ausgang = sgn(Eingang)
 
-## Verstärkerschaltungen
+### Verstärkerschaltungen
 * Invertierende und Nichtinvertierende Verstärker
 * Integrierer, Differenzierer
 * Addierer, Subtrahierer
 
-## Brückenschaltung
+### Brückenschaltung
 * Häufiges Problem: Genaue Messung eines veränderlichen Widerstands (Sensor)
 * Wheatstone Brücke wandelt Widerstandsänderung in größere Spannungsdifferenz um als einfache Spannungsteiler-Schaltung.
 * Auslesen der Wheatstone Brücke mit OPV möglich

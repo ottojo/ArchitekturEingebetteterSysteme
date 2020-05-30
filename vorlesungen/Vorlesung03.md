@@ -1,5 +1,5 @@
-# Architektur der Komponenten
-## Instruction Set Processor ISP
+## Architektur der Komponenten
+### Instruction Set Processor ISP
 * Struktur:
   * Mikroarchitektur
     * Register
@@ -17,13 +17,13 @@
     * Store to Memory
     * Operand Store
 
-## Application Specific Instructionset Processor ASIP
+### Application Specific Instructionset Processor ASIP
 * z.B. Vektorrechner (SIMD), DSP
 * Applikationsspezifische Befehle
 * Spezifische Komponenten
   * Hardware Multiplizierer
 
-## Application Specific Processor ASP
+### Application Specific Processor ASP
 * Fur eine genz bestimmte Operation gebaut, z.B. FFT
 * Mikroarchitektur
   * Special Purpose Register

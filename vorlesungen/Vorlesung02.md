@@ -1,9 +1,9 @@
-# VHDL
-## Einführung
+## VHDL
+### Einführung
 * Verhaltensbeschreibung einer Schaltung
 * Simulation der Schaltung
 
-## Motivation
+### Motivation
 * GdRA: Boolsche Funktionen mittels Wahrheitstabelle
 * Umsetzung der Funktion mittels Gatter
 * 2 Varianten der Schaltungsbeschreibung
@@ -16,11 +16,11 @@
   * Transistorebene: DGL <=> Transistor-Schaltplan
 -> Y-Diagramm
 
-### VHDL - Very High Speed Hardware Description Language
-#### Signale
+#### VHDL - Very High Speed Hardware Description Language
+##### Signale
   * Signalzuweisung: `f <= ((not a) and b and c) or (...` -> Verhaltensbeschreibung der boolschen Funktion
     * Auch: Datenflussbeschreibung
-#### Entity
+##### Entity
 Schnittstelle:
 ```VHDL
 entity DECO is
@@ -60,7 +60,7 @@ end
 ```
 
 
-## Komponenten
+### Komponenten
 Komponenten sind `entity`s. Schnittstelle wird mit `port` spezifiziert.
 Port spezifiziert mehrere Eingänge `in`, an die Eingangssignale angeschlossen werden.
 Eingangssignale müssen spezifiziertem Typ (z.B. `bit`) entsprechen.
@@ -113,7 +113,7 @@ configuration name of Entity is
 end configuration
 ```
 
-## Verhalten
+### Verhalten
 Das Konzept `process` kapselt algorithmisches Verhalten.
 
 Beispiel Multiplexer:
@@ -145,7 +145,7 @@ end...
 ```
 Dies ist eine Datenflussbeschreibung.
 
-## Struktur
+### Struktur
 Spezifizieren einer Komponente aus Bibliothek:
 ```VHDL
 component NAND
@@ -162,7 +162,7 @@ nand1: NAND portmap(t, s, o)
                    (a=>t, b=>s, c=>o)
 ```
 
-## Datentypen
+### Datentypen
 * Numerische Datentypen
   * Integer, Real
 * Boolean `true`/`false`
@@ -172,30 +172,30 @@ nand1: NAND portmap(t, s, o)
 * Bit `'1'`/`'0'`
 * Bit_Vector `"10001"`
 
-### IEEE
+#### IEEE
 * std_logic
   * Mehr logische Werte: `U, X, 0, 1, Z, L, H, W, -`
 * std_ulogic
 * std_logic_vector
 
-### Userdefiniert
+#### Userdefiniert
 ```VHDL
 type int0 is range 0 to 100;
 type int1 is range -100 to 1000;
 ```
 
-### Subtypes
+#### Subtypes
 "Vererbung":
 ```VHDL
 subtype int5 is Integer range -5 to 5;
 ```
 
-### Aufzählungen
+#### Aufzählungen
 ```VHDL
 type state is (locked, unlocked, ...);
 ```
 
-### Komplexere Datentypen
+#### Komplexere Datentypen
 4-bit breiter Bus:
 ```VHDL
 type BUS is array(0 to 3) of bit;
@@ -210,7 +210,7 @@ type INTERFACE is record
 end record;
 ```
 
-## Simulationssemantik
+### Simulationssemantik
 In der Realität treten Effekte wie Verzögerungszeiten auf.
 Diese können modelliert werden:
 ```VHDL
