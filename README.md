@@ -11,5 +11,5 @@ Vorlesungsmitschriebe der Vorlesung *Architektur Eingebetteter Systeme* im Somme
 ## Building
 Die Notizen in diesem Dokument können mit [pandoc](https://pandoc.org) zu einem Dokument gebaut werden:
 ```bash
-pandoc $(cat pandoc_list.txt) -o out.pdf -s
+make pdf
 ```
