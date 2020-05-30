@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: mkdir output
       - run: curl -L -O https://b.enjam.info/panam/styling.css
-      - run: echo "::set-env name=FILELIST::$(cat pandoc_list.txt)"
+      - run: echo "::set-env name=FILELIST::$(cat pandoc_list.txt | tr '\n' ' ')"
       - uses: docker://pandoc/core:latest
         with:
           args: ${{ env.FILELIST }} -o index.html -s --toc -w html5 --css=styling.css
