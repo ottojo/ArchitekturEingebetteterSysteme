@@ -1,6 +1,8 @@
 # Architektur Eingebetteter Systeme
 Vorlesungsmitschriebe der Vorlesung *Architektur Eingebetteter Systeme* im Sommersemester 2020.
 
+## Gesamtes Dokument zum online lesen [hier](https://ottojo.github.io/ArchitekturEingebetteterSysteme)
+
 ## Inhalt
 * [Vorlesung 1: Einführung](vorlesungen/Vorlesung01.md)
 * [Vorlesung 2: VHDL](vorlesungen/Vorlesung02.md)
