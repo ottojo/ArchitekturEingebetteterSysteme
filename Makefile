@@ -12,7 +12,7 @@ styling.css:
 
 .PHONY: html
 html: styling.css
-	pandoc $(shell cat pandoc_list.txt) -o index.html -s --toc -w html5 --css=styling.css
+	pandoc $(shell cat pandoc_list.txt) -o index.html -s --toc -w html5 --css=styling.css --mathjax
 
 clean:
 	rm main.pdf || true
