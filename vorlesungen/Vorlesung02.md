@@ -20,6 +20,7 @@
 ##### Signale
   * Signalzuweisung: `f <= ((not a) and b and c) or (...` -> Verhaltensbeschreibung der boolschen Funktion
     * Auch: Datenflussbeschreibung
+
 ##### Entity
 Schnittstelle:
 ```VHDL

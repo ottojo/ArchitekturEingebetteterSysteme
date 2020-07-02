@@ -36,12 +36,15 @@
 #### Standardzellenentwurf
 * Komponenten aus Bibliotheken (vorgefertigte Layouts)
 * Bibliotheken enthalten auch Verhaltensbeschreibungen zur Simulation
+
 #### Gate Array
 * Array von Logikgattern
 * Durch entsprechende Verdrahtungen (mittels Layoutsynthese) entstehen Schaltungen
 * Braucht mehr Fläche als Full-Custom-Entwurf
+
 #### Sea of Gates
 * Metallisierung nicht zwischen Gates, sondern beliebig über Gates
+
 #### Zusammenfassung
 * Tradeoff Fläche<->Komplexität
 
