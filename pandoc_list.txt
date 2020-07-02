@@ -6,5 +6,6 @@ vorlesungen/Vorlesung03.md
 vorlesungen/Vorlesung04.md
 vorlesungen/Vorlesung05.md
 vorlesungen/Vorlesung07.md
+vorlesungen/Vorlesung08.md
 labor/header.md
 labor/04_grundlagen/aufgabe1/labnotes.md
