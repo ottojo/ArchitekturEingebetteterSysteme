@@ -1,6 +1,8 @@
-% Portfolio Architektur Eingebetteter Systeme
-% Jonas Otto
-% Sommersemester 2020
+---
+title: Portfolio Architektur Eingebetteter Systeme
+author: Jonas Otto
+date: Sommersemester 2020
+---
 
 \maketitle
 \clearpage

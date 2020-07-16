@@ -2,7 +2,7 @@ VIEWER=xdg-open
 
 .PHONY: pdf
 pdf:
-	pandoc $(shell cat pandoc_list.txt) -o main.pdf -s
+	pandoc $(shell cat pandoc_list.txt) -o main.pdf --pdf-engine=xelatex -s
 
 show: pdf
 	screen -dm $(VIEWER) main.pdf
