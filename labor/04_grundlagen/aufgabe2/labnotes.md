@@ -80,3 +80,4 @@ BEGIN
         IN1 WHEN OTHERS;
 END LogicFunction;
 ```
+
