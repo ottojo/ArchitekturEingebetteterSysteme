@@ -12,3 +12,4 @@ vorlesungen/Vorlesung10.md
 vorlesungen/Vorlesung11.md
 labor/header.md
 labor/04_grundlagen/aufgabe1/labnotes.md
+labor/04_grundlagen/aufgabe2/labnotes.md
