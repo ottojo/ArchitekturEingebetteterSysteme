@@ -15,3 +15,5 @@ kurseinlagen/freertos.md
 labor/header.md
 labor/04_grundlagen/aufgabe1/labnotes.md
 labor/04_grundlagen/aufgabe2/labnotes.md
+labor/04_grundlagen/aufgabe3/labnotes.md
+labor/04_grundlagen/aufgabe4/labnotes.md
