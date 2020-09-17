@@ -10,6 +10,8 @@ vorlesungen/Vorlesung08.md
 vorlesungen/Vorlesung09.md
 vorlesungen/Vorlesung10.md
 vorlesungen/Vorlesung11.md
+kurseinlagen/header.md
+kurseinlagen/freertos.md
 labor/header.md
 labor/04_grundlagen/aufgabe1/labnotes.md
 labor/04_grundlagen/aufgabe2/labnotes.md
