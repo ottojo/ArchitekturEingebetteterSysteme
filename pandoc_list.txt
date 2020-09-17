@@ -9,3 +9,4 @@ labor/04_grundlagen/aufgabe4/labnotes.md
 labor/05_latches/part2/labnotes.md
 labor/05_latches/part3/labnotes.md
 labor/05_latches/part4/labnotes.md
+labor/06_counter/aufgabe1/labnotes.md

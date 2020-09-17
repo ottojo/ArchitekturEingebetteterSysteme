@@ -7,7 +7,7 @@ Neu ist hier die Funktion
 verwendet wird, wo beim Latch `Clk = '1'` geprüft wird:
 
 ```vhdl
- ENTITY flipflop IS
+ENTITY flipflop IS
     PORT (
         D, Clk : IN STD_LOGIC;
         Q : OUT STD_LOGIC);

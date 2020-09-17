@@ -1,6 +1,8 @@
 PANDOC_HTML_OPTIONS=--toc -w html5 --css=styling.css --mathjax --standalone
 PANDOC_PDF_OPTIONS=-V links-as-notes=true --pdf-engine=xelatex --standalone
 
+all: pdf html vorlesung-html vorlesung-html
+
 styling.css:
 	curl -L -O https://b.enjam.info/panam/styling.css
 
