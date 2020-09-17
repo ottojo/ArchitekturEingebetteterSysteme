@@ -13,7 +13,11 @@ jobs:
       - run: echo "::set-env name=FILELIST::$(cat pandoc_list.txt | tr '\n' ' ')"
       - uses: docker://pandoc/core:latest
         with:
-          args: ${{ env.FILELIST }} -o output/index.html -s --toc -w html5 --css=styling.css
+          args: ${{ env.FILELIST }} -o output/index.html --toc -w html5 --css=styling.css --mathjax --standalone
+      - run: echo "::set-env name=FILELIST_VL::$(cat vorlesung.txt | tr '\n' ' ')"
+      - uses: docker://pandoc/core:latest
+        with:
+          args: ${{ env.FILELIST_VL }} -o output/vl.html --toc -w html5 --css=styling.css --mathjax --standalone
       - uses: maxheld83/ghpages@v0.3.0
         env:
           BUILD_DIR: "output/"
