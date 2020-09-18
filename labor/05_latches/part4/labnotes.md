@@ -1,4 +1,4 @@
-## Part IV
+## Latches + flip-flop: Beschreibung als Process
 In diesem Teil wird wieder das D-Latch verwendet. Hier ist allerdings eine
 Implementierung angegeben, also wird nicht auf die vorherigen Aufgaben
 zurückgegriffen. Der Flipflop soll im gleichen Stil implementiert werden.
