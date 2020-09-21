@@ -16,3 +16,4 @@ labor/08_crcNIOS/aufgabe1/labnotes.md
 labor/09_NIOS/aufgabe1/labnotes.md
 labor/11_softwarecrc/aufgabe1/labnotes.md
 labor/12_NIOS_CRC/aufgabe1/labnotes.md
+labor/13_entwurfsraum/aufgabe1/labnotes.md
