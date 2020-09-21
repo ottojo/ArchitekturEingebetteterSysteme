@@ -114,3 +114,8 @@ int main()
 
 Wie zu erwarten, inkrementiert die Hardware-Komponente den internen Wert bei
 jedem Aktivieren des `enable` bits um den eingestellten Wert.
+
+
+In diese Komponente wurde dann erneut die CRC Berechnung eingefügt, was diesmal
+dann auch funktioniert hat, und gleiche Resultate wie die Software
+Implementierung lieferte.
