@@ -1,4 +1,3 @@
--- CRC-7 (8bit Generator)
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
@@ -16,38 +15,39 @@ END crc;
 
 ARCHITECTURE Behavior OF crc IS
 BEGIN
-
-    PROCESS (Clock, Write, Address)
-        VARIABLE reg : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    PROCESS (Clock, Reset)
         VARIABLE Data : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        VARIABLE Enable : STD_LOGIC;
         VARIABLE G : STD_LOGIC_VECTOR(7 DOWNTO 0);
+        VARIABLE enable : STD_LOGIC;
     BEGIN
-        -- TODO: Reset
-        IF RISING_EDGE(Clock) THEN
+        IF (Reset = '1') THEN
+            -- Reset
+            Data := (OTHERS => '0');
+            DataBusOut <= Data;
+            G := (OTHERS => '0');
+            enable := '0';
+        ELSIF RISING_EDGE(Clock) THEN
             IF Write = '1' THEN
                 -- Input
                 IF Address = '1' THEN
-                    -- Set generator and enable bit
+                    -- control
                     G := DataBusIn(31 DOWNTO 24);
-                    Enable := DataBusIn(0);
+                    enable := DataBusIn(0);
                 ELSE
-                    -- Read input data
+                    -- Data
                     Data := DataBusIn;
                 END IF;
-            ELSIF Enable = '1' THEN
-                -- Calculate CRC
-                reg := Data;
+            ELSIF enable = '1' THEN
+                -- Calculation
                 FOR i IN 0 TO 31 LOOP
-                    IF reg(31) = '1' THEN
-                        reg := std_logic_vector(shift_left(unsigned(reg), 1));
-                        reg(31 DOWNTO 25) := reg(31 DOWNTO 25) XOR G(6 DOWNTO 0);
-                    ELSE
-                        reg := std_logic_vector(shift_left(unsigned(reg), 1));
+                    IF Data(31) = '1' THEN
+                        Data(31 DOWNTO 25) := Data(31 DOWNTO 25) XOR G(6 DOWNTO 0);
                     END IF;
+                    Data := std_logic_vector(shift_left(unsigned(Data), 1));
                 END LOOP;
-                Data := reg;
-                Enable := '0';
+                Data(6 DOWNTO 0) := Data(31 DOWNTO 25);
+                Data(31 DOWNTO 7) := (OTHERS => '0');
+                enable := '0';
             END IF;
 
             -- Set correct output depending on address
@@ -56,7 +56,7 @@ BEGIN
             ELSE
                 DataBusOut <= (OTHERS => '0');
                 DataBusOut(31 DOWNTO 24) <= G;
-                DataBusOut(0) <= Enable;
+                DataBusOut(0) <= enable;
             END IF;
         END IF;
     END PROCESS;
