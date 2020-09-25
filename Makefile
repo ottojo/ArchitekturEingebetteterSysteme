@@ -1,5 +1,6 @@
-PANDOC_HTML_OPTIONS=--toc -w html5 --css=styling.css --mathjax --standalone
-PANDOC_PDF_OPTIONS=-V links-as-notes=true --pdf-engine=xelatex --standalone
+PANDOC_BASE_OPTIONS=--standalone  --filter pandoc-citeproc
+PANDOC_HTML_OPTIONS=$(PANDOC_BASE_OPTIONS) --toc -w html5 --css=styling.css --mathjax
+PANDOC_PDF_OPTIONS=$(PANDOC_BASE_OPTIONS) -V links-as-notes=true --pdf-engine=xelatex
 
 all: pdf html vorlesung-html vorlesung-html
 
