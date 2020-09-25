@@ -4,6 +4,7 @@ author: Jonas Otto
 date: Sommersemester 2020
 bibliography: bib.bib
 csl: ieee.csl
+link-citations: true
 ---
 
 \maketitle
