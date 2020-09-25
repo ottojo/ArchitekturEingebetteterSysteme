@@ -2,6 +2,7 @@
 title: Portfolio Architektur Eingebetteter Systeme
 author: Jonas Otto
 date: Sommersemester 2020
+lang: de-DE
 bibliography: bib.bib
 csl: ieee.csl
 link-citations: true
