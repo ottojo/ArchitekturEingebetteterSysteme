@@ -5,6 +5,8 @@ on: push
 jobs:
   build-and-deploy:
     runs-on: ubuntu-18.04
+    env:
+      PANDOC_OPTIONS: --toc -w html5 --css=styling.css --mathjax --standalone --filter pandoc-citeproc
     steps:
       - uses: actions/checkout@v2
       - run: mkdir output
@@ -13,11 +15,11 @@ jobs:
       - run: echo "::set-env name=FILELIST::$(cat pandoc_list.txt | tr '\n' ' ')"
       - uses: docker://pandoc/core:latest
         with:
-          args: ${{ env.FILELIST }} -o output/index.html --toc -w html5 --css=styling.css --mathjax --standalone
+          args: ${{ env.FILELIST }} -o output/index.html ${{ env.PANDOC_OPTIONS }}
       - run: echo "::set-env name=FILELIST_VL::$(cat vorlesung.txt | tr '\n' ' ')"
       - uses: docker://pandoc/core:latest
         with:
-          args: ${{ env.FILELIST_VL }} -o output/vl.html --toc -w html5 --css=styling.css --mathjax --standalone
+          args: ${{ env.FILELIST_VL }} -o output/vl.html ${{ env.PANDOC_OPTIONS }}
       - uses: maxheld83/ghpages@v0.3.0
         env:
           BUILD_DIR: "output/"
