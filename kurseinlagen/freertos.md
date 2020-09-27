@@ -1,11 +1,11 @@
-## Scheduling in FreeRTOS
-Zur Veranshcaulichung der Konzepte von Scheduling und insbesondere Scheduling im
+## Kurseinlage zur Vorlesung "Echtzeitbetriebssysteme"
+Zur Veranschaulichung der Konzepte von Scheduling und insbesondere Scheduling im
 Realtime Kontext, habe ich mir angeschaut, wie das bei einem RTOS gelöst ist,
-mit dem ich bereis im Microcontroller-Praktikum in Kontakt gekommen bin,
+mit dem ich bereits im Microcontroller-Praktikum in Kontakt gekommen bin,
 FreeRTOS (TODO CITE).
 
 
-Das Scheduling wird in der DOkumentation im Kapitel
+Das Scheduling wird in der Dokumentation im Kapitel
 [RTOS Fundamentals](https://www.freertos.org/implementation/a00002.html)
 erklärt. Zur Einführung wird wiederholt, dass hier auf Multitasking
 eingegangen wird, was nicht zwingend auch eine tatsächliche gleichzeitige
@@ -19,7 +19,7 @@ ausführende Tasks auf einem Kern ausführt.
 Der FreeRTOS Kernel kann Prozesse anhalten, um einen anderen Task auszuführen,
 ein Prozess kann aber auch freiwillig die Kontrolle an das Betriebssystem
 abgeben, zum Beispiel wenn dieser Prozess einen delay braucht oder auf ein Event
-(z.B. ein Tastendruck) oder eine Resource (z.B. Serialport) gewartet wird.
+(z.B. ein Tastendruck) oder eine Resource (z.B. Serial-port) gewartet wird.
 Dies wird in der Dokumentation mit einem Ablaufdiagramm veranschaulicht,
 welches sowohl ein Unterbrechen eines Tasks aufgrund der aktuellen scheduling
 policy (fair), als auch ein Unterbrechen durch den Task selbst.

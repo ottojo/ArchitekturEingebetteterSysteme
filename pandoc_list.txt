@@ -1,5 +1,6 @@
 header.md
 kurseinlagen/header.md
+kurseinlagen/logicfabrics.md
 kurseinlagen/freertos.md
 labor/header.md
 labor/04_grundlagen/aufgabe1/labnotes.md
