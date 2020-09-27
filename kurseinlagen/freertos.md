@@ -1,8 +1,8 @@
-## Kurseinlage zur Vorlesung "Echtzeitbetriebssysteme"
+## Kurseinlage zur Vorlesung 13: "Echtzeitbetriebssysteme"
 Zur Veranschaulichung der Konzepte von Scheduling und insbesondere Scheduling im
 Realtime Kontext, habe ich mir angeschaut, wie das bei einem RTOS gelöst ist,
 mit dem ich bereits im Microcontroller-Praktikum in Kontakt gekommen bin,
-FreeRTOS (TODO CITE).
+FreeRTOS [@freertos].
 
 
 Das Scheduling wird in der Dokumentation im Kapitel

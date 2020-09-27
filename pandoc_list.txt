@@ -2,6 +2,7 @@ header.md
 kurseinlagen/header.md
 kurseinlagen/logicfabrics.md
 kurseinlagen/freertos.md
+nmigen.md
 labor/header.md
 labor/04_grundlagen/aufgabe1/labnotes.md
 labor/04_grundlagen/aufgabe2/labnotes.md
@@ -18,5 +19,4 @@ labor/09_NIOS/aufgabe1/labnotes.md
 labor/11_softwarecrc/aufgabe1/labnotes.md
 labor/12_NIOS_CRC/aufgabe1/labnotes.md
 labor/13_entwurfsraum/aufgabe1/labnotes.md
-nmigen.md
 footer.md
