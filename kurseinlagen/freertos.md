@@ -1,3 +1,4 @@
+\clearpage
 ## Kurseinlage zur Vorlesung 13: "Echtzeitbetriebssysteme"
 Zur Veranschaulichung der Konzepte von Scheduling und insbesondere Scheduling im
 Realtime Kontext, habe ich mir angeschaut, wie das bei einem RTOS gelöst ist,

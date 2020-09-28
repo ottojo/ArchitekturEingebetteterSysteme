@@ -1,6 +1,7 @@
 header.md
 kurseinlagen/header.md
 kurseinlagen/logicfabrics.md
+kurseinlagen/adc.md
 kurseinlagen/freertos.md
 nmigen.md
 labor/header.md

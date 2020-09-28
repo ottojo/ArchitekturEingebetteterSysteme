@@ -44,7 +44,7 @@ kompakteres Design ermöglicht.
 #### Field Programmable Gate Arrays (FPGA)
 Auf modernen FPGAs kann ein ganzes eingebettetes System inklusive mehrerer
 Prozessorkerne realisiert werden. FPGAs enthalten auch eine Anordnung von
-vordefinierten Modulen, welche aber programmierbar sind, zum Bespiel in Form
+vordefinierten Modulen, welche aber programmierbar sind, zum Beispiel in Form
 einer lookup table und Flipflops.
 
 
@@ -66,4 +66,4 @@ Gates direkt zu einem Maskenlayout synthetisiert wird, was natürlich im Kontras
 zur oben genannten Flexibilität, einzelne Gates genau anzupassen, steht. Eine
 weitere interessante Frage, der hier aber nicht weiter nachgegangen wird, ist
 auch, wie ein Analogdesign in solch einen Chip integriert wird, und ob hier auch
-Beschreibungssprachen wie für digiale Logik existieren.
+Beschreibungssprachen wie für digitale Logik existieren.
