@@ -37,7 +37,7 @@ vorgegebener Zeit erzeugt wird.
 Im **Sigma-Delta Verfahren** ist die Herangehensweise, das Signal mittels des
 Sigma-Delta Modulators in einen Bitstream umzuwandeln, in dem das Verhältnis von
 Einsen und Nullen proportional zur Eingangsspannung ist. Da mir dieses Prinzip
-in der Vorlesung nicht ganz klar wurde, habe ich zuerste einen Artikel von TI
+in der Vorlesung nicht ganz klar wurde, habe ich zuerst einen Artikel von TI
 [@baker2011] gefunden, welcher das Verfahren der Sigma-Delta Modulation noch mal
 Schritt für Schritt auflistet. In letzten Teil wird auch kurz auf das
 Noise-Shaping eingegangen, und mit einem Diagramm der unterschiedlichen
@@ -48,5 +48,5 @@ auf einen anderen Artikel verwiesen. Eine weitere Resource, die besonders für
 das Verständnis, wie der vom Modulator kommende Bitstream genau zu
 interpretieren ist, war das interaktive Tutorial von Analog Devices
 [@analog_adc_tutorial], welches das Eingeben von Eingangs- und Referenzspannung
-erlaubt und dann für jeden einzelnen Schritt die Spannungswere an den relevanten
+erlaubt und dann für jeden einzelnen Schritt die Spannungswerte an den relevanten
 Stellen darstellt.
