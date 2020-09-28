@@ -11,17 +11,19 @@ link-citations: true
 \maketitle
 \clearpage
 
-\tableofcontents
+Die aktuellste Version dieses Dokuments ist immer als HTML-Version unter
+[ottojo.github.io/ArchitekturEingebetteterSysteme](https://ottojo.github.io/ArchitekturEingebetteterSysteme)
+verfügbar.
+
+Dieses Dokument ist während der Vorlesung "Architektur Eingebetteter
+Systeme" entstanden, meine Vorlesungsnotizen sind im gleichen Repository und als
+HTML auf
+[ottojo.github.io/ArchitekturEingebetteterSysteme/vl.html](https://ottojo.github.io/ArchitekturEingebetteterSysteme/vl.html)
+verfügbar.
+
+Den Quellcode für beide Dokumente (Markdown für den Text, Übungen mir
+VHDL) findet man auf
+[github.com/ottojo/ArchitekturEingebetteterSysteme](https://github.com/ottojo/ArchitekturEingebetteterSysteme).
+
 \clearpage
-
-# Einleitung und Überblick
-Im ersten Teil dieses Dokuments finden sich Vorlesungsnotizen, die großteils nur aus Stichpunkten
-bestehen, die während der Vorlesung relevant erschienen und mir es erleichtern, Teile der Vorlesung
-wiederzufinden.
-
-Der zweite Teil besteht aus Notizen die während dem Bearbeiten der Übungen gemacht wurden.
-Der Quellcode und die eigentlichen Übungen sind im gleichen [git Repository auf GitHub: github.com/ottojo/ArchitekturEingebetteterSysteme](https://github.com/ottojo/ArchitekturEingebetteterSysteme) zu finden, in dem auch dieses Dokument versioniert wird.
-
-Neben diesem PDF kann die neuste Version dieses Dokuments auch jederzeit unter
-[ottojo.github.io/ArchitekturEingebetteterSysteme](https://ottojo.github.io/ArchitekturEingebetteterSysteme) als HTML Seite gelesen werden.
-
+\tableofcontents
