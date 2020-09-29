@@ -1,13 +1,6 @@
 \clearpage
 # Zusatzthema: nMigen
 
-M-Labs: https://m-labs.hk/gateware/nmigen/ GitHub:
-https://github.com/m-labs/nmigen Tutorial:
-http://blog.lambdaconcept.com/doku.php?id=nmigen:tutorial Towards a Hardware DSL
-Ecosystem: RubyRTL and Friends https://arxiv.org/pdf/2004.09858.pdf LiteX: an
-open-source SoC builder and library based on Migen Python DSL
-https://arxiv.org/pdf/2005.02506.pdf
-
 ## Motivation
 Schon seit den 1980er bzw. 1990er Jahren existieren die uns bekannten Sprachen
 zur Hardwarebeschreibung VHDL [@vhdl_1987] und Verilog [@verilog_1995]. Wir
