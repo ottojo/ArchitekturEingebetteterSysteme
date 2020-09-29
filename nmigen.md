@@ -1,11 +1,12 @@
 \clearpage
 # Zusatzthema: nMigen
 
-M-Labs: https://m-labs.hk/gateware/nmigen/
-GitHub: https://github.com/m-labs/nmigen
-Tutorial: http://blog.lambdaconcept.com/doku.php?id=nmigen:tutorial
-Towards a Hardware DSL Ecosystem: RubyRTL and Friends https://arxiv.org/pdf/2004.09858.pdf
-LiteX: an open-source SoC builder and library based on Migen Python DSL https://arxiv.org/pdf/2005.02506.pdf
+M-Labs: https://m-labs.hk/gateware/nmigen/ GitHub:
+https://github.com/m-labs/nmigen Tutorial:
+http://blog.lambdaconcept.com/doku.php?id=nmigen:tutorial Towards a Hardware DSL
+Ecosystem: RubyRTL and Friends https://arxiv.org/pdf/2004.09858.pdf LiteX: an
+open-source SoC builder and library based on Migen Python DSL
+https://arxiv.org/pdf/2005.02506.pdf
 
 ## Motivation
 Schon seit den 1980er bzw. 1990er Jahren existieren die uns bekannten Sprachen
@@ -43,28 +44,32 @@ erwähnen sind noch PyRTL [@clow2017], CLasH [@baaij2009], SysPy [@logaray2010]
 und SpinalHDL [@spinalhdl]. Die hier näher betrachtete Lösung ist *nMigen*
 [@nmigen].
 
+Im Folgenden soll ein beispielorientierter Überblick über die wichtigsten
+Konzepte in nMigen gegeben werden, um einen Eindruck von der Bibliothek zu
+bekommen. Mein Ziel ist es auch zu testen, wie vergleichbar das Ganze mit VHDL
+ist, und ob die oben genannten Ziele erfüllt werden.
+
 ## Hintergrund
 nMigen ist die zweite Version der Migen Bibliothek für Hardware Design in
 Python. Die gesamte Software ist Open Source, gehostet auf
 [GitHub](https://github.com/m-labs/nmigen). Auf GitHub werden 25 Autoren
-gelistet, die initiale Entwicklung stammt aber von der Firma [M-Labs](https://m-labs.hk/), welche
-auch initialer Autor des Vorgängers *Migen* ist. Zusätzlich an der Entwicklung
-beteiligt ist die Firma [LambdaConcept](https://lambdaconcept.com/), welche wie
-M-Labs Migen und nMigen in eigenen Produkten einsetzen.
+gelistet, die initiale Entwicklung stammt aber von der Firma
+[M-Labs](https://m-labs.hk/), welche auch initialer Autor des Vorgängers *Migen*
+ist. Zusätzlich an der Entwicklung beteiligt ist die Firma
+[LambdaConcept](https://lambdaconcept.com/), welche wie M-Labs Migen und nMigen
+in eigenen Produkten einsetzen.
 
 
-## Beispiel
-
-### Board Definition
+## Board Definition
 In nMigen (genauer: im Modul
 [nmigen-boards](https://github.com/m-labs/nmigen-boards)) sind viele FPGA-Boards
 von unterschiedlichen Herstellern, mit freien und proprietären Toolchains,
 bereits definiert. Das *DE2-115* fehlt zwar, kann aber mit vergleichsweise wenig
 Aufwand hinzugefügt werden, da bereits mehrere *DE0* und *DE10* Boards
 existieren: Eine neue Klasse `DE2115Platform` wird erstellt, diese erbt von
-`IntelPlatform`, was bereits die meisten relevanten Einstellungen enthält.
-Hier ein Ausschnitt der entsprechenden Datei, hier werden die vorhandenen
-Clocks, LEDs, Buttons, Schalter und eine serielle Schnittstelle definiert:
+`IntelPlatform`, was bereits die meisten relevanten Einstellungen enthält. Hier
+ein Ausschnitt der entsprechenden Datei, hier werden die vorhandenen Clocks,
+LEDs, Buttons, Schalter und eine serielle Schnittstelle definiert:
 
 
 ```python
@@ -104,7 +109,7 @@ GitHub für die Boarddefinition erstellt.
 ## Hello World
 Das klassische "Hello World" der Hardware Welt ist sicher das "Blinky" Programm,
 das nichts weiter tut, als eine LED zu blinken. So auch im nMigen Tutorial
-[@nmigen_tutorial]:
+[@nmigen_tutorial], dem in den nachfolgenden Kapiteln gefolgt wird:
 
 
 ```python
@@ -179,3 +184,153 @@ Quartus Toolchain von Intel/Altera synthetisiert und auf den FPGA geladen wird.
 Für FPGAs der *iCE40* und *ECP5* Serie von Lattice wird eine vollständig freie
 Open Source Toolchain (Yosys+nextpnr [@yosys_nexpnr]) verwendet.
 
+## Kombinatorische und Synchrone Logik
+Die eigentliche Spezifikation der Logik im Blink Beispiel passiert in der
+Funktion `elaborate`:
+```python
+def elaborate(self, platform):
+    m = Module()
+    counter = Signal(3)
+    m.d.sync += counter.eq(counter + 1)
+    m.d.comb += self.led.eq(counter[2])
+    return m
+```
+Wie auch VHDL kennt nMigen kombinatorische und synchrone Logik. Mit
+```python
+m.d.sync += counter.eq(counter + 1)
+```
+wird der counter in jedem Taktzyklus inkrementiert, in der nächsten Zeile
+```python
+m.d.comb += self.led.eq(counter[2])
+```
+wird die LED aber fest mit dem höchstwertigem Bit des Zählers verbunden,
+unabhängig von der Clock (Kombinatorische Logik).
+
+## Hierarchische Designs
+Im vorherigen Kapitel wurde bereits ein hierarchisches Design verwendet, ohne
+genauer darauf einzugehen. Um dieses Prinzip genauer zu verstehen, soll eine ALU
+(*Arithmetic Logic Unit*) aufgebaut werden, die zwei Eingänge abhängig von einem
+Kontrollsignal addiert oder subtrahiert.
+
+Im ersten schritt wird ein Addierer und ein Subtrahierer geschrieben:
+```python
+class Adder(Elaboratable):
+    def __init__(self, width):
+        self.a = Signal(width)
+        self.b = Signal(width)
+        self.o = Signal(width)
+
+    def elaborate(self, platform):
+        m = Module()
+        m.d.comb += self.o.eq(self.a + self.b)
+        return m
+```
+
+```python
+class Subtractor(Elaboratable):
+    def __init__(self, width):
+        self.a = Signal(width)
+        self.b = Signal(width)
+        self.o = Signal(width)
+
+    def elaborate(self, platform):
+        m = Module()
+        m.d.comb += self.o.eq(self.a - self.b)
+        return m
+```
+
+Diese Module enthalten beide jeweils zwei Eingänge `a` und `b` und einen Ausgang
+`o`. Die Addition und Subtraktion wird in Form von kombinatorischer Logik
+angegeben. Anzumerken ist hier aber, dass dem Konstruktor ein weiteres Argument
+`width` hinzugefügt wurde. Dies ist die Breite der Ein- und Ausgangssignale, und
+kann frei gewählt werden. Die ALU wird auch ein entsprechendes Argument erhalten
+und dann den passenden Addierer/Subtrahierer instanziieren:
+
+```python
+class ALU(Elaboratable):
+    def __init__(self, width):
+        self.op  = Signal()
+        self.a   = Signal(width)
+        self.b   = Signal(width)
+        self.o   = Signal(width)
+ 
+        self.add = Adder(width)
+        self.sub = Subtractor(width)
+ 
+    def elaborate(self, platform):
+        m = Module()
+        m.submodules.add = self.add
+        m.submodules.sub = self.sub
+        m.d.comb += [
+            self.add.a.eq(self.a),
+            self.sub.a.eq(self.a),
+            self.add.b.eq(self.b),
+            self.sub.b.eq(self.b),
+        ]
+        with m.If(self.op):
+            m.d.comb += self.o.eq(self.sub.o)
+        with m.Else():
+            m.d.comb += self.o.eq(self.add.o)
+        return m
+```
+
+Im Konstruktor wird der Addierer und Subtrahierer instanziiert und als
+Membervariable zugewiesen. In der `elaborate` Funktion werden diese dem Modul
+als Submodul hinzugefügt, und die Ein- und Ausgänge der Module werden mit den
+entsprechenden Signalen der ALU verbunden. Das zusätzliche Signal `op` wählt die
+Funktion der ALU aus. Da das resultierende Design ja beide Modi enthalten muss,
+kann hier kein python-`if` verwendet werden, sondern in einer etwas abweichenden
+Syntax:
+```python
+with m.If(self.op):
+    m.d.comb += self.o.eq(self.sub.o)
+with m.Else():
+    m.d.comb += self.o.eq(self.add.o)
+```
+
+## Testing
+nMigen unterstützt Integration in Pythons standard Unit-Testing tools, und
+integriert Möglichkeiten zur Simulation. Natürlich kann auch ohne Hilfe von
+Unit-Test Bibliotheken ein Test geschrieben werden:
+```python
+width = 4
+alu = ALU(width)
+sim = Simulator(alu)
+with sim.write_vcd("alu.vcd"):
+    def process():
+        for a, b in itertools.product(range(2 ** width), range(2 ** width)):
+            yield alu.a.eq(a)
+            yield alu.b.eq(b)
+            yield alu.op.eq(0)
+            yield Delay()
+            print(f"{a}+{b}={(yield alu.o)}")
+            assert (a + b) % (2 ** width) == (yield alu.o)
+            yield alu.op.eq(1)
+            yield Delay()
+            print(f"{a}-{b}={(yield alu.o)}")
+            assert (a - b) % (2 ** width) == (yield alu.o)
+```
+Für den Simulator wird die `process` Funktion definiert, die mittels `yield` die
+Simulierten Eingänge generiert, und dann zum verifizieren der Ergebnisse mit
+`assert` die Korrektheit prüft.
+
+## Evaluation
+Nach einigem Ausprobieren und Testen bin ich der Ansicht, dass HDLs wie nMigen
+gut nutzbar und eine echte Alternative zu VHDL sind. Dass die Integration in
+Python nicht nur eine Fülle an Möglichkeiten zur Metaprogrammierung liefert,
+sondern auch die Wiederverwendung von Modulen vereinfacht, ist ein enormer
+Vorteil. Für den Vorgänger von nMigen, `Migen`, existiert das LiteX Projekt
+[@kermarrec2020litex], eine Open-Source Bibliothek, die alle Bestandteile
+enthält um einen eigenen SoC (*System On Chip*) im Baukastensystem aufzubauen.
+Neben verschiedenen Softcores sind Schnittstellen wie Ethernet, PCIe, DRAM und
+mehr verfügbar, für Videoverarbeitung existieren im LiteVideo Projekt HDMI Ein-
+und Ausgang sowie Module zur Konvertierung zwischen Farbräumen.
+
+Die verfügbare Dokumentation zu nMigen lässt momentan noch zu Wünschen übrig,
+das [Manual](https://m-labs.hk/migen/manual/index.html) zum Vorgänger Migen ist
+aber ausführlich. Auf GitHub sind außerdem einige Projekte und Beispiele zu
+finden, teils auch für spezifische Boards.
+
+Abschließend lässt sich sagen, dass besonders mit Python Vorkenntnissen nMigen
+einen einfacheren Einstieg bietet als VHDL, die Hardware-Kompatibilität und
+Dokumentation für den Produktiven Einsatz aber besser werden muss.
