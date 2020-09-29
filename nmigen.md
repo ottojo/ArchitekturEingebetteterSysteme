@@ -23,7 +23,7 @@ Mehrere Projekte, die Hardwarebeschreibung in Form von *domain specific
 languages (DSL)* innerhalb anderer Programmiersprachen realisieren, existieren.
 Einige Beispiele, mit definierenden Features und Highlights sind:
 
-* RubyRTL [@rubyrtl_2020]:  Erstmals präsentiert in [@lann2020hardware] (2020),
+* RubyRTL [@rubyrtl_2020]:  Erstmals präsentiert in [@lann2020hardware],
   baut RubyRTL auf die Programmiersprache Ruby auf, unter anderem weil es in
   Ruby möglich ist, der Sprache scheinbar neue Keywords hinzuzufügen.
 * MyHDL [@jaic2015]: Motiviert von der weiten Verbreitung und der umfassenden
@@ -138,7 +138,7 @@ eingestellt, und die tatsächliche Frequenz wird ausgegeben:
 counter_width = round(log2(platform.default_clk_frequency))
 actual_freq = platform.default_clk_frequency / (2 ** counter_width)
 print(f"creating {counter_width}-bit counter, "
-      "resulting frequency will be {actual_freq}Hz")
+      f"resulting frequency will be {actual_freq}Hz")
 
 counter = Signal(counter_width)
 m.d.sync += counter.eq(counter + 1)
