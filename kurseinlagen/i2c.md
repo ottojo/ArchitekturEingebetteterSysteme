@@ -96,3 +96,18 @@ i2c::Bus bus{"/dev/i2c-0"};
     auto dataFromDevice = lockedBus.read<7>();
 }
 ```
+Für ein Spezielles Gerät kann nun eine Klasse definiert werden, welche eine
+Referenz auf den Bus enthält, und die Funktionen des Geräts bereitstellt. Im
+oben verlinkten Repository ist beispielsweise eine Klasse für den `PCA9685` PWM
+Controller enthalten.
+
+Im Linux Treiber sind einige Probleme ersichtlich geworden, die in der Vorlesung
+nicht direkt erwähnt wurden: Ein Gerätetreiber ist üblicherweise in ein
+komplexes System integriert. Es können mehrere Interfaces zu diesem Treiber
+existieren, hier zum Beispiel das `/dev/`- und das Kernel-Interface. Ein Treiber
+muss auch nicht immer den gesamten Stack zwischen Applikation und Hardware
+abdecken, in Linux gibt es ein I2C Subsystem, auf welches die diversen
+Gerätetreiber dann aufbauen, ohne das I2C Interface an sich selbst zu
+implementieren. Außerdem kommen in Mehrbenutzersystemen oder Multithreaded
+Applikationen die üblichen Probleme des gleichzeitigen Zugriffs hinzu, die im
+Treiber bedacht werden müssen.
