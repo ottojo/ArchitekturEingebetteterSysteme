@@ -3,6 +3,7 @@ einleitung.md
 kurseinlagen/header.md
 kurseinlagen/logicfabrics.md
 kurseinlagen/adc.md
+kurseinlagen/i2c.md
 kurseinlagen/freertos.md
 nmigen.md
 labor/header.md
