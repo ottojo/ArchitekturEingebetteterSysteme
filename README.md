@@ -18,3 +18,14 @@ HTML geht auch, mit dem [panam style von Benjamin Woodruff
 make html
 make vorlesung-html
 ```
+
+## How to cite
+```bibtex
+@misc{otto2020,
+  author      = {Jonas Otto},
+  title       = {Portfolio Architektur Eingebetteter Systeme},
+  url         = {https://github.com/ottojo/ArchitekturEingebetteterSysteme},
+  institution = {Univerität Ulm},
+  year        = {2020}
+}
+```
