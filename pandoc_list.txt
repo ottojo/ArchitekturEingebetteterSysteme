@@ -2,6 +2,7 @@ header.md
 einleitung.md
 kurseinlagen/header.md
 kurseinlagen/logicfabrics.md
+kurseinlagen/sensoren.md
 kurseinlagen/adc.md
 kurseinlagen/i2c.md
 kurseinlagen/freertos.md
