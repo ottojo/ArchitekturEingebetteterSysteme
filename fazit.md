@@ -1,12 +1,12 @@
 \clearpage
 # Fazit
-Die Vorlesung hat umfassenden Überblick über die Thematik "Eingebettete Systeme"
-gegeben. In einigen Bereichen, etwa den Analog-Digital Wandlern, wurden auch die
-speziellen Problemstellungen und mehrere Lösungen präsentiert. In der Übung
-wurde die Hardwarebeschreibungssprache VHDL praxisnah angewendet. Vor dieser
-Vorlesung dachte ich bei Eingebetteten Systemen nur an Microcontroller, maximal
-noch an Echtzeitbetriebssysteme. Die Möglichkeiten der engen Integration von
-Hard- und Software, die Vorteile, spezielle Funktionen in Hardware zu
+Die Vorlesung hat einen umfassenden Überblick über die Thematik "Eingebettete
+Systeme" gegeben. In einigen Bereichen, etwa den Analog-Digital Wandlern, wurden
+auch die speziellen Problemstellungen und mehrere Lösungen präsentiert. In der
+Übung wurde die Hardwarebeschreibungssprache VHDL praxisnah angewendet. Vor
+dieser Vorlesung dachte ich bei Eingebetteten Systemen nur an Microcontroller,
+maximal noch an Echtzeitbetriebssysteme. Die Möglichkeiten der engen Integration
+von Hard- und Software, die Vorteile, spezielle Funktionen in Hardware zu
 Implementieren, und die Knackpunkte bei Systemen mit Echtzeitanforderungen waren
 mir neu.
 
