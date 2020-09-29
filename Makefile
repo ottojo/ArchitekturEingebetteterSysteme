@@ -5,7 +5,7 @@ PANDOC_PDF_OPTIONS=$(PANDOC_BASE_OPTIONS) -V links-as-notes=true --pdf-engine=xe
 all: pdf html vorlesung-html vorlesung-html
 
 styling.css:
-	curl -L -O --insecure https://b.enjam.info/panam/styling.css
+	curl -L -O https://b.enjam.info/panam/styling.css
 
 .PHONY: pdf
 pdf:
