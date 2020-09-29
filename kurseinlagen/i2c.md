@@ -17,7 +17,7 @@ anheben und z.B. verschiedene Varianten eines Gerätetyps ansprechen können ode
 Fehlerbehandlung beherrschen.
 
 Besonders für Sensoren, dessen Messungen mit wenig Verzögerung verarbeitet
-werden sollen, sind * Interrupts* ein wichtiges Konzept. Hier wird der Prozessor
+werden sollen, sind *Interrupts* ein wichtiges Konzept. Hier wird der Prozessor
 (durch den *Interrupt Controller*) in der Ausführung unterbrochen, und eine
 vorher definierte *Interrupt Service Routine* wird ausgeführt, welche dann z.B.
 die Verarbeitung des Sensorwerts anstoßen kann.
