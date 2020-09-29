@@ -25,7 +25,7 @@ make vorlesung-html
   author      = {Jonas Otto},
   title       = {Portfolio Architektur Eingebetteter Systeme},
   url         = {https://github.com/ottojo/ArchitekturEingebetteterSysteme},
-  institution = {Univerität Ulm},
+  institution = {Universität Ulm},
   year        = {2020}
 }
 ```
