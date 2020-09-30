@@ -21,12 +21,12 @@ mangelnde direkte Kollaboration im Labor zurückzuführen ist.
 
 
 Auf die Frage, "welche weiteren Ideen mir für die eventuelle Fortführung meiner
-Forschungen im Bereich der Rechnerarchitektur eingefallen sind", kann ich keine
-konkrete Antwort geben. Was ich mir aber durchaus gewünscht habe, besonders
-während der Übung, ist dass der Prozess der Hardwareentwicklung von der modernen
-Softwareentwicklung lernt. Dazu gehören nicht nur von Anfang bis Ende
-durchschaubare Open Source Toolchains, sondern auch einfach wiederverwendbare
-Blöcke, oder "Bibliotheken", die auch öffentlich geteilt werden. Starke
-Veränderung in diese Richtung ist momentan im Gange, siehe die oben erwähnte
-Yosys Toolchain für Lattice FPGAs, und andere im Zusatzthema angesprochene
-Projekte.
+Forschungen im Bereich der Rechnerarchitektur eingefallen sind"^[Anleitung zum
+Kursportfolio], kann ich keine konkrete Antwort geben. Was ich mir aber durchaus
+gewünscht habe, besonders während der Übung, ist dass der Prozess der
+Hardwareentwicklung von der modernen Softwareentwicklung lernt. Dazu gehören
+nicht nur von Anfang bis Ende durchschaubare Open Source Toolchains, sondern
+auch einfach wiederverwendbare Blöcke, oder "Bibliotheken", die auch öffentlich
+geteilt werden. Starke Veränderung in diese Richtung ist momentan im Gange,
+siehe die oben erwähnte Yosys Toolchain für Lattice FPGAs, und andere im
+Zusatzthema angesprochene Projekte.
