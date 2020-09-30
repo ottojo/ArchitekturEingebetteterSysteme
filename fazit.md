@@ -10,13 +10,13 @@ von Hard- und Software, die Vorteile, spezielle Funktionen in Hardware zu
 Implementieren, und die Knackpunkte bei Systemen mit Echtzeitanforderungen waren
 mir neu.
 
-Die Übung mir VHDL war eine aufschlussreiche Erfahrung, aber besonders nach
+Die Übung mit VHDL war eine aufschlussreiche Erfahrung, aber besonders nach
 Bearbeitung meines Zusatzthemas und der letzten Übungsaufgaben sehe ich mich in
 näherer Zukunft keinen VHDL Code selbst schreiben. Das Zusatzthema hat mir in
-dieser Hinsicht die Gelegenheit gegeben, herauszufinden dass die Konzepte der
+dieser Hinsicht die Gelegenheit gegeben, herauszufinden, dass die Konzepte der
 Hardwarebeschreibung nicht zwingend an das Lernen einer neuen, bisher
 unbekannten Beschreibungssprache gebunden sind. Die Übung hat am Ende etwas mehr
-Zeit als erwartet in Anspruch genommen, was aber aber sicher großteils auf die
+Zeit als erwartet in Anspruch genommen, was aber sicher großteils auf die
 mangelnde direkte Kollaboration im Labor zurückzuführen ist.
 
 
