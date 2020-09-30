@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de-DE" xml:lang="de-DE">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jonas Otto" />
+  <title>Portfolio Architektur Eingebetteter Systeme</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styling.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Portfolio Architektur Eingebetteter Systeme</h1>
+<p class="author">Jonas Otto</p>
+<p class="date">Sommersemester 2020</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#einleitung-und-überblick">Einleitung und Überblick</a></li>
+<li><a href="#kurseinlagen">Kurseinlagen</a>
+<ul>
+<li><a href="#kurseinlage-zu-vorlesung-4-logic-fabrics-technologie-und-entwurf">Kurseinlage zu Vorlesung 4: “Logic Fabrics: Technologie und Entwurf”</a></li>
+<li><a href="#kurseinlage-zu-vorlesung-7-sensoren-und-aktoren-ii">Kurseinlage zu Vorlesung 7: “Sensoren und Aktoren II”</a></li>
+<li><a href="#kurseinlage-zu-vorlesung-10-analog-digital-umsetzer">Kurseinlage zu Vorlesung 10: “Analog-Digital Umsetzer”</a></li>
+<li><a href="#kurseinlage-zu-vorlesung-11-programmierung-eingebetteter-systeme">Kurseinlage zu Vorlesung 11: “Programmierung eingebetteter Systeme”</a></li>
+<li><a href="#kurseinlage-zu-vorlesung-13-echtzeitbetriebssysteme">Kurseinlage zu Vorlesung 13: “Echtzeitbetriebssysteme”</a></li>
+</ul></li>
+<li><a href="#zusatzthema-nmigen">Zusatzthema: nMigen</a>
+<ul>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#hintergrund">Hintergrund</a></li>
+<li><a href="#board-definition">Board Definition</a></li>
+<li><a href="#hello-world">Hello World</a></li>
+<li><a href="#kombinatorische-und-synchrone-logik">Kombinatorische und Synchrone Logik</a></li>
+<li><a href="#hierarchische-designs">Hierarchische Designs</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#evaluation">Evaluation</a></li>
+</ul></li>
+<li><a href="#übung">Übung</a>
+<ul>
+<li><a href="#einfacher-multiplexer">Einfacher Multiplexer</a></li>
+<li><a href="#fancy-multiplexer">Fancy Multiplexer</a>
+<ul>
+<li><a href="#finaler-vhdl-code">Finaler VHDL Code</a></li>
+</ul></li>
+<li><a href="#segment">7 Segment</a></li>
+<li><a href="#volladdierer">Volladdierer</a></li>
+<li><a href="#carry-ripple-addierer">Carry-Ripple-Addierer</a></li>
+<li><a href="#d-latch">D-Latch</a></li>
+<li><a href="#master-slave-d-flip-flop">Master-slave D flip-flop</a></li>
+<li><a href="#latches-flip-flop-beschreibung-als-process">Latches + flip-flop: Beschreibung als Process</a></li>
+<li><a href="#counter">Counter</a></li>
+<li><a href="#counter-bis-999">Counter bis 999</a></li>
+<li><a href="#hardware-crc">Hardware CRC</a></li>
+<li><a href="#crc-für-anbindung-an-nios">CRC für Anbindung an NIOS</a></li>
+<li><a href="#nios-lights-sdram">NIOS Lights + SDRAM</a></li>
+<li><a href="#software-crc">Software CRC</a></li>
+<li><a href="#hardware-crc-integration">Hardware CRC Integration</a></li>
+<li><a href="#entwurfsraum">Entwurfsraum</a></li>
+</ul></li>
+<li><a href="#fazit">Fazit</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</nav>
+<p>Die aktuellste Version dieses Dokuments ist immer als HTML-Version unter <a href="https://ottojo.github.io/ArchitekturEingebetteterSysteme">ottojo.github.io/ArchitekturEingebetteterSysteme</a> verfügbar.</p>
+<p>Dieses Dokument ist während der Vorlesung “Architektur Eingebetteter Systeme” entstanden, meine Vorlesungsnotizen sind im gleichen Repository und als HTML auf <a href="https://ottojo.github.io/ArchitekturEingebetteterSysteme/vl.html">ottojo.github.io/ArchitekturEingebetteterSysteme/vl.html</a> verfügbar.</p>
+<p>Den Quellcode für beide Dokumente (Markdown für den Text, Übungen mir VHDL) findet man auf <a href="https://github.com/ottojo/ArchitekturEingebetteterSysteme">github.com/ottojo/ArchitekturEingebetteterSysteme</a>.</p>
+<h1 id="einleitung-und-überblick">Einleitung und Überblick</h1>
+<p>Eingebettete Systeme repräsentieren einen Großteil aller Computersysteme die uns täglich umgeben. Bei der Entwicklung dieser gibt es spezielle Herausforderungen, die in anderen Disziplinen der Soft- und Hardwareentwicklung so nicht gelten. In der Vorlesung, und damit auch in diesem Portfolio, wird ein Überblick über die Herausforderungen, Möglichkeiten und Eigenschaften von eingebetteten Systemen gegeben.</p>
+<p>Im ersten Teil dieses Portfolios werden einige Teile der Vorlesung in Form von Kurseinlagen hervorgehoben und mit zusätzlichen Quellen ergänzt: Zuerst wird auf die verschiedenen Methoden der Realisierung eingebetteter Rechnersysteme eingegangen, und wichtige Unterschiede werden dargelegt. Die zweite Kurseinlage betrachtet die Anbindung von Sensoren und Aktoren am Beispiel eines Flugzeuges aus der Vorlesung, was zu einem kurzen Ausblick auf ein Netzwerkprotokoll für Avioniksysteme führt. Darauf folgt ein Teil zu Analog-Digital Wandlern, mit Fokus auf dem Sigma-Delta Verfahren. Die letzten beiden Kurseinlagen befassen sich mit der Programmierung eingebetteter Systeme, speziell werden zwei konkrete Beispiele beleuchtet: Das I2C Subsystem von Linux und Schedulingkonzepte in FreeRTOS.</p>
+<p>Mein Zusatzthema beinhaltet einen kurzen Überblick über alternative Hardware-Beschreibungssprachen, und gibt dann eine kurze Einführung, wie mittels <code>nMigen</code> Hardware in Python spezifiziert werden kann. Die Motivation hierzu war ein wachsendes Interesse an diesem und ähnlichen Tools in der Open-Source-FPGA Community und anfängliche Frustration mit VHDL während der ersten Übungsaufgaben.</p>
+<p>In der Programmierung von eingebetteten Systemen habe ich bereits einige Vorkenntnisse mitgebracht, aber speziell in den Bereichen programmierbarer Logik und Hardwaredesign hat die Vorlesung mir einen guten ersten Einblick gegeben. Von der Übung habe ich mir einen Einstieg in die FPGA Programmierung erwartet, was sich dann auch erfüllt hat. Die Übungen sind im vierten Kapitel dokumentiert.</p>
+<p>Abschließend werden in einem kurzem Fazit die Erkenntnisse der Vorlesung und Übung zusammengefasst.</p>
+<h1 id="kurseinlagen">Kurseinlagen</h1>
+<h2 id="kurseinlage-zu-vorlesung-4-logic-fabrics-technologie-und-entwurf">Kurseinlage zu Vorlesung 4: “Logic Fabrics: Technologie und Entwurf”</h2>
+<p>In dieser Vorlesung wurden einige Varianten der Realisierung eines eingebetteten Systems gezeigt:</p>
+<p>Gerade beim IC Design existieren eine Vielzahl unterschiedlicher Abstraktionsebenen, von der physikalischen Beschreibung der Transistoren, über elektrische und logische Schaltbilder bis hin zu Verhaltensbeschreibungen. Je tiefer die Abstraktionsebene gewählt wird, desto höher die Flexibilität:</p>
+<h4 id="full-custom">Full Custom</h4>
+<p>Bei einem sogenannten “Full Custom” Entwurf, also dem direkten Spezifizieren der Halbleiterschichten des ICs, kann zum Beispiel das Layout einzelner Schaltungselemente so angepasst werden, wie es für die spezielle Anwendung ideal ist.</p>
+<h4 id="semi-custom">Semi Custom</h4>
+<p>Der <em>Semi Custom</em> Entwurf unterscheidet sich vom <em>Full Custom</em> Entwurf darin, dass hier nicht der Physikalische Aufbau des Chips und der genaue Fertigungsprozess interessiert, sondern die resultierende Logikfunktion der Schaltung. Der Entwurf beschränkt sich hier also darauf, Logikgatter zusammenzufügen. Einzelne Funktionen wie z.B. die Addition, können bereits als fertige Komponenten in einer Bibliothek vorliegen, die vom Entwickler direkt verwendet werden können.</p>
+<h4 id="standardzellenentwurf">Standardzellenentwurf</h4>
+<p>Beim Standardzellenentwurf werden vorgefertigte Komponenten verwendet, welche beim Design zusammengefügt werden. Jede Komponente enthält bereits ein Layout, welches somit nicht selbst entworfen werden muss. Zusätzlich können Komponenten Verhaltensbeschreibungen zur Simulation enthalten.</p>
+<h4 id="gate-arrays">Gate Arrays</h4>
+<p>Beim Gate Array Entwurf werden Gates verwendet, die bereits in einem Raster angeordnet sind, und dann verbunden werden. Die Anordnung der Gates ist also vorgegeben, die Verbindungen dazwischen aber nicht. Diese werden üblicherweise auch nicht manuell, sondern mittels eines Synthesetools generiert.</p>
+<p>Ein Nachteil des Gate Arrays im Vergleich zum Full-Custom oder Standardzellenentwurf ist ein größerer Flächenbedarf des Chips.</p>
+<p>Die Verdrahtung des Gate Arrays kann auch in Form einer Metallisierungsebene permanent auf ein sogenanntes Sea-of-Gates aufgebracht werden, was ein kompakteres Design ermöglicht.</p>
+<h4 id="field-programmable-gate-arrays-fpga">Field Programmable Gate Arrays (FPGA)</h4>
+<p>Auf modernen FPGAs kann ein ganzes eingebettetes System inklusive mehrerer Prozessorkerne realisiert werden. FPGAs enthalten auch eine Anordnung von vordefinierten Modulen, welche aber programmierbar sind, zum Beispiel in Form einer lookup table und Flipflops.</p>
+<p>Zur Verdeutlichung der Vorlesungsinhalte habe ich nach einem zusammenfassenden Text gesucht, der insbesondere die einzelnen Methoden vergleichend gegenüberstellt, und mehr Unterschiede als Kosten und Flexibilität aufzählt. Einen guten Überblick habe ich in einem Beitrag auf der Website “Numato Lab” <span class="citation" data-cites="numato_fpga_asic">[<a href="#ref-numato_fpga_asic" role="doc-biblioref">1</a>]</span> gefunden. Der Artikel wiederholt Anfangs kurz, was ein FPGA und was ein ASIC ist, und zählt dann relevante Unterschiede auf. Ein interessanter Unterschied ist, dass ASICs deutlich energieeffizienter arbeiten als FPGAs, und gleichzeitig bei gleichem Produktionsprozess viel höhere Frequenzen in digitalen Schaltkreisen ermöglichen. Außerdem wird noch hervorgehoben, dass in ASICs auch Analogkomponenten oder HF Schaltkreise realisiert werden können.</p>
+<p>Der Artikel nennt als Gemeinsamkeit von FPGA und ASIC, dass beide mittels HDLs wir Verilog und VHDL entworfen werden. Das wirft die Frage auf, wie das beim ASIC Workflow funktioniert, ob hier Verilog mit Hilfe eigener Bausteine für Gates direkt zu einem Maskenlayout synthetisiert wird, was natürlich im Kontrast zur oben genannten Flexibilität, einzelne Gates genau anzupassen, steht. Eine weitere interessante Frage, der hier aber nicht weiter nachgegangen wird, ist auch, wie ein Analogdesign in solch einen Chip integriert wird, und ob hier auch Beschreibungssprachen wie für digitale Logik existieren.</p>
+<h2 id="kurseinlage-zu-vorlesung-7-sensoren-und-aktoren-ii">Kurseinlage zu Vorlesung 7: “Sensoren und Aktoren II”</h2>
+<p>In diesem Kapitel wird als Beispiel für einen Sensor im eingebetteten System das Staurohr eines Flugzeugs betrachtet. Ziel des Sensors ist es, die Geschwindigkeit des Flugzeugs relativ zur umgebenden Luft zu bestimmen. Wenn mittels einer Sonde sowohl der Staudruck als auch der statische Druck außerhalb des Flugzeugs gemessen werden, kann aus der Differenz der beiden Werte die Geschwindigkeit ermittelt werden. Da nur die Differenz von Staudruck und statischem Druck interessiert, kann der Sensor in Form einer Membran zwischen zwei Volumina, in denen der jeweilige Druck herrscht, realisiert werden. Ein Dehnungsmessstreifen auf der Membran verändert seinen Widerstand je nach Wölbung der Membran. Die Messung des Widerstands geschieht mit einer Messbrücke.</p>
+<p>Ein anderer im Flugzeug benötigter Sensor ist der Drehratensensor am Fahrwerk. Die gemessene Drehrate kann zum Beispiel als Eingang für ein Antiblockiersystem verwendet werden. Zur Messung der Drehrate gibt es verschiedene Messmethoden. Die erste vorgestellte Methode ist ein optischer Sensor, der durchsichtige und undurchsichtige Bereiche einer sich drehenden Scheibe erkennt. Durch Zählen der Ausgangsfrequenz kann die Drehrate bestimmt werden. Eine andere Möglichkeit ist, Magnete so am sich drehenden Teil zu befestigen, dass diese sich an einem stationären Hallsensor vorbeibewegen, welcher das Magnetfeld misst. Wie beim optischen Sensor kann dann die Drehrate bestimmt werden. Ein Unterschied ist, dass beim (analogen) Hallsensor das sinusförmige Ausgangssignal zuerst in eine Impulsfolge umgewandelt werden muss, was mit einem Schmitt Trigger möglich ist.</p>
+<p>Im Flugzeug-Beispiel ist neben der Sensorik auch die Aktorik vertreten. Die Klappen werden heutzutage elektrisch angesteuert, der Aktor kann direkt an der Klappe angebracht sein, und es sind nur elektronische Leitungen zum Steuercomputer notwendig. In der Vorlesung wird als Steuersignal PWM vorgestellt. Da PWM als nicht sehr resistent gegenüber Elektromagnetischer Interferenz bekannt ist, und natürlich keinerlei Fehlererkennung und -korrektur beinhaltet, wirkte es etwas verwunderlich, dass ein PWM Signal für eine solche sicherheitsrelevante Aufgabe über längere Strecken benutzt wird. Im nächsten Teil der Vorlesung wurden dann auch SPI, I2C und UART als digitale Protokolle zwischen Sensor-, Aktor-, und Prozessorkomponenten in einem System vorgestellt, auf LVDS wurde detaillierter eingegangen. Nach kurzer Recherche bin ich auf <code>AFDX</code> gestoßen, ein auf Ethernet aufbauendes Netzwerk, welches von Airbus speziell für Flugzeugsysteme entwickelt wurde.</p>
+<p>Ein Überblick ist in <span class="citation" data-cites="yanik2007">[<a href="#ref-yanik2007" role="doc-biblioref">2</a>]</span> gegeben. AFDX wurde entwickelt, da bestehende Netzwerktechnologien im Flugzeugbereich nicht die ausreichenden Datenraten unterstützten. Das Paper erklärt zuerst, dass bei traditionellem Ethernet Übertragungen kollidieren können, was dazu führen kann dass manche Pakete nie übertragen werden, oder nur mit großer Verzögerung. Daher ist es notwendig, Full-Duplex Switched Ethernet zu verwenden, bei dem ein Link nur einen einzigen Host mit einem Switch verbindet. AFDX Ethernet Frames enthalten wie normale Ethernet Frames eine Checksumme, die Start- und Zieladressen sind allerdings genau spezifiziert und enthalten eine “Virtual Link ID”, welche zum Routen der Pakete verwendet wird. Ein AFDX Payload wird in einem UDP Paket verschickt, welches im UDP Header eine weitere Prüfsumme enthält. Nach dem Payload wird allerdings noch eine Sequenznummer angefügt, was bei UDP normalerweise nicht der Fall ist. In <span class="citation" data-cites="yanik2007">[<a href="#ref-yanik2007" role="doc-biblioref">2</a>]</span> wird auch ein 20 Byte IP Header, was auf eine Verwendung von IPv4 schließen lässt, obwohl das nicht explizit angegeben ist. Warum hier UDP Pakete mit Sequenznummer im Payload verwendet wird, und nicht TCP, wird nicht ganz klar. Das charakteristische Feature sind die oben erwähnten “Virtual Links”, die mit einer maximalen Bandbreite spezifiziert sind. Die Switches kennen die Spezifikation aller Virtual Links, und können eintreffende Pakete, die das Limit überschreiten verwerfen, um die Bandbreite für andere Links zu garantieren.</p>
+<h2 id="kurseinlage-zu-vorlesung-10-analog-digital-umsetzer">Kurseinlage zu Vorlesung 10: “Analog-Digital Umsetzer”</h2>
+<p>In der Zehnten Vorlesung wurden die Analog-Digital Umsetzer (<em>ADC</em>) vorgestellt, als essenzieller Baustein zwischen jeder Art von Sensor und einem digitalen System zur Verarbeitung, wie einem Mikroprozessor.</p>
+<p>Es gibt viele verschiedene Arten, einen ADC zu realisieren, die alle unterschiedliche Vor- und Nachteile aufweisen und für verschiedene Anwendungsbereiche geeignet sind:</p>
+<p>Zuerst wurden die <strong>Parallelverfahren</strong> vorgestellt, hier wird im einfachsten Fall mir genau so vielen Komparatoren wie Quantisierungsstufen das Signal abgeglichen, wobei die Komparatoren beispielsweise von einer Widerstandskette Referenzspannungen in gleichen Abständen erhalten. Diese Art von ADC hat den Vorteil, in einem einzelnen Taktzyklus das Signal zu digitalisieren, hat aber den größten Hardwareaufwand von allen Typen. Ähnliche Umsetzer, die aber mehrstufig aufgebaut sind, finden zum Beispiel in schnellen Oszilloskopen Anwendung.</p>
+<p>Eine Variante, die mit weniger Hardwareaufwand auskommt, ist das <strong>Wägeverfahren</strong>. Hierbei wird nur ein einziger Komparator genutzt, die Vergleichsspannung muss allerdings von einem DAC (Digital-Analog Wandler) erzeugt werden. Durch bitweises annähern der Vergleichsspannung an die Eingangsspannung, kann so der Wert dieser Digitalisiert werden. Da in dieser Variante die Zeit der Messung direkt proportional ist zur Anzahl der zu messenden Bits, wird üblicherweise eine Sample-and-Hold Schaltung benötigt, die die Eingangsspannung während der Messung konstant hält.</p>
+<p>Die <strong>Zählverfahren</strong> arbeiten nach dem Prinzip, die Analogspannung in eine Frequenz oder eine Abfolge von Impulsen umzuwandeln, welche dann mit einem digitalen Zähler gezählt werden können. Dafür muss die Spannung zuerst in eine Zeitdauer umgewandelt werden, in dieser zu zählende Pulse generiert werden. Typischerweise wird dies realisiert, indem die Eingangsspannung mit einem Sägezahnsignal verglichen wird, beziehungsweise eine solche Rampe im Dual-Slope Verfahren ein Rampenförmiges Signal abhängig von der Eingangsspannung innerhalb vorgegebener Zeit erzeugt wird.</p>
+<p>Im <strong>Sigma-Delta Verfahren</strong> ist die Herangehensweise, das Signal mittels des Sigma-Delta Modulators in einen Bitstream umzuwandeln, in dem das Verhältnis von Einsen und Nullen proportional zur Eingangsspannung ist. Da mir dieses Prinzip in der Vorlesung nicht ganz klar wurde, habe ich zuerst einen Artikel von TI <span class="citation" data-cites="baker2011">[<a href="#ref-baker2011" role="doc-biblioref">3</a>]</span> gefunden, welcher das Verfahren der Sigma-Delta Modulation noch mal Schritt für Schritt auflistet. In letzten Teil wird auch kurz auf das Noise-Shaping eingegangen, und mit einem Diagramm der unterschiedlichen Rauschdichten verdeutlicht, warum Sigma-Delta ADCs höherer Ordnung nochmals deutlich geringeres Rauschen aufweisen. Die Notwendigkeit der anschließenden digitalen Filterung des Signals wird zwar angesprochen, für Details wird aber auf einen anderen Artikel verwiesen. Eine weitere Resource, die besonders für das Verständnis, wie der vom Modulator kommende Bitstream genau zu interpretieren ist, war das interaktive Tutorial von Analog Devices <span class="citation" data-cites="analog_adc_tutorial">[<a href="#ref-analog_adc_tutorial" role="doc-biblioref">4</a>]</span>, welches das Eingeben von Eingangs- und Referenzspannung erlaubt und dann für jeden einzelnen Schritt die Spannungswerte an den relevanten Stellen darstellt.</p>
+<h2 id="kurseinlage-zu-vorlesung-11-programmierung-eingebetteter-systeme">Kurseinlage zu Vorlesung 11: “Programmierung eingebetteter Systeme”</h2>
+<p>Ab dieser Vorlesung wird sich nicht mehr mit der Hardware, sondern der Software und der Schnittstelle zwischen Hard- und Software befasst.</p>
+<p>Eine populäre Methode zur Anbindung von Peripherie an einen Prozessorkern ist das zugänglich machen von Registern mittels <em>Memory Mapped IO</em>. Hier kann das Gerät in einer Weise vom Prozessor angesprochen werden, die sich nicht von “normalen” Speicherzugriffen unterscheidet. Dafür werden üblicherweise vom Treiber Datenstrukturen definiert, die das Interface zur Peripherie so abbildet, dass es für andere Programme benutzbar ist. Der Treiber bietet oft auch Funktionen zum interagieren mit dem Gerät an, welche die Abstraktionsebene anheben und z.B. verschiedene Varianten eines Gerätetyps ansprechen können oder Fehlerbehandlung beherrschen.</p>
+<p>Besonders für Sensoren, dessen Messungen mit wenig Verzögerung verarbeitet werden sollen, sind <em>Interrupts</em> ein wichtiges Konzept. Hier wird der Prozessor (durch den <em>Interrupt Controller</em>) in der Ausführung unterbrochen, und eine vorher definierte <em>Interrupt Service Routine</em> wird ausgeführt, welche dann z.B. die Verarbeitung des Sensorwerts anstoßen kann.</p>
+<p>Ein verbreitetes Kommunikationsprotokoll zwischen Prozessoren und Ein-/Ausgabegeräten ist <strong>I2C</strong>. Hier sind mehrere Geräte an einem geteilten Bus verbunden, und ein oder mehrere dieser Geräte können als Initiator den Bus für die Kommunikation mit einem anderen, durch eine eindeutige Adresse spezifiziertem Gerät nutzen. Aus aktuellem Eigenbedarf und zum verdeutlichen der Prinzipien eines Gerätetreibers soll hier die Benutzung von I2C Geräten unter Linux betrachtet werden. Dies unterscheidet sich etwas von der Art, wie entsprechende Geräte z.B. auf Mikrocontrollern angesprochen werden, da bereits einige Schichten an Abstraktion vom Betriebssystem zur Verfügung gestellt werden.</p>
+<p>In der aktuellen Kernel Dokumentation <span class="citation" data-cites="kernel">[<a href="#ref-kernel" role="doc-biblioref">5</a>]</span> im Kapitel <a href="https://www.kernel.org/doc/html/latest/driver-api/i2c.html">“I2C and SMBus Subsystem”</a> werden die Funktionen und Datenstrukturen definiert, mit denen Gerätetreiber im Linux Kernel das I2C Subsystem verwenden können. Ein spezifisches I2C Gerät wird beispielsweise durch den <code>i2c_client</code> struct repräsentiert:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">struct</span> i2c_client {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="dt">unsigned</span> <span class="dt">short</span> flags;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  <span class="dt">unsigned</span> <span class="dt">short</span> addr;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  <span class="dt">char</span> name[I2C_NAME_SIZE];</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  <span class="kw">struct</span> i2c_adapter *adapter;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  <span class="kw">struct</span> device dev;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>  <span class="dt">int</span> init_irq;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>  <span class="dt">int</span> irq;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>  <span class="kw">struct</span> list_head detected;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="pp">#if IS_ENABLED(CONFIG_I2C_SLAVE);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>  i2c_slave_cb_t slave_cb;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="pp">#endif;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>};</span></code></pre></div>
+<p>Die hier dokumentierte API richtet sich allerdings an Entwickler, welche einen Kernel-Treiber für ein Gerät schreiben. Es ist auch möglich, I2C Geräte vom userspace zu nutzen, ohne einen speziellen Treiber zu benötigen (Kapitel <a href="https://www.kernel.org/doc/html/latest/i2c/dev-interface.html">“Implementing I2C device drivers in userspace”</a>): Hier wird jedem I2C Interface vom Kernel eine spezielle Datei <code>/dev/i2c-0</code> (bzw <code>-1</code> usw.) zugewiesen, auf die je nach System Konfiguration auch von nicht-superuser Benutzern zugegriffen werden kann. Nach dem öffnen der Datei kann mittels <code>ioctl</code> <span class="citation" data-cites="ioctl">[<a href="#ref-ioctl" role="doc-biblioref">6</a>]</span> die Target-Adresse gesetzt, und danach mit den üblichen <code>write()</code> und <code>read()</code> Systemaufrufen I2C-Transaktionen durchgeführt werden. Obwohl die Dokumentation ein Beispiel in <code>C</code> liefert, kann dies natürlich aus jeder Programmiersprache geschehen, die I/O und <code>ioctl</code> unter Linux unterstützt. Da ich gerne <code>C++</code> nutze, habe ich diese Methoden in einer <code>C++</code> <a href="https://github.com/ottojo/I2C">Bibliothek</a> zusammengefasst. Ein I2C Bus wird so mit</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>i2c::Bus bus{<span class="st">&quot;/dev/i2c-0&quot;</span>};</span></code></pre></div>
+<p>initialisiert. Danach kann vom Gerät gelesen und zum Gerät geschrieben werden. Hier im Beispiel werden zuerst 3 Bytes geschrieben und dann 7 Bytes gelesen:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">constexpr</span> <span class="kw">auto</span> DEVICE_ADDRESS = <span class="bn">0x40</span>;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>i2c::Bus bus{<span class="st">&quot;/dev/i2c-0&quot;</span>};</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>bus.lock(DEVICE_ADDRESS).write&lt;<span class="dv">3</span>&gt;({byte{<span class="bn">0xA</span>}, byte{<span class="bn">0xB</span>}, byte{<span class="bn">0xC</span>}});</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="kw">auto</span> dataFromDevice = bus.lock(DEVICE_ADDRESS).read&lt;<span class="dv">7</span>&gt;();</span></code></pre></div>
+<p>Dabei wird der Bus vor jeder Transaktion gelockt und nach Abschluss automatisch wieder unlocked, was das Benutzen des Bus von mehreren Threads ermöglicht. Soll eine Transaktion mit mehreren Read- und Write Aufrufen am Stück, ohne eventuelles verwenden des Bus von anderen Threads, durchgeführt werden, wird der Bus nur ein mal für das gesamte Scope gelockt:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">constexpr</span> <span class="kw">auto</span> DEVICE_ADDRESS = <span class="bn">0x40</span>;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>i2c::Bus bus{<span class="st">&quot;/dev/i2c-0&quot;</span>};</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>{</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>    <span class="kw">auto</span> lockedBus = bus.lock(DEVICE_ADDRESS);</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>    lockedBus.write&lt;<span class="dv">3</span>&gt;({byte{<span class="bn">0xA</span>}, byte{<span class="bn">0xB</span>}, byte{<span class="bn">0xC</span>}});</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>    <span class="kw">auto</span> dataFromDevice = lockedBus.read&lt;<span class="dv">7</span>&gt;();</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>}</span></code></pre></div>
+<p>Für ein Spezielles Gerät kann nun eine Klasse definiert werden, welche eine Referenz auf den Bus enthält, und die Funktionen des Geräts bereitstellt. Im oben verlinkten Repository ist beispielsweise eine Klasse für den <code>PCA9685</code> PWM Controller enthalten.</p>
+<p>Im Linux Treiber sind einige Probleme ersichtlich geworden, die in der Vorlesung nicht direkt erwähnt wurden: Ein Gerätetreiber ist üblicherweise in ein komplexes System integriert. Es können mehrere Interfaces zu diesem Treiber existieren, hier zum Beispiel das <code>/dev/</code>- und das Kernel-Interface. Ein Treiber muss auch nicht immer den gesamten Stack zwischen Applikation und Hardware abdecken, in Linux gibt es ein I2C Subsystem, auf welches die diversen Gerätetreiber dann aufbauen, ohne das I2C Interface an sich selbst zu implementieren. Außerdem kommen in Mehrbenutzersystemen oder Multithreaded Applikationen die üblichen Probleme des gleichzeitigen Zugriffs hinzu, die im Treiber bedacht werden müssen.</p>
+<h2 id="kurseinlage-zu-vorlesung-13-echtzeitbetriebssysteme">Kurseinlage zu Vorlesung 13: “Echtzeitbetriebssysteme”</h2>
+<p>Zur Veranschaulichung der Konzepte von Scheduling und insbesondere Scheduling im Realtime Kontext, habe ich mir angeschaut, wie das bei einem RTOS gelöst ist, mit dem ich bereits im Microcontroller-Praktikum in Kontakt gekommen bin, FreeRTOS <span class="citation" data-cites="freertos">[<a href="#ref-freertos" role="doc-biblioref">7</a>]</span>.</p>
+<p>Das Scheduling wird in der Dokumentation im Kapitel <a href="https://www.freertos.org/implementation/a00002.html">RTOS Fundamentals</a> erklärt. Zur Einführung wird wiederholt, dass hier auf Multitasking eingegangen wird, was nicht zwingend auch eine tatsächliche gleichzeitige Ausführung impliziert, wie es in einem System mit mehreren Prozessoren möglich wäre. FreeRTOS ist populär besonders auf Microcontroller-Systemen, wo meist nur ein einziger Prozessorkern zur Verfügung steht. Aus diesem Grund implementiert FreeRTOS einen Scheduler, der mehrere scheinbar gleichzeitig ausführende Tasks auf einem Kern ausführt.</p>
+<p>Der FreeRTOS Kernel kann Prozesse anhalten, um einen anderen Task auszuführen, ein Prozess kann aber auch freiwillig die Kontrolle an das Betriebssystem abgeben, zum Beispiel wenn dieser Prozess einen delay braucht oder auf ein Event (z.B. ein Tastendruck) oder eine Resource (z.B. Serial-port) gewartet wird. Dies wird in der Dokumentation mit einem Ablaufdiagramm veranschaulicht, welches sowohl ein Unterbrechen eines Tasks aufgrund der aktuellen scheduling policy (fair), als auch ein Unterbrechen durch den Task selbst. Diese Scheduling Variante hat noch keine Prioritäten.</p>
+<p>Den kurzen Einschub zu Context Switching, der in der Doku an dieser Stelle steht, überspringe ich hier.</p>
+<p>Der nächste Abschnitt betrifft Realtime Applikationen. Das Beispiel, welches von den Entwicklern gegeben ist, besteht aus zwei Tasks: Der erste Task ist für user-input zuständig. Er wartet, bis ein Tastendruck erkannt wird, und gibt dann das Resultat auf einem Display aus. Die maximale Latenz zwischen Tastendruck und Feedback auf dem Bildschirm beträgt 100ms.</p>
+<p>Der zweite Task implementiert einen Regler, der alle 2ms, mit einer Toleranz von 0.5ms, ausgeführt werden muss. Da die Deadline des zweiten Tasks früher als die des ersten ist, sollte diesem eine höhere Priorität zugewiesen werden. Außerdem könnte ein Überschreiten der Deadline beim zweiten Task schwerwiegendere Auswirkungen haben.</p>
+<p>Wenn die Tasks wie beschrieben geordnet sind, ändert sich das Scheduling Verhalten: Wenn eine Taste gedrückt wird, während der Regler rechnet, wird dieses Event zurückgestellt, bis der Regler fertig ist. Wenn das Zeitfenster für den Regler erreicht wird, während aber gerade ein Tastendruck verarbeitet wird, wird diese Verarbeitung unterbrochen.</p>
+<p>Ein weiteres Konzept, was hier hinzukommt, ist der sogenannte “Idle Task”, der vom RTOS selbst angelegt wurde, und ausgeführt wird solange der Regler nicht rechnet, und keine Taste gedrückt wird.</p>
+<p>Interessant an dieser Erklärung ist, dass die Anforderungen des Reglers nur durch geschicktes Wählen der Prioritäten eingehalten werden. Wie das dann aber aussieht, wenn mehrere Zeitkritische Tasks laufen, die z.B. unterschiedliche Toleranzen hinsichtlich der Ausführungszeit haben, wird hier nicht erläutert. Der Scheduling Algorithmus wurde hier nicht über die expliziten Zeitschranken informiert, und könnte z.B. nicht eine Verarbeitung eines Tastendrucks unterbrechen, um dafür eine fristgerechte Verarbeitung einer währenddessen gedrückten Taste zu gewährleisten. Dennoch hilft dieses praktische Beispiel dem Verständnis und der Intuition bezüglich Scheduling und Echtzeitanforderungen.</p>
+<h1 id="zusatzthema-nmigen">Zusatzthema: nMigen</h1>
+<h2 id="motivation">Motivation</h2>
+<p>Schon seit den 1980er bzw. 1990er Jahren existieren die uns bekannten Sprachen zur Hardwarebeschreibung VHDL <span class="citation" data-cites="vhdl_1987">[<a href="#ref-vhdl_1987" role="doc-biblioref">8</a>]</span> und Verilog <span class="citation" data-cites="verilog_1995">[<a href="#ref-verilog_1995" role="doc-biblioref">9</a>]</span>. Wir haben in VHDL die Möglichkeiten, einen Schaltkreis sowohl anhand dessen Struktur, also der direkten Verschaltung und Verknüpfung von Komponenten und Signalen, als auch über das gewünschte Verhalten des Schaltkreises zu beschreiben. Es ist möglich, Teile eines Gesamtsystems in Komponenten auszulagern, welche auch mehrfach wiederverwendet beziehungsweise instanziiert werden können. Möglichkeiten zur Metaprogrammierung sind vorhanden mit Konstrukten wie <code>generic</code> und <code>generate</code> <a href="#carry-ripple-addierer">(Übung)</a>.</p>
+<p>Dennoch wäre es wünschenswert, Hardwarebeschreibung mittels bereits bekannter, etablierter Programmiersprachen zu realisieren, die auch für wiederkehrende Probleme wie Dependency-Management, das Wiederverwenden von Code (Libraries), etc. bereits eine Lösung bereithalten. Ein nicht von der Hand zu weisender Vorteil ist auch, dass viele Entwickler bereits Erfahrung in einer dieser Sprachen besitzen, was auch zur wachsenden Popularität dieser Lösungen beiträgt.</p>
+<p>Mehrere Projekte, die Hardwarebeschreibung in Form von <em>domain specific languages (DSL)</em> innerhalb anderer Programmiersprachen realisieren, existieren. Einige Beispiele, mit definierenden Features und Highlights sind:</p>
+<ul>
+<li>RubyRTL <span class="citation" data-cites="rubyrtl_2020">[<a href="#ref-rubyrtl_2020" role="doc-biblioref">10</a>]</span>: Erstmals präsentiert in <span class="citation" data-cites="lann2020hardware">[<a href="#ref-lann2020hardware" role="doc-biblioref">11</a>]</span>, baut RubyRTL auf die Programmiersprache Ruby auf, unter anderem weil es in Ruby möglich ist, der Sprache scheinbar neue Keywords hinzuzufügen.</li>
+<li>MyHDL <span class="citation" data-cites="jaic2015">[<a href="#ref-jaic2015" role="doc-biblioref">12</a>]</span>: Motiviert von der weiten Verbreitung und der umfassenden Standardbibliothek, setzt MyHDL auf Python. Ein Fokus liegt auf Code reuse und Abstraktion von Interfaces, was schnelles Prototyping ermöglichen soll.</li>
+<li>Chisel <span class="citation" data-cites="bachrach2012">[<a href="#ref-bachrach2012" role="doc-biblioref">13</a>]</span>: Chisel ist in Scala implementiert, und unterstützt Generierung von sowohl Verilog als auch C++ Code für Simulation des Designs.</li>
+</ul>
+<p>Dies sind nur einige Beispiele von vielen verschiedenen DSLs, hier nur zu erwähnen sind noch PyRTL <span class="citation" data-cites="clow2017">[<a href="#ref-clow2017" role="doc-biblioref">14</a>]</span>, CLasH <span class="citation" data-cites="baaij2009">[<a href="#ref-baaij2009" role="doc-biblioref">15</a>]</span>, SysPy <span class="citation" data-cites="logaray2010">[<a href="#ref-logaray2010" role="doc-biblioref">16</a>]</span> und SpinalHDL <span class="citation" data-cites="spinalhdl">[<a href="#ref-spinalhdl" role="doc-biblioref">17</a>]</span>. Die hier näher betrachtete Lösung ist <em>nMigen</em> <span class="citation" data-cites="nmigen">[<a href="#ref-nmigen" role="doc-biblioref">18</a>]</span>.</p>
+<p>Im Folgenden soll ein beispielorientierter Überblick über die wichtigsten Konzepte in nMigen gegeben werden, um einen Eindruck von der Bibliothek zu bekommen. Mein Ziel ist es auch zu testen, wie vergleichbar das Ganze mit VHDL ist, und ob die oben genannten Ziele erfüllt werden.</p>
+<h2 id="hintergrund">Hintergrund</h2>
+<p>nMigen ist die zweite Version der Migen Bibliothek für Hardware Design in Python. Die gesamte Software ist Open Source, gehostet auf <a href="https://github.com/m-labs/nmigen">GitHub</a>. Auf GitHub werden 25 Autoren gelistet, die initiale Entwicklung stammt aber von der Firma <a href="https://m-labs.hk/">M-Labs</a>, welche auch initialer Autor des Vorgängers <em>Migen</em> ist. Zusätzlich an der Entwicklung beteiligt ist die Firma <a href="https://lambdaconcept.com/">LambdaConcept</a>, welche wie M-Labs Migen und nMigen in eigenen Produkten einsetzen.</p>
+<h2 id="board-definition">Board Definition</h2>
+<p>In nMigen (genauer: im Modul <a href="https://github.com/m-labs/nmigen-boards">nmigen-boards</a>) sind viele FPGA-Boards von unterschiedlichen Herstellern, mit freien und proprietären Toolchains, bereits definiert. Das <em>DE2-115</em> fehlt zwar, kann aber mit vergleichsweise wenig Aufwand hinzugefügt werden, da bereits mehrere <em>DE0</em> und <em>DE10</em> Boards existieren: Eine neue Klasse <code>DE2115Platform</code> wird erstellt, diese erbt von <code>IntelPlatform</code>, was bereits die meisten relevanten Einstellungen enthält. Hier ein Ausschnitt der entsprechenden Datei, hier werden die vorhandenen Clocks, LEDs, Buttons, Schalter und eine serielle Schnittstelle definiert:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">class</span> DE2115Platform(IntelPlatform):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>    device <span class="op">=</span> <span class="st">&quot;EP4CE115&quot;</span>  <span class="co"># Cyclone IV</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>    package <span class="op">=</span> <span class="st">&quot;F29&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>    speed <span class="op">=</span> <span class="st">&quot;C8&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>    default_clk <span class="op">=</span> <span class="st">&quot;clk50&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>    resources <span class="op">=</span> [</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>        Resource(<span class="st">&quot;clk50&quot;</span>, <span class="dv">0</span>, Pins(<span class="st">&quot;Y2&quot;</span>, <span class="bu">dir</span><span class="op">=</span><span class="st">&quot;i&quot;</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>                 Clock(<span class="fl">50e6</span>), Attrs(io_standard<span class="op">=</span><span class="st">&quot;3.3-V LVTTL&quot;</span>)),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>        Resource(<span class="st">&quot;clk50&quot;</span>, <span class="dv">1</span>, Pins(<span class="st">&quot;AG14&quot;</span>, <span class="bu">dir</span><span class="op">=</span><span class="st">&quot;i&quot;</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>                 Clock(<span class="fl">50e6</span>), Attrs(io_standard<span class="op">=</span><span class="st">&quot;3.3-V LVTTL&quot;</span>)),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a>        Resource(<span class="st">&quot;clk50&quot;</span>, <span class="dv">2</span>, Pins(<span class="st">&quot;AG15&quot;</span>, <span class="bu">dir</span><span class="op">=</span><span class="st">&quot;i&quot;</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a>                 Clock(<span class="fl">50e6</span>), Attrs(io_standard<span class="op">=</span><span class="st">&quot;3.3-V LVTTL&quot;</span>)),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a>        <span class="op">*</span>LEDResources(pins<span class="op">=</span><span class="st">&quot;E21 E22 E25 E24 H21 G20 G22 G21&quot;</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a>                      attrs<span class="op">=</span>Attrs(io_standard<span class="op">=</span><span class="st">&quot;2.5 V&quot;</span>)),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a>        <span class="op">*</span>ButtonResources(pins<span class="op">=</span><span class="st">&quot;M23 M21 N21 R24&quot;</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a>                         attrs<span class="op">=</span>Attrs(io_standard<span class="op">=</span><span class="st">&quot;2.5 V&quot;</span>)),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a>        <span class="op">*</span>SwitchResources(pins<span class="op">=</span><span class="st">&quot;AB28 AC28 AC27 AD27 AB27 AC26 AD26 AB26 AC25 &quot;</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a>                              <span class="st">&quot;AB25 AC24 AB24 AB23 AA24 AA23 AA22 Y24 Y23&quot;</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true"></a>                         attrs<span class="op">=</span>Attrs(io_standard<span class="op">=</span><span class="st">&quot;2.5 V&quot;</span>)),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true"></a>        UARTResource(<span class="dv">0</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true"></a>                     rx<span class="op">=</span><span class="st">&quot;G12&quot;</span>, tx<span class="op">=</span><span class="st">&quot;G9&quot;</span>, rts<span class="op">=</span><span class="st">&quot;J13&quot;</span>, cts<span class="op">=</span><span class="st">&quot;G14&quot;</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true"></a>                     attrs<span class="op">=</span>Attrs(io_standard<span class="op">=</span><span class="st">&quot;3.3-V LVTTL&quot;</span>)),</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true"></a>    ]</span></code></pre></div>
+<p>Um anderen Nutzern von nMigen das Verwenden des DE2-115 einfacher zu machen, wurde ein <a href="https://github.com/m-labs/nmigen-boards/pull/54">Pull-Request</a> auf GitHub für die Boarddefinition erstellt.</p>
+<h2 id="hello-world">Hello World</h2>
+<p>Das klassische “Hello World” der Hardware Welt ist sicher das “Blinky” Programm, das nichts weiter tut, als eine LED zu blinken. So auch im nMigen Tutorial <span class="citation" data-cites="nmigen_tutorial">[<a href="#ref-nmigen_tutorial" role="doc-biblioref">19</a>]</span>, dem in den nachfolgenden Kapiteln gefolgt wird:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="im">from</span> nmigen <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="im">from</span> nmigen.cli <span class="im">import</span> main</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="kw">class</span> Blinky(Elaboratable):</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>        <span class="va">self</span>.led <span class="op">=</span> Signal()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>    <span class="kw">def</span> elaborate(<span class="va">self</span>, platform):</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>        m <span class="op">=</span> Module()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>        counter <span class="op">=</span> Signal(<span class="dv">3</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>        m.d.sync <span class="op">+=</span> counter.eq(counter <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>        m.d.comb <span class="op">+=</span> <span class="va">self</span>.led.eq(counter[<span class="dv">2</span>])</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>        <span class="cf">return</span> m</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a> </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a> </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a>    top <span class="op">=</span> Blinky()</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a>    main(top, ports<span class="op">=</span>[top.led])</span></code></pre></div>
+<p>Klassen, die synthetisierbare Module erzeugen, erben immer von <code>Elaboratable</code>. Die Funktion <code>elaborate()</code> der Klasse erzeugt dann das entsprechende Modul. Signale werden im Konstruktor angelegt.</p>
+<p>Hier kann natürlich auf sämtliche Python Features zurückgegriffen werden, mit Hilfe der <code>math</code> Bibliothek beispielsweise wird der Counter auf ca. 1Hz eingestellt, und die tatsächliche Frequenz wird ausgegeben:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>counter_width <span class="op">=</span> <span class="bu">round</span>(log2(platform.default_clk_frequency))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>actual_freq <span class="op">=</span> platform.default_clk_frequency <span class="op">/</span> (<span class="dv">2</span> <span class="op">**</span> counter_width)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="bu">print</span>(<span class="ss">f&quot;creating </span><span class="sc">{</span>counter_width<span class="sc">}</span><span class="ss">-bit counter, &quot;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>      <span class="ss">f&quot;resulting frequency will be </span><span class="sc">{</span>actual_freq<span class="sc">}</span><span class="ss">Hz&quot;</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>counter <span class="op">=</span> Signal(counter_width)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>m.d.sync <span class="op">+=</span> counter.eq(counter <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>m.d.comb <span class="op">+=</span> <span class="va">self</span>.led.eq(counter[<span class="op">-</span><span class="dv">1</span>])</span></code></pre></div>
+<p>Das <code>Blinky</code> Modul ist noch nicht mit Pins auf dem Board verbunden, dafür wurde ein zweites Modul geschrieben, um <code>Blinky</code> nicht darauf zu beschränken, direkt Hardware Pins anzusteuern:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">class</span> Blinker(Elaboratable):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>        <span class="va">self</span>.blinky <span class="op">=</span> Blinky()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>    <span class="kw">def</span> elaborate(<span class="va">self</span>, platform):</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>        m <span class="op">=</span> Module()</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>        m.submodules.blinky <span class="op">=</span> <span class="va">self</span>.blinky</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>        led_pin <span class="op">=</span> platform.request(<span class="st">&quot;led&quot;</span>, <span class="dv">0</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>        m.d.comb <span class="op">+=</span> led_pin.o.eq(<span class="va">self</span>.blinky.led)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>        <span class="cf">return</span> m</span></code></pre></div>
+<p>In diesem Modul wird ein <code>Blinky</code> instanziiert und als Submodul verwendet. Mittels <code>platform.request</code> wird der als <code>"led0"</code> definierte Pin des jeweiligen Boards verwendet.</p>
+<p>Um das Programm auf das Board zu schreiben genügt:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>top <span class="op">=</span> Blinker()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>DE2115Platform().build(top, do_program<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>In diesem Fall ist der Output von nMigen Verilog Code, welcher dann mit der Quartus Toolchain von Intel/Altera synthetisiert und auf den FPGA geladen wird. Für FPGAs der <em>iCE40</em> und <em>ECP5</em> Serie von Lattice wird eine vollständig freie Open Source Toolchain (Yosys+nextpnr <span class="citation" data-cites="yosys_nexpnr">[<a href="#ref-yosys_nexpnr" role="doc-biblioref">20</a>]</span>) verwendet.</p>
+<h2 id="kombinatorische-und-synchrone-logik">Kombinatorische und Synchrone Logik</h2>
+<p>Die eigentliche Spezifikation der Logik im Blink Beispiel passiert in der Funktion <code>elaborate</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="kw">def</span> elaborate(<span class="va">self</span>, platform):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>    m <span class="op">=</span> Module()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>    counter <span class="op">=</span> Signal(<span class="dv">3</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>    m.d.sync <span class="op">+=</span> counter.eq(counter <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>    m.d.comb <span class="op">+=</span> <span class="va">self</span>.led.eq(counter[<span class="dv">2</span>])</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>    <span class="cf">return</span> m</span></code></pre></div>
+<p>Wie auch VHDL kennt nMigen kombinatorische und synchrone Logik. Mit</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>m.d.sync <span class="op">+=</span> counter.eq(counter <span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>wird der counter in jedem Taktzyklus inkrementiert, in der nächsten Zeile</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>m.d.comb <span class="op">+=</span> <span class="va">self</span>.led.eq(counter[<span class="dv">2</span>])</span></code></pre></div>
+<p>wird die LED aber fest mit dem höchstwertigem Bit des Zählers verbunden, unabhängig von der Clock (Kombinatorische Logik).</p>
+<h2 id="hierarchische-designs">Hierarchische Designs</h2>
+<p>Im vorherigen Kapitel wurde bereits ein hierarchisches Design verwendet, ohne genauer darauf einzugehen. Um dieses Prinzip genauer zu verstehen, soll eine ALU (<em>Arithmetic Logic Unit</em>) aufgebaut werden, die zwei Eingänge abhängig von einem Kontrollsignal addiert oder subtrahiert.</p>
+<p>Im ersten schritt wird ein Addierer und ein Subtrahierer geschrieben:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">class</span> Adder(Elaboratable):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, width):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>        <span class="va">self</span>.a <span class="op">=</span> Signal(width)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>        <span class="va">self</span>.b <span class="op">=</span> Signal(width)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a>        <span class="va">self</span>.o <span class="op">=</span> Signal(width)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>    <span class="kw">def</span> elaborate(<span class="va">self</span>, platform):</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a>        m <span class="op">=</span> Module()</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true"></a>        m.d.comb <span class="op">+=</span> <span class="va">self</span>.o.eq(<span class="va">self</span>.a <span class="op">+</span> <span class="va">self</span>.b)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true"></a>        <span class="cf">return</span> m</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="kw">class</span> Subtractor(Elaboratable):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, width):</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>        <span class="va">self</span>.a <span class="op">=</span> Signal(width)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>        <span class="va">self</span>.b <span class="op">=</span> Signal(width)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>        <span class="va">self</span>.o <span class="op">=</span> Signal(width)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>    <span class="kw">def</span> elaborate(<span class="va">self</span>, platform):</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a>        m <span class="op">=</span> Module()</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a>        m.d.comb <span class="op">+=</span> <span class="va">self</span>.o.eq(<span class="va">self</span>.a <span class="op">-</span> <span class="va">self</span>.b)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a>        <span class="cf">return</span> m</span></code></pre></div>
+<p>Diese Module enthalten beide jeweils zwei Eingänge <code>a</code> und <code>b</code> und einen Ausgang <code>o</code>. Die Addition und Subtraktion wird in Form von kombinatorischer Logik angegeben. Anzumerken ist hier aber, dass dem Konstruktor ein weiteres Argument <code>width</code> hinzugefügt wurde. Dies ist die Breite der Ein- und Ausgangssignale, und kann frei gewählt werden. Die ALU wird auch ein entsprechendes Argument erhalten und dann den passenden Addierer/Subtrahierer instanziieren:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="kw">class</span> ALU(Elaboratable):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, width):</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>        <span class="va">self</span>.op  <span class="op">=</span> Signal()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a>        <span class="va">self</span>.a   <span class="op">=</span> Signal(width)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a>        <span class="va">self</span>.b   <span class="op">=</span> Signal(width)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a>        <span class="va">self</span>.o   <span class="op">=</span> Signal(width)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true"></a> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true"></a>        <span class="va">self</span>.add <span class="op">=</span> Adder(width)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true"></a>        <span class="va">self</span>.sub <span class="op">=</span> Subtractor(width)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a> </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a>    <span class="kw">def</span> elaborate(<span class="va">self</span>, platform):</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true"></a>        m <span class="op">=</span> Module()</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true"></a>        m.submodules.add <span class="op">=</span> <span class="va">self</span>.add</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true"></a>        m.submodules.sub <span class="op">=</span> <span class="va">self</span>.sub</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true"></a>        m.d.comb <span class="op">+=</span> [</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true"></a>            <span class="va">self</span>.add.a.eq(<span class="va">self</span>.a),</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true"></a>            <span class="va">self</span>.sub.a.eq(<span class="va">self</span>.a),</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true"></a>            <span class="va">self</span>.add.b.eq(<span class="va">self</span>.b),</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true"></a>            <span class="va">self</span>.sub.b.eq(<span class="va">self</span>.b),</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true"></a>        ]</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true"></a>        <span class="cf">with</span> m.If(<span class="va">self</span>.op):</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true"></a>            m.d.comb <span class="op">+=</span> <span class="va">self</span>.o.eq(<span class="va">self</span>.sub.o)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true"></a>        <span class="cf">with</span> m.Else():</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true"></a>            m.d.comb <span class="op">+=</span> <span class="va">self</span>.o.eq(<span class="va">self</span>.add.o)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true"></a>        <span class="cf">return</span> m</span></code></pre></div>
+<p>Im Konstruktor wird der Addierer und Subtrahierer instanziiert und als Membervariable zugewiesen. In der <code>elaborate</code> Funktion werden diese dem Modul als Submodul hinzugefügt, und die Ein- und Ausgänge der Module werden mit den entsprechenden Signalen der ALU verbunden. Das zusätzliche Signal <code>op</code> wählt die Funktion der ALU aus. Da das resultierende Design ja beide Modi enthalten muss, kann hier kein python-<code>if</code> verwendet werden, sondern in einer etwas abweichenden Syntax:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="cf">with</span> m.If(<span class="va">self</span>.op):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>    m.d.comb <span class="op">+=</span> <span class="va">self</span>.o.eq(<span class="va">self</span>.sub.o)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="cf">with</span> m.Else():</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a>    m.d.comb <span class="op">+=</span> <span class="va">self</span>.o.eq(<span class="va">self</span>.add.o)</span></code></pre></div>
+<h2 id="testing">Testing</h2>
+<p>nMigen unterstützt Integration in Pythons standard Unit-Testing tools, und integriert Möglichkeiten zur Simulation. Natürlich kann auch ohne Hilfe von Unit-Test Bibliotheken ein Test geschrieben werden:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>width <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>alu <span class="op">=</span> ALU(width)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a>sim <span class="op">=</span> Simulator(alu)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a><span class="cf">with</span> sim.write_vcd(<span class="st">&quot;alu.vcd&quot;</span>):</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a>    <span class="kw">def</span> process():</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a>        <span class="cf">for</span> a, b <span class="kw">in</span> itertools.product(<span class="bu">range</span>(<span class="dv">2</span> <span class="op">**</span> width), <span class="bu">range</span>(<span class="dv">2</span> <span class="op">**</span> width)):</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a>            <span class="cf">yield</span> alu.a.eq(a)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a>            <span class="cf">yield</span> alu.b.eq(b)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true"></a>            <span class="cf">yield</span> alu.op.eq(<span class="dv">0</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true"></a>            <span class="cf">yield</span> Delay()</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true"></a>            <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{a}</span><span class="ss">+</span><span class="sc">{b}</span><span class="ss">=</span><span class="sc">{</span>(<span class="cf">yield</span> alu.o)<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true"></a>            <span class="cf">assert</span> (a <span class="op">+</span> b) <span class="op">%</span> (<span class="dv">2</span> <span class="op">**</span> width) <span class="op">==</span> (<span class="cf">yield</span> alu.o)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true"></a>            <span class="cf">yield</span> alu.op.eq(<span class="dv">1</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true"></a>            <span class="cf">yield</span> Delay()</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true"></a>            <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{a}</span><span class="ss">-</span><span class="sc">{b}</span><span class="ss">=</span><span class="sc">{</span>(<span class="cf">yield</span> alu.o)<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true"></a>            <span class="cf">assert</span> (a <span class="op">-</span> b) <span class="op">%</span> (<span class="dv">2</span> <span class="op">**</span> width) <span class="op">==</span> (<span class="cf">yield</span> alu.o)</span></code></pre></div>
+<p>Für den Simulator wird die <code>process</code> Funktion definiert, die mittels <code>yield</code> die Simulierten Eingänge generiert, und dann zum verifizieren der Ergebnisse mit <code>assert</code> die Korrektheit prüft.</p>
+<h2 id="evaluation">Evaluation</h2>
+<p>Nach einigem Ausprobieren und Testen bin ich der Ansicht, dass HDLs wie nMigen gut nutzbar und eine echte Alternative zu VHDL sind. Dass die Integration in Python nicht nur eine Fülle an Möglichkeiten zur Metaprogrammierung liefert, sondern auch die Wiederverwendung von Modulen vereinfacht, ist ein enormer Vorteil. Für den Vorgänger von nMigen, <code>Migen</code>, existiert das LiteX Projekt <span class="citation" data-cites="kermarrec2020litex">[<a href="#ref-kermarrec2020litex" role="doc-biblioref">21</a>]</span>, eine Open-Source Bibliothek, die alle Bestandteile enthält um einen eigenen SoC (<em>System On Chip</em>) im Baukastensystem aufzubauen. Neben verschiedenen Softcores sind Schnittstellen wie Ethernet, PCIe, DRAM und mehr verfügbar, für Videoverarbeitung existieren im LiteVideo Projekt HDMI Ein- und Ausgang sowie Module zur Konvertierung zwischen Farbräumen.</p>
+<p>Die verfügbare Dokumentation zu nMigen lässt momentan noch zu Wünschen übrig, das <a href="https://m-labs.hk/migen/manual/index.html">Manual</a> zum Vorgänger Migen ist aber ausführlich. Auf GitHub sind außerdem einige Projekte und Beispiele zu finden, teils auch für spezifische Boards.</p>
+<p>Abschließend lässt sich sagen, dass besonders mit Python Vorkenntnissen nMigen einen einfacheren Einstieg bietet als VHDL, die Hardware-Kompatibilität und Dokumentation für den Produktiven Einsatz aber besser werden muss.</p>
+<h1 id="übung">Übung</h1>
+<p>In diesem Teil werden die Ergebnisse der Übungen dargestellt. Bei der Darstellung des VHDL Codes habe ich mich auf die interessanten Teile beschränkt, die volle Lösung mit allen notwendigen Dateien ist zu jeder Aufgabe im <a href="https://github.com/ottojo/ArchitekturEingebetteterSysteme/tree/master/labor">git Repository</a> einzusehen.</p>
+<h2 id="einfacher-multiplexer">Einfacher Multiplexer</h2>
+<p>Zur besseren Strukturierung habe ich mich dazu entschieden, den eigentlichen Multiplexer als eigene Entity zu beschreiben, die nicht die Top-Level entity ist (Danke Dominik für den Hinweis!). Das ist anders als in der vorherigen Übung, in der direkt die Bezeichnungen des Boards verwendet wurden. Das erlaubt mir, den Eingangs- und Ausgangssignalen sinnvolle Namen zu geben, die nicht direkt mit dem Board zusammenhängen (<code>IN_1</code> statt <code>SW(1)</code> oder so). Außerdem ist es damit möglich, mehrere Instanzen der entity zu verwenden (was hier aber noch nicht gemacht wird).</p>
+<p>Beim instanziieren des Multiplexers ist das Problem aufgetreten, dass <code>multiplexer</code> nicht gefunden wurde. Kurzes recherchieren hat ergeben dass <code>work.multiplexer</code> das Problem löst, wobei an Stelle von <code>work</code> normalerweise der Name einer Bibliothek steht, <code>work</code> ist hier speziell und bedeutet “aktuelle Bibliothek”.</p>
+<h2 id="fancy-multiplexer">Fancy Multiplexer</h2>
+<p>Hier war der Ansatz, so weit wie möglich den Ansatz aus Aufgabe 1 zu übernehmen. Im Wesentlichen war es nur nötig, den Datentyp der Eingänge zu <code>STD_LOGIC_VECTOR</code> zu machen. Das <code>SELECT</code> Statement konnte übernommen werden, wobei für den select Eingang jeweils der passende Binärvektor notiert wurde:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a>SEL <span class="ot">:</span> IN std_logic_vector(2 DOWNTO 0);</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>WITH SEL SELECT</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a>    RESULT <span class="ot">&lt;=</span> IN1 WHEN <span class="st">&quot;000&quot;</span><span class="ot">,</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a>    IN2 WHEN <span class="st">&quot;001&quot;</span><span class="ot">,</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a>    IN3 WHEN <span class="st">&quot;010&quot;</span><span class="ot">,</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a>    IN4 WHEN <span class="st">&quot;011&quot;</span><span class="ot">,</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a>    IN5 WHEN <span class="st">&quot;100&quot;</span><span class="ot">,</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true"></a>    IN1 WHEN OTHERS;</span></code></pre></div>
+<p>Für Verwirrung beim Testen hat gesorgt, dass die Vektor-literals hier in anderer Reihenfolge als erwartet sind. Kurzes Testen:</p>
+<pre class="vdhl"><code>LEDG(3 TO 7) &lt;= &quot;11100&quot;;</code></pre>
+<p>Das Ergebnis ist, dass LEDs 3 bis 5 leuchten. Die Literals im Multiplexer werden also umgedreht. In Übung 2 ist das Problem wohl nicht aufgetreten, da das <code>SEL</code> Signal da mit <code>DOWNTO</code> statt <code>TO</code> deklariert war, was hier aber das Problem auch nicht gelöst hat…</p>
+<h3 id="finaler-vhdl-code">Finaler VHDL Code</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="kw">LIBRARY</span> ieee;</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a><span class="kw">USE</span> ieee<span class="ot">.</span>std_logic_1164<span class="ot">.</span>ALL;</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a><span class="kw">ENTITY</span> <span class="kw">aufgabe2</span> <span class="kw">IS</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a>    <span class="kw">PORT</span> (</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a>        SW <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">17</span>);</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a>        LEDR <span class="ot">:</span> <span class="kw">OUT</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">17</span>);</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true"></a>        LEDG <span class="ot">:</span> <span class="kw">OUT</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">7</span>));</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true"></a><span class="kw">END aufgabe2;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true"></a><span class="kw">ARCHITECTURE</span> <span class="kw">LogicFunction</span> <span class="kw">OF</span> <span class="kw">aufgabe2</span> <span class="kw">IS</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true"></a><span class="kw">BEGIN</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true"></a>    LEDR(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">17</span>) <span class="ot">&lt;=</span> SW(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">17</span>);</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true"></a>    <span class="kw">my_mux</span> <span class="ot">:</span> <span class="er">ENTITY</span> <span class="er">work</span><span class="ot">.</span><span class="er">multiplexer(LogicFunction)</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true"></a>        <span class="kw">PORT MAP(</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true"></a>            IN1 <span class="ot">=&gt;</span> SW(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">2</span>)<span class="ot">,</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true"></a>            IN2 <span class="ot">=&gt;</span> SW(<span class="dv">3</span> <span class="ot">TO</span> <span class="dv">5</span>)<span class="ot">,</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true"></a>            IN3 <span class="ot">=&gt;</span> SW(<span class="dv">6</span> <span class="ot">TO</span> <span class="dv">8</span>)<span class="ot">,</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true"></a>            IN4 <span class="ot">=&gt;</span> SW(<span class="dv">9</span> <span class="ot">TO</span> <span class="dv">11</span>)<span class="ot">,</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true"></a>            IN5 <span class="ot">=&gt;</span> SW(<span class="dv">12</span> <span class="ot">TO</span> <span class="dv">14</span>)<span class="ot">,</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true"></a>            SEL <span class="ot">=&gt;</span> SW(<span class="dv">15</span> <span class="ot">TO</span> <span class="dv">17</span>)<span class="ot">,</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true"></a>            RESULT <span class="ot">=&gt;</span> LEDG(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">2</span>));</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true"></a><span class="er">END LogicFunction;</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="kw">LIBRARY</span> ieee;</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="kw">USE</span> ieee<span class="ot">.</span>std_logic_1164<span class="ot">.</span>ALL;</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true"></a><span class="kw">ENTITY</span> <span class="kw">multiplexer</span> <span class="kw">IS</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true"></a>    <span class="kw">PORT</span> (</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true"></a>        IN1 <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">2</span>);</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true"></a>        IN2 <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">2</span>);</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true"></a>        IN3 <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">2</span>);</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true"></a>        IN4 <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">2</span>);</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true"></a>        IN5 <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">2</span>);</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true"></a>        SEL <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">2</span>);</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true"></a>        RESULT <span class="ot">:</span> <span class="kw">OUT</span> <span class="dt">std_logic_vector</span>(<span class="dv">0</span> <span class="ot">TO</span> <span class="dv">2</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true"></a>    );</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true"></a><span class="kw">END multiplexer;</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true"></a><span class="kw">ARCHITECTURE</span> <span class="kw">LogicFunction</span> <span class="kw">OF</span> <span class="kw">multiplexer</span> <span class="kw">IS</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true"></a><span class="kw">BEGIN</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true"></a>    <span class="kw">WITH</span> SEL <span class="kw">SELECT</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true"></a>        RESULT <span class="ot">&lt;=</span> IN1 <span class="kw">WHEN</span> <span class="st">&quot;000&quot;</span><span class="ot">,</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true"></a>        IN2 <span class="kw">WHEN</span> <span class="st">&quot;100&quot;</span><span class="ot">,</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true"></a>        IN3 <span class="kw">WHEN</span> <span class="st">&quot;010&quot;</span><span class="ot">,</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true"></a>        IN4 <span class="kw">WHEN</span> <span class="st">&quot;110&quot;</span><span class="ot">,</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true"></a>        IN5 <span class="kw">WHEN</span> <span class="st">&quot;001&quot;</span><span class="ot">,</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true"></a>        IN1 <span class="kw">WHEN</span> <span class="ot">OTHERS</span>;</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true"></a><span class="er">END LogicFunction;</span></span></code></pre></div>
+<h2 id="segment">7 Segment</h2>
+<p>Wieder mal eine geringfügige Erweiterung der vorherigen Aufgabe: Dieses mal mit literals als Ausgabe, die Pin-Belegung konnte im Manual gefunden werden. Außerdem sind hier erstmals hex-literals verwendet, wo vorher binary Zahlen waren. Das Problem mit der Reihenfolge wurde durch konsequentes Verwenden von <code>DOWNTO</code> bei Binärvektoren, die Zahlen darstellen sollen, umgangen.</p>
+<h2 id="volladdierer">Volladdierer</h2>
+<p>Der Volladdierer konnte ohne Probleme implementiert werden:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="kw">ENTITY</span> <span class="kw">fulladder</span> <span class="kw">IS</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a>    <span class="kw">PORT</span> (</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a>        a <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic</span>;</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a>        b <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic</span>;</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a>        ci <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">std_logic</span>;</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a>        s <span class="ot">:</span> <span class="kw">OUT</span> <span class="dt">std_logic</span>;</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a>        co <span class="ot">:</span> <span class="kw">OUT</span> <span class="dt">std_logic</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true"></a>    );</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true"></a><span class="kw">END fulladder;</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true"></a><span class="kw">ARCHITECTURE</span> <span class="kw">LogicFunction</span> <span class="kw">OF</span> <span class="kw">fulladder</span> <span class="kw">IS</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true"></a>    <span class="ot">SIGNAL</span> ab <span class="ot">:</span> <span class="dt">std_logic</span>;</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true"></a><span class="kw">BEGIN</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true"></a>    ab <span class="ot">&lt;=</span> a <span class="kw">XOR</span> b;</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true"></a>    s <span class="ot">&lt;=</span> ab <span class="kw">XOR</span> ci;</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true"></a>    co <span class="ot">&lt;=</span> (ab <span class="kw">AND</span> ci) <span class="kw">OR</span> (a <span class="kw">AND</span> b);</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true"></a><span class="er">END LogicFunction;</span></span></code></pre></div>
+<p>Und dann zum Testen mit LEDs verbunden:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a>adder <span class="ot">:</span> work<span class="ot">.</span>fulladder</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a>PORT MAP(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a>    a <span class="ot">=&gt;</span> SW(0)<span class="ot">,</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true"></a>    b <span class="ot">=&gt;</span> SW(1)<span class="ot">,</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true"></a>    ci <span class="ot">=&gt;</span> SW(2)<span class="ot">,</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true"></a>    s <span class="ot">=&gt;</span> LEDG(0)<span class="ot">,</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true"></a>    co <span class="ot">=&gt;</span> LEDG(1));</span></code></pre></div>
+<h2 id="carry-ripple-addierer">Carry-Ripple-Addierer</h2>
+<p>Hier war ein 3-bit Carry-Ripple-Addierer gefragt, da ich aber in der Einführung schon mal Generics verwendet habe, habe ich mich dazu entschieden den Addierer hinsichtlich der Wortbreite zu parametrisieren. Das Instantiieren der einzelnen Addierer hat mit einem <code>FOR ... GENERATE</code> statement funktioniert, auf der Suche nach Dokumentation bin ich dann auf einen <a href="https://www.allaboutcircuits.com/technical-articles/how-to-use-vhdl-components-to-create-a-neat-hierarchical-design/">Artikel auf allaboutcircuits.com</a> gestoßen, der auch genau dieses Beispiel zur Veranschaulichung nutzt. Neben dem <code>FOR ... GENERATE</code> wurde noch ein Vektor <code>c_inputs</code> für die carry Signale zwischen den Addierern eingefügt.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>gen <span class="ot">:</span> FOR i IN 0 TO BIT_WIDTH <span class="ot">-</span> 1 GENERATE</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>        adder <span class="ot">:</span> work<span class="ot">.</span>fulladder PORT MAP(a <span class="ot">=&gt;</span> a(i)<span class="ot">,</span> b <span class="ot">=&gt;</span> b(i)<span class="ot">,</span> ci <span class="ot">=&gt;</span> c_inputs(i)<span class="ot">,</span> s <span class="ot">=&gt;</span> s(i)<span class="ot">,</span> co <span class="ot">=&gt;</span> c_inputs(i <span class="ot">+</span> 1));</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a>    END GENERATE;</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a>    c_inputs(0) <span class="ot">&lt;=</span> ci;</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a>    co <span class="ot">&lt;=</span> c_inputs(BIT_WIDTH);</span></code></pre></div>
+<h2 id="d-latch">D-Latch</h2>
+<p>In diesem Teil der Übung soll ein gated D-Latch implementiert werden. Hier wird vor dem Testen auf dem Board wieder auf die Simulation zurückgegriffen, die hier zwar keine Bugs im code findet, aber das VHDL Attribut <code>KEEP</code> einführt. Es scheint etwas undurchsichtig an welchen Stellen die proprietäre Intel Software im Synthetisierungsprozess optimiert, es wirkt aber so, als ob interne Signale nicht bestehen bleiben müssen, was an den Kompilierprozess von z.B C++ Code erinnert, wo zum Debuggen oftmals die entsprechenden Optimierungen deaktiviert werden (<code>gcc -Og</code>).</p>
+<h2 id="master-slave-d-flip-flop">Master-slave D flip-flop</h2>
+<p>In diesem Teil konnte auf das bereits im vorherigen Teil konstruierte D-Latch zurückgegriffen werden. Um Redundanz zu vermeiden habe ich das File <code>../part2/d_latch.vhd</code> zum neuen Projekt hinzugefügt, was auch funktioniert hat.</p>
+<h2 id="latches-flip-flop-beschreibung-als-process">Latches + flip-flop: Beschreibung als Process</h2>
+<p>In diesem Teil wird wieder das D-Latch verwendet. Hier ist allerdings eine Implementierung angegeben, also wird nicht auf die vorherigen Aufgaben zurückgegriffen. Der Flipflop soll im gleichen Stil implementiert werden. Neu ist hier die Funktion <code>rising_edge ( signal s : std_ulogic ) return boolean</code>, die an der Stelle verwendet wird, wo beim Latch <code>Clk = '1'</code> geprüft wird:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a><span class="kw">ENTITY</span> <span class="kw">flipflop</span> <span class="kw">IS</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a>    <span class="kw">PORT</span> (</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a>        D<span class="ot">,</span> Clk <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">STD_LOGIC</span>;</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a>        Q <span class="ot">:</span> <span class="kw">OUT</span> <span class="dt">STD_LOGIC</span>);</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true"></a><span class="kw">END flipflop;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true"></a><span class="kw">ARCHITECTURE</span> <span class="kw">Behavior</span> <span class="kw">OF</span> <span class="kw">flipflop</span> <span class="kw">IS</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true"></a><span class="kw">BEGIN</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true"></a>    <span class="kw">PROCESS</span> (D<span class="ot">,</span> Clk)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true"></a>    <span class="kw">BEGIN</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true"></a>        <span class="kw">IF</span> <span class="kw">RISING_EDGE</span>(Clk) <span class="kw">THEN</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true"></a>            Q <span class="ot">&lt;=</span> D;</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true"></a>        <span class="kw">END IF;</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true"></a>    <span class="kw">END PROCESS</span>;</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true"></a><span class="er">END Behavior;</span></span></code></pre></div>
+<p>Der Technology Map Viewer zeigt für das Latch einen Block <code>LOGIC_CELL_COMB</code> und für die Flipflops tatsächlich nur einen Block der dem Schaltbild eines Flipflops entspricht. Dies deutet darauf hin, dass tatsächlich die im FPGA enthaltenen Flipflops verwendet wurden.</p>
+<h2 id="counter">Counter</h2>
+<p>Die erste Herausforderung in dieser Aufgabe war es, die 50MHz Clock zu einer 1Hz Clock umzuwandeln, mit der dann gezählt wird. Dafür wurde in jedem 50MHz-cycle eine Zählvariable erhöht, und wenn der Wert 25000000 erreicht, also alle 0.5s, der Clock-output invertiert:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="co">-- Make a 1 Hz, 50% duty cycle clock</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a>PROCESS (CLOCK_50<span class="ot">,</span> clk_1)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a>    VARIABLE count <span class="ot">:</span> INTEGER RANGE 0 TO 25000000;</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a>BEGIN</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true"></a>    IF RISING_EDGE(CLOCK_50) THEN</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true"></a>        IF count <span class="ot">=</span> 25000000 THEN</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true"></a>            clk_1 <span class="ot">&lt;=</span> NOT clk_1;</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true"></a>            count <span class="ot">:=</span> 0;</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true"></a>        ELSE</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true"></a>            count <span class="ot">:=</span> count <span class="ot">+</span> 1;</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true"></a>        END IF;</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true"></a>    END IF;</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true"></a>END PROCESS;</span></code></pre></div>
+<p>Mit dieser 1Hz Clock konnte dann das eigentlich Zählen ganz änhlich implementiert werden:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a><span class="co">-- Increment the number each clock cycle</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true"></a>PROCESS (clk_1)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true"></a>    VARIABLE number <span class="ot">:</span> INTEGER RANGE 0 TO 9;</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true"></a>BEGIN</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true"></a>    IF RISING_EDGE(clk_1) THEN</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true"></a>        IF number <span class="ot">=</span> 9 THEN</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true"></a>            number <span class="ot">:=</span> 0;</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true"></a>        ELSE</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true"></a>            number <span class="ot">:=</span> number <span class="ot">+</span> 1;</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true"></a>        END IF;</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true"></a>    END IF;</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true"></a>    number_signal <span class="ot">&lt;=</span> conv_std_logic_vector(number<span class="ot">,</span> 4);</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true"></a>END PROCESS;</span></code></pre></div>
+<p>Hier war noch eine Konvertierung von <code>integer</code> zu <code>std_logic_vector</code> nötig, da das Modul für die 7-Segment Codierung ein Signal dieses Datentyps erwartet, und eine <code>integer</code> Variable für den Zähler gewählt wurde.</p>
+<h2 id="counter-bis-999">Counter bis 999</h2>
+<p>Der Counter an sich ist gleich wie im vorherigen Programm, für die höhere Frequenz wurde einfach das maximum des Counters entsprechend angepasst, sodass der Counter jetzt eine Clock mit 10Hz statt 1Hz erzeugt. Für die Anzeige als Dezimalzahl ist eine Umwandlung in BCD hilfreich, hier wurde der “Double dabble” Algorithus verwendet. Viele Implementierungen existieren, hier wurde die auf Wikipedia gegebene verwendet, die zwar nicht optimal aber gut verständlich und kommentiert ist. Die Verwendung von BCD erlaubt es dann, für die einzelnen Zehnerstellen den 7-Segment Encoder der vorherigen Aufgaben vier mal zu verwenden:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a>Digit0 <span class="ot">:</span> <span class="kw">ENTITY</span> <span class="kw">work</span><span class="ot">.</span>htb(LogicFunction) <span class="kw">PORT</span> <span class="kw">MAP</span> (ones<span class="ot">,</span> HEX0);</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a>Digit1 <span class="ot">:</span> ENTITY work<span class="ot">.</span>htb(LogicFunction) <span class="kw">PORT</span> <span class="kw">MAP</span> (tens<span class="ot">,</span> HEX1);</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a>Digit2 <span class="ot">:</span> ENTITY work<span class="ot">.</span>htb(LogicFunction) <span class="kw">PORT</span> <span class="kw">MAP</span> (hundreds<span class="ot">,</span> HEX2);</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a>Digit3 <span class="ot">:</span> ENTITY work<span class="ot">.</span>htb(LogicFunction) <span class="kw">PORT</span> <span class="kw">MAP</span> (thousands<span class="ot">,</span> HEX3);</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true"></a>bcd <span class="ot">:</span> ENTITY work<span class="ot">.</span>bin2bcd_12bit(Behavioral)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true"></a>    <span class="kw">PORT</span> <span class="kw">MAP</span>(number_signal<span class="ot">,</span> ones<span class="ot">,</span> tens<span class="ot">,</span> hundreds<span class="ot">,</span> thousands);</span></code></pre></div>
+<h2 id="hardware-crc">Hardware CRC</h2>
+<p>In dieser Aufgabe wurde die CRC in VHDL implementiert. Die größte Herausforderung hier war das Verstehen der CRC Berechnung, nicht die anschließende Umsetzung. Zum Testen wurde der Eingang auf die 7-Segment Anzeigen und Schalter gelegt, der Ausgang auf die linken beiden 7-Segment Anzeigen.</p>
+<h2 id="crc-für-anbindung-an-nios">CRC für Anbindung an NIOS</h2>
+<p>Hier wurde die CRC Logik aus der letzten Aufgabe in ein Interface gebracht, welches später an den Prozessor angeschlossen werden kann. Die Eingangs-Signale der vorherigen Aufgabe wurden in Variablen umgewandelt, welche abhängig vom Adress-Eingang gesetzt werden. Der Ausgang ist auch direkt vom Adress-Eingang abhängig. Zum Testen wurden die Schalter für die oberen und unteren Bits des Datenbus verwendet, um sowohl das Polynom als auch das enable-bit setzten zu können. Für die Ausgabe der Prüfsumme wurden wiederum zwei 7-Segment Displays eingesetzt.</p>
+<h2 id="nios-lights-sdram">NIOS Lights + SDRAM</h2>
+<p>Für die einführenden Aufgaben zu NIOS wurde die Anleitung von Altera abgearbeitet, Schwierigkeiten bereitete hier nur die Installation der entsprechenden Software um das C-Programm auf den Prozessor zu laden. Der Teil mit Assembler-Programmierung wurde übersprungen, da sehr gute C-Compiler existieren, und jegliche weitere Benutzung der Intel-Software Kopfschmerzen verursacht.</p>
+<h2 id="software-crc">Software CRC</h2>
+<p>Das Implementieren der CRC in C lief ähnlich wie die Implementierung in VHDL, mit dem Unterschied dass sich die C-Implementierung deutlich einfacher lokal testen lies. Nachdem der Abgleich mit diversen Online-CRC-Tools widersprüchliche Ergebnisse lieferte, wurde die Programmausgabe Schritt für Schritt mit dem manuell gerechneten Beispiel auf <a href="https://en.wikipedia.org/w/index.php?title=Cyclic_redundancy_check&amp;oldid=979058159#Computation">Wikipedia</a> verglichen, und mittels CRC-Berechnung, Prüfung, und Prüfung nach Flippen eines Bits das erforderliche Vertrauen in die Korrektheit der Implementierung gewonnen.</p>
+<h2 id="hardware-crc-integration">Hardware CRC Integration</h2>
+<p>Da das Integrieren der Hardware CRC nicht auf Anhieb wie in der Anleitung funktioniert hat (Resultierende Checksumme war immer <code>0x00</code>), wurde zum Debuggen eine VHDL Komponente mit ähnlicher Schnittstelle konstruiert:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a><span class="kw">LIBRARY</span> ieee;</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a><span class="kw">USE</span> ieee<span class="ot">.</span>std_logic_1164<span class="ot">.</span>ALL;</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a><span class="kw">USE</span> ieee<span class="ot">.</span>numeric_std<span class="ot">.</span>ALL;</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a><span class="kw">ENTITY</span> <span class="kw">ding</span> <span class="kw">IS</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a>    <span class="kw">PORT</span> (</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true"></a>        DataBusIn <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">STD_LOGIC_VECTOR</span>(<span class="dv">31</span> <span class="ot">DOWNTO</span> <span class="dv">0</span>);</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true"></a>        DataBusOut <span class="ot">:</span> <span class="kw">OUT</span> <span class="dt">STD_LOGIC_VECTOR</span>(<span class="dv">31</span> <span class="ot">DOWNTO</span> <span class="dv">0</span>);</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true"></a>        Clock <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">STD_LOGIC</span>;</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true"></a>        Reset <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">STD_LOGIC</span>;</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true"></a>        Address <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">STD_LOGIC</span>;</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true"></a>        Write <span class="ot">:</span> <span class="kw">IN</span> <span class="dt">STD_LOGIC</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true"></a>    );</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true"></a><span class="kw">END ding;</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true"></a></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true"></a><span class="kw">ARCHITECTURE</span> <span class="kw">Behavior</span> <span class="kw">OF</span> <span class="kw">ding</span> <span class="kw">IS</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true"></a><span class="kw">BEGIN</span></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true"></a>    <span class="kw">PROCESS</span> (Clock<span class="ot">,</span> Reset)</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true"></a>        <span class="ot">VARIABLE</span> data <span class="ot">:</span> <span class="dt">STD_LOGIC_VECTOR</span>(<span class="dv">31</span> <span class="ot">DOWNTO</span> <span class="dv">0</span>);</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true"></a>        <span class="ot">VARIABLE</span> increment <span class="ot">:</span> <span class="dt">STD_LOGIC_VECTOR</span>(<span class="dv">7</span> <span class="ot">DOWNTO</span> <span class="dv">0</span>);</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true"></a>        <span class="ot">VARIABLE</span> enable <span class="ot">:</span> <span class="dt">STD_LOGIC</span>;</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true"></a>    <span class="kw">BEGIN</span></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true"></a>        <span class="kw">IF</span> (Reset <span class="ot">=</span> <span class="bn">&#39;1&#39;</span>) <span class="kw">THEN</span></span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true"></a>            <span class="co">-- Reset</span></span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true"></a>            data <span class="ot">:=</span> (<span class="ot">OTHERS</span> <span class="ot">=&gt;</span> <span class="bn">&#39;0&#39;</span>);</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true"></a>            DataBusOut <span class="ot">&lt;=</span> data;</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true"></a>            increment <span class="ot">:=</span> (<span class="ot">OTHERS</span> <span class="ot">=&gt;</span> <span class="bn">&#39;0&#39;</span>);</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true"></a>            enable <span class="ot">:=</span> <span class="bn">&#39;0&#39;</span>;</span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true"></a>        <span class="kw">ELSIF</span> <span class="kw">RISING_EDGE</span>(Clock) <span class="kw">THEN</span></span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true"></a>            <span class="kw">IF</span> Write <span class="ot">=</span> <span class="bn">&#39;1&#39;</span> <span class="kw">THEN</span></span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true"></a>                <span class="co">-- Input</span></span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true"></a>                <span class="kw">IF</span> Address <span class="ot">=</span> <span class="bn">&#39;1&#39;</span> <span class="kw">THEN</span></span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true"></a>                    <span class="co">-- control</span></span>
+<span id="cb30-34"><a href="#cb30-34" aria-hidden="true"></a>                    increment <span class="ot">:=</span> DataBusIn(<span class="dv">31</span> <span class="ot">DOWNTO</span> <span class="dv">24</span>);</span>
+<span id="cb30-35"><a href="#cb30-35" aria-hidden="true"></a>                    enable <span class="ot">:=</span> DataBusIn(<span class="dv">0</span>);</span>
+<span id="cb30-36"><a href="#cb30-36" aria-hidden="true"></a>                <span class="kw">ELSE</span></span>
+<span id="cb30-37"><a href="#cb30-37" aria-hidden="true"></a>                    <span class="co">-- data</span></span>
+<span id="cb30-38"><a href="#cb30-38" aria-hidden="true"></a>                    data <span class="ot">:=</span> DataBusIn;</span>
+<span id="cb30-39"><a href="#cb30-39" aria-hidden="true"></a>                <span class="kw">END IF;</span></span>
+<span id="cb30-40"><a href="#cb30-40" aria-hidden="true"></a>            <span class="kw">ELSIF</span> enable <span class="ot">=</span> <span class="bn">&#39;1&#39;</span> <span class="kw">THEN</span></span>
+<span id="cb30-41"><a href="#cb30-41" aria-hidden="true"></a>                <span class="co">-- Calculation</span></span>
+<span id="cb30-42"><a href="#cb30-42" aria-hidden="true"></a>                data <span class="ot">:=</span> <span class="dt">std_logic_vector</span>(<span class="dt">unsigned</span>(data) <span class="ot">+</span> <span class="dt">unsigned</span>(increment));</span>
+<span id="cb30-43"><a href="#cb30-43" aria-hidden="true"></a>                enable <span class="ot">:=</span> <span class="bn">&#39;0&#39;</span>;</span>
+<span id="cb30-44"><a href="#cb30-44" aria-hidden="true"></a>            <span class="kw">END IF;</span></span>
+<span id="cb30-45"><a href="#cb30-45" aria-hidden="true"></a></span>
+<span id="cb30-46"><a href="#cb30-46" aria-hidden="true"></a>            <span class="co">-- Set correct output depending on address</span></span>
+<span id="cb30-47"><a href="#cb30-47" aria-hidden="true"></a>            <span class="kw">IF</span> Address <span class="ot">=</span> <span class="bn">&#39;0&#39;</span> <span class="kw">THEN</span></span>
+<span id="cb30-48"><a href="#cb30-48" aria-hidden="true"></a>                DataBusOut <span class="ot">&lt;=</span> data;</span>
+<span id="cb30-49"><a href="#cb30-49" aria-hidden="true"></a>            <span class="kw">ELSE</span></span>
+<span id="cb30-50"><a href="#cb30-50" aria-hidden="true"></a>                DataBusOut <span class="ot">&lt;=</span> (<span class="ot">OTHERS</span> <span class="ot">=&gt;</span> <span class="bn">&#39;0&#39;</span>);</span>
+<span id="cb30-51"><a href="#cb30-51" aria-hidden="true"></a>                DataBusOut(<span class="dv">31</span> <span class="ot">DOWNTO</span> <span class="dv">24</span>) <span class="ot">&lt;=</span> increment;</span>
+<span id="cb30-52"><a href="#cb30-52" aria-hidden="true"></a>                DataBusOut(<span class="dv">0</span>) <span class="ot">&lt;=</span> enable;</span>
+<span id="cb30-53"><a href="#cb30-53" aria-hidden="true"></a>            <span class="kw">END IF;</span></span>
+<span id="cb30-54"><a href="#cb30-54" aria-hidden="true"></a>        <span class="kw">END IF;</span></span>
+<span id="cb30-55"><a href="#cb30-55" aria-hidden="true"></a>    <span class="kw">END PROCESS</span>;</span>
+<span id="cb30-56"><a href="#cb30-56" aria-hidden="true"></a><span class="er">END Behavior;</span></span></code></pre></div>
+<p>Die Komponente hat wie die CRC zwei Register, wobei im ersten die Daten, auf denen gearbeitet wird stehen, und im zweiten eine Konfiguration und ein <code>enable</code> Signal. Statt der CRC-Berechnung wird hier eine einfache Addition durchgeführt, wobei der eine Summand die Daten und der andere Summand die 8-Bit Konfiguration (Polynom beim CRC) ist.</p>
+<p>Die Komponente wurde dann in ein QSys Modul integriert, und zur Konfiguration hinzugefügt. Für das Lesen und Schreiben der Register werden die Makros <code>IOWR_32DIRECT</code> und <code>IORD_32DIRECT</code> aus dem <code>io.h</code> Header verwendet:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;io.h&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;stdint.h&gt;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true"></a><span class="pp">#define DING_BASE 0x10004000</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true"></a><span class="dt">int</span> main()</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true"></a>{</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true"></a>    <span class="co">// Write initial value to data register</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true"></a>    <span class="dt">volatile</span> <span class="dt">uint32_t</span> initialValue = <span class="bn">0xFF0</span>;</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true"></a>    IOWR_32DIRECT(DING_BASE, <span class="dv">0</span>, initialValue);</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true"></a>    <span class="co">// Read it back</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true"></a>    printf(<span class="st">&quot;Written: 0x%x</span><span class="sc">\n</span><span class="st">&quot;</span>, IORD_32DIRECT(DING_BASE, <span class="dv">0</span>));</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true"></a></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true"></a>    <span class="dt">uint8_t</span> increment = <span class="dv">3</span>;</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true"></a>    <span class="co">// Write increment to config register</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true"></a>    IOWR_32DIRECT(DING_BASE, <span class="dv">4</span>, increment &lt;&lt; <span class="dv">24</span>);</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true"></a>    <span class="co">// Read it back</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true"></a>    printf(<span class="st">&quot;Written to config: 0x%x</span><span class="sc">\n</span><span class="st">&quot;</span>, IORD_32DIRECT(DING_BASE, <span class="dv">4</span>));</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true"></a>    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">10</span>; i++)</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true"></a>    {</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true"></a>        <span class="co">// Command is increment and enable bit</span></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true"></a>        <span class="dt">volatile</span> <span class="dt">uint32_t</span> command = (increment &lt;&lt; <span class="dv">24</span>) | <span class="dv">1</span>;</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true"></a>        IOWR_32DIRECT(DING_BASE, <span class="dv">4</span>, command);</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true"></a>        printf(<span class="st">&quot;Written to config: 0x%x</span><span class="sc">\n</span><span class="st">&quot;</span>, command);</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true"></a></span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true"></a>        <span class="co">// Wait for computation to complete (enable bit reset)</span></span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true"></a>        <span class="dt">volatile</span> <span class="dt">uint32_t</span> res = command;</span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true"></a>        <span class="cf">while</span> (res &amp; <span class="dv">1</span>)</span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true"></a>        {</span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true"></a>            res = IORD_32DIRECT(DING_BASE, <span class="dv">4</span>);</span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true"></a>        }</span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true"></a></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true"></a>        <span class="co">// Read result</span></span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true"></a>        res = IORD_32DIRECT(DING_BASE, <span class="dv">0</span>);</span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true"></a>        printf(<span class="st">&quot;Result: 0x%x</span><span class="sc">\n</span><span class="st">&quot;</span>, res);</span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true"></a>    }</span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true"></a>}</span></code></pre></div>
+<p>Wie zu erwarten, inkrementiert die Hardware-Komponente den internen Wert bei jedem Aktivieren des <code>enable</code> bits um den eingestellten Wert.</p>
+<p>In diese Komponente wurde dann erneut die CRC Berechnung eingefügt, was diesmal dann auch funktioniert hat, und gleiche Resultate wie die Software Implementierung lieferte.</p>
+<h2 id="entwurfsraum">Entwurfsraum</h2>
+<p>Im ersten Schritt soll die Laufzeit der Software- und Hardware CRC bestimmt werden. Aus Frustration mit Intel-Tools wird dies nicht mir sicher irgendwo vorhandenen Profiling Tools gemacht, sondern mittels an- und ausschalten einer LED und einer Stoppuhr.</p>
+<p>Die Berechnung von <span class="math inline">\(10^6\)</span> CRCs mittels Hardware-CRC dauert ca. 9.8s, was bei einer Taktfrequenz von 50MHz ca. 490 Taktzyklen pro CRC entspricht. Bei der reinen Software Implementierung dauert eine CRC Berechnung ganze 7750 Taktzyklen.</p>
+<p>Das Hinzufügen des CRC Moduls in QSys führt zu einem Anstieg der genutzten Logikelemente von 2171 auf 2410, statt 1328 Registern werden 1436 gebraucht.</p>
+<p>In diesem konkreten Fall ist die Implementierung der CRC in Hardware sicherlich sinnvoll, da die Anzahl der benötigten Logikelemente besonders im Vergleich zu den bereits benötigten Elementen für den Prozessor gering ist. Die Laufzeit der Hardware CRC ist bedeutend kleiner, was allerdings auch der Tatsache geschuldet ist, dass die Software CRC keine optimale Implementierung darstellt. Vor einer Entscheidung müsste hier noch eine optimierte Softwareimplementierung getestet werden. Die Software-Variante hat darüber hinaus den enormen Vorteil, dass sie jederzeit ausgetauscht werden kann, auch wenn die Konfiguration des Chips nicht mehr geändert werden kann. Gibt es an die CRC Berechnung allerdings harte Echtzeitanforderungen, muss dies zusätzlich sichergestellt werden, die VHDL Implementierung läuft unabhängig von anderen Tasks auf dem Prozessor immer in gleicher Zeit.</p>
+<h1 id="fazit">Fazit</h1>
+<p>Die Vorlesung hat einen umfassenden Überblick über die Thematik “Eingebettete Systeme” gegeben. In einigen Bereichen, etwa den Analog-Digital Wandlern, wurden auch die speziellen Problemstellungen und mehrere Lösungen präsentiert. In der Übung wurde die Hardwarebeschreibungssprache VHDL praxisnah angewendet. Vor dieser Vorlesung dachte ich bei Eingebetteten Systemen nur an Microcontroller, maximal noch an Echtzeitbetriebssysteme. Die Möglichkeiten der engen Integration von Hard- und Software, die Vorteile, spezielle Funktionen in Hardware zu Implementieren, und die Knackpunkte bei Systemen mit Echtzeitanforderungen waren mir neu.</p>
+<p>Die Übung mit VHDL war eine aufschlussreiche Erfahrung, aber besonders nach Bearbeitung meines Zusatzthemas und der letzten Übungsaufgaben sehe ich mich in näherer Zukunft keinen VHDL Code selbst schreiben. Das Zusatzthema hat mir in dieser Hinsicht die Gelegenheit gegeben, herauszufinden, dass die Konzepte der Hardwarebeschreibung nicht zwingend an das Lernen einer neuen, bisher unbekannten Beschreibungssprache gebunden sind. Die Übung hat am Ende etwas mehr Zeit als erwartet in Anspruch genommen, was aber sicher großteils auf die mangelnde direkte Kollaboration im Labor zurückzuführen ist.</p>
+<p>Auf die Frage, “welche weiteren Ideen mir für die eventuelle Fortführung meiner Forschungen im Bereich der Rechnerarchitektur eingefallen sind”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, kann ich keine konkrete Antwort geben. Was ich mir aber durchaus gewünscht habe, besonders während der Übung, ist dass der Prozess der Hardwareentwicklung von der modernen Softwareentwicklung lernt. Dazu gehören nicht nur von Anfang bis Ende durchschaubare Open Source Toolchains, sondern auch einfach wiederverwendbare Blöcke, oder “Bibliotheken”, die auch öffentlich geteilt werden. Starke Veränderung in diese Richtung ist momentan im Gange, siehe die oben erwähnte Yosys Toolchain für Lattice FPGAs, und andere im Zusatzthema angesprochene Projekte.</p>
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references" role="doc-bibliography">
+<div id="ref-numato_fpga_asic">
+<p>[1] R. Singh, „FPGA Vs ASIC: Differences Between Them And Which One To Use“. 2018, Zugegriffen: Sep. 27, 2020. [Online]. Verfügbar unter: <a href="https://numato.com/blog/differences-between-fpga-and-asics/">https://numato.com/blog/differences-between-fpga-and-asics/</a>.</p>
+</div>
+<div id="ref-yanik2007">
+<p>[2] M. Yanik, „Avionics full duplex switched ethernet (AFDX) data bus“. Okt. 2007.</p>
+</div>
+<div id="ref-baker2011">
+<p>[3] B. Baker, „How delta-sigma ADCs work, Part 1“, <em>Analog Applications Journal, Issue Q3 2011</em>, 2011.</p>
+</div>
+<div id="ref-analog_adc_tutorial">
+<p>[4] Analog Devices, Inc., „Sigma-Delta ADC Tutorial“. Zugegriffen: Sep. 29, 2020. [Online]. Verfügbar unter: <a href="https://www.analog.com/en/design-center/interactive-design-tools/sigma-delta-adc-tutorial.html">https://www.analog.com/en/design-center/interactive-design-tools/sigma-delta-adc-tutorial.html</a>.</p>
+</div>
+<div id="ref-kernel">
+<p>[5] The Linux Kernel contributors, „The Linux Kernel documentation“. Zugegriffen: Sep. 29, 2020. [Online]. Verfügbar unter: <a href="https://www.kernel.org/doc/html/latest/">https://www.kernel.org/doc/html/latest/</a>.</p>
+</div>
+<div id="ref-ioctl">
+<p>[6] <em>ioctl(2) Linux Programmer’s Manual</em>, 5.08 Aufl. 2020.</p>
+</div>
+<div id="ref-freertos">
+<p>[7] „FreeRTOS™ Real-time operating system for microcontrollers“. Zugegriffen: Sep. 27, 2020. [Online]. Verfügbar unter: <a href="https://www.freertos.org/index.html">https://www.freertos.org/index.html</a>.</p>
+</div>
+<div id="ref-vhdl_1987">
+<p>[8] „IEEE Standard VHDL Language Reference Manual“, <em>IEEE Std 1076-1987</em>, S. 1–218, 1988, doi: <a href="https://doi.org/10.1109/IEEESTD.1988.122645">10.1109/IEEESTD.1988.122645</a>.</p>
+</div>
+<div id="ref-verilog_1995">
+<p>[9] „IEEE Standard Hardware Description Language Based on the Verilog(R) Hardware Description Language“, <em>IEEE Std 1364-1995</em>, S. 1–688, Okt. 1996, doi: <a href="https://doi.org/10.1109/IEEESTD.1996.81542">10.1109/IEEESTD.1996.81542</a>.</p>
+</div>
+<div id="ref-rubyrtl_2020">
+<p>[10] J.-C. L. Lann, „RubyRTL : Ruby-on-gates !“ 2020, Zugegriffen: Sep. 25, 2020. [Online]. Verfügbar unter: <a href="https://github.com/JC-LL/ruby_rtl">https://github.com/JC-LL/ruby_rtl</a>.</p>
+</div>
+<div id="ref-lann2020hardware">
+<p>[11] J.-C. L. Lann, H. Badier, und F. Kermarrec, „Towards a Hardware DSL Ecosystem : RubyRTL and Friends“. 2020, [Online]. Verfügbar unter: <a href="http://arxiv.org/abs/2004.09858">http://arxiv.org/abs/2004.09858</a>.</p>
+</div>
+<div id="ref-jaic2015">
+<p>[12] K. Jaic und M. C. Smith, „Enhancing Hardware Design Flows with MyHDL“, in <em>Proceedings of the 2015 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays</em>, 2015, S. 28–31, doi: <a href="https://doi.org/10.1145/2684746.2689092">10.1145/2684746.2689092</a>.</p>
+</div>
+<div id="ref-bachrach2012">
+<p>[13] J. Bachrach <em>u. a.</em>, „Chisel: Constructing hardware in a Scala embedded language“, in <em>DAC Design Automation Conference 2012</em>, 2012, S. 1212–1221, doi: <a href="https://doi.org/10.1145/2228360.2228584">10.1145/2228360.2228584</a>.</p>
+</div>
+<div id="ref-clow2017">
+<p>[14] J. Clow, G. Tzimpragos, D. Dangwal, S. Guo, J. McMahan, und T. Sherwood, „A pythonic approach for rapid hardware prototyping and instrumentation“, in <em>2017 27th International Conference on Field Programmable Logic and Applications (FPL)</em>, 2017, S. 1–7, doi: <a href="https://doi.org/10.23919/FPL.2017.8056860">10.23919/FPL.2017.8056860</a>.</p>
+</div>
+<div id="ref-baaij2009">
+<p>[15] C. Baaij, „CLasH: From Haskell To Hardware“, Magisterarbeit, University of Twente, 2009.</p>
+</div>
+<div id="ref-logaray2010">
+<p>[16] E. Logaras und E. S. Manolakos, „SysPy: using Python for processor-centric SoC design“, in <em>2010 17th IEEE International Conference on Electronics, Circuits and Systems</em>, Dez. 2010, S. 762–765, doi: <a href="https://doi.org/10.1109/ICECS.2010.5724624">10.1109/ICECS.2010.5724624</a>.</p>
+</div>
+<div id="ref-spinalhdl">
+<p>[17] „SpinalHDL, A high level hardware description language“. Zugegriffen: Sep. 25, 2020. [Online]. Verfügbar unter: <a href="https://github.com/SpinalHDL">https://github.com/SpinalHDL</a>.</p>
+</div>
+<div id="ref-nmigen">
+<p>[18] „nMigen: A refreshed Python toolbox for building complex digital hardware“. 2018, Zugegriffen: Sep. 25, 2020. [Online]. Verfügbar unter: <a href="https://nmigen.org">https://nmigen.org</a>.</p>
+</div>
+<div id="ref-nmigen_tutorial">
+<p>[19] LambdaConcept S.A.S., „nMigen Step by Step Tutorial“. 2018, Zugegriffen: Sep. 25, 2020. [Online]. Verfügbar unter: <a href="http://blog.lambdaconcept.com/doku.php?id=nmigen:tutorial">http://blog.lambdaconcept.com/doku.php?id=nmigen:tutorial</a>.</p>
+</div>
+<div id="ref-yosys_nexpnr">
+<p>[20] D. Shah, E. Hung, C. Wolf, S. Bazanski, D. Gisselquist, und M. Milanovic, „Yosys+nextpnr: an Open Source Framework from Verilog to Bitstream for Commercial FPGAs“, <em>CoRR</em>, Bd. abs/1903.10407, 2019, [Online]. Verfügbar unter: <a href="http://arxiv.org/abs/1903.10407">http://arxiv.org/abs/1903.10407</a>.</p>
+</div>
+<div id="ref-kermarrec2020litex">
+<p>[21] F. Kermarrec, S. Bourdeauducq, J.-C. L. Lann, und H. Badier, „LiteX: an open-source SoC builder and library based on Migen Python DSL“. 2020, [Online]. Verfügbar unter: <a href="http://arxiv.org/abs/2005.02506">http://arxiv.org/abs/2005.02506</a>.</p>
+</div>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Anleitung zum Kursportfolio<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>

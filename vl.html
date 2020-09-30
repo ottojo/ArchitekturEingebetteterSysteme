@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jonas Otto" />
+  <title>Vorlesungsnotizen Architektur Eingebetteter Systeme</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styling.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Vorlesungsnotizen Architektur Eingebetteter Systeme</h1>
+<p class="author">Jonas Otto</p>
+<p class="date">Sommersemester 2020</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#was-ist-ein-eingebettetes-system">Was ist ein Eingebettetes System</a>
+<ul>
+<li><a href="#aufgaben">Aufgaben</a></li>
+<li><a href="#vorlesungsnotizen">Vorlesungsnotizen</a></li>
+</ul></li>
+<li><a href="#vhdl">VHDL</a>
+<ul>
+<li><a href="#einführung">Einführung</a></li>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#komponenten">Komponenten</a></li>
+<li><a href="#verhalten">Verhalten</a></li>
+<li><a href="#struktur">Struktur</a></li>
+<li><a href="#datentypen">Datentypen</a></li>
+<li><a href="#simulationssemantik">Simulationssemantik</a></li>
+</ul></li>
+<li><a href="#architektur-der-komponenten">Architektur der Komponenten</a>
+<ul>
+<li><a href="#instruction-set-processor-isp">Instruction Set Processor ISP</a></li>
+<li><a href="#application-specific-instructionset-processor-asip">Application Specific Instructionset Processor ASIP</a></li>
+<li><a href="#application-specific-processor-asp">Application Specific Processor ASP</a></li>
+</ul></li>
+<li><a href="#logic-fabrics">Logic Fabrics</a>
+<ul>
+<li><a href="#entwurfsprozess">Entwurfsprozess</a></li>
+<li><a href="#synthese-digitaler-schaltungen">Synthese digitaler Schaltungen</a></li>
+<li><a href="#chip-technologie">Chip Technologie</a></li>
+<li><a href="#asic-entwurf">ASIC Entwurf</a></li>
+<li><a href="#fpgas">FPGAs</a></li>
+</ul></li>
+<li><a href="#sensoren-und-aktoren-i">Sensoren und Aktoren I</a>
+<ul>
+<li><a href="#sensoren">Sensoren</a></li>
+<li><a href="#aktoren">Aktoren</a></li>
+<li><a href="#bauteile">Bauteile</a></li>
+<li><a href="#verstärkerschaltungen">Verstärkerschaltungen</a></li>
+<li><a href="#brückenschaltung">Brückenschaltung</a></li>
+</ul></li>
+<li><a href="#sensoren-und-aktoren-ii">Sensoren und Aktoren II</a>
+<ul>
+<li><a href="#komparator-1">Komparator</a></li>
+<li><a href="#sensor-zur-geschwindigkeitsmessung">Sensor zur Geschwindigkeitsmessung</a></li>
+<li><a href="#drehratensensor">Drehratensensor</a></li>
+<li><a href="#radar">Radar</a></li>
+<li><a href="#sonar">Sonar</a></li>
+<li><a href="#aktoren-1">Aktoren</a></li>
+<li><a href="#anschluss-von-sensoren">Anschluss von Sensoren</a></li>
+</ul></li>
+<li><a href="#adcdac">ADC/DAC</a>
+<ul>
+<li><a href="#abtasttheorem">Abtasttheorem</a></li>
+<li><a href="#dac---digital-analog-umsetzer">DAC - Digital-Analog-Umsetzer</a></li>
+<li><a href="#adc">ADC</a></li>
+</ul></li>
+<li><a href="#programmierung-eingebetteter-systeme">Programmierung eingebetteter Systeme</a>
+<ul>
+<li><a href="#programmieren-von-treibern-in-c">Programmieren von Treibern in C</a></li>
+<li><a href="#unterbrechungen">Unterbrechungen</a></li>
+<li><a href="#programmieren-von-treibern-in-ada">Programmieren von Treibern in ADA</a></li>
+<li><a href="#ea-architekturen">EA Architekturen</a></li>
+</ul></li>
+<li><a href="#echtzeitsysteme">Echtzeitsysteme</a>
+<ul>
+<li><a href="#beispiel-steuercomputer-eines-flugzeugs">Beispiel: Steuercomputer eines Flugzeugs</a></li>
+<li><a href="#zeit-und-echtzeitsysteme">Zeit und Echtzeitsysteme</a></li>
+<li><a href="#nebenläufigkeit-in-echtzeitsystemen">Nebenläufigkeit in Echtzeitsystemen</a></li>
+<li><a href="#ausführungsmodelle">Ausführungsmodelle</a></li>
+</ul></li>
+<li><a href="#echtzeitbetriebssysteme">Echtzeitbetriebssysteme</a>
+<ul>
+<li><a href="#aufgaben-eines-rtos">Aufgaben eines RTOS</a></li>
+</ul></li>
+</ul>
+</nav>
+<h2 id="was-ist-ein-eingebettetes-system">Was ist ein Eingebettetes System</h2>
+<h3 id="aufgaben">Aufgaben</h3>
+<h4 id="bitte-beschreiben-sie-kurz-was-ein-eingebettetes-system-ist.">Bitte beschreiben Sie kurz was ein eingebettetes System ist.</h4>
+<p>Ein eingebettetes System ist ein Rechnersystem, bei dem alle Komponenten hochintegriert und eng miteinander verbunden sind. Es wurden ja schon FPGAs erwähnt, ich denke da ist von einem eingebetteten System die Rede, wenn auf einem Chip sowohl ein Prozessorkern als auch diverse (evtl Applikationsspezifische) Peripherie untergebracht ist. Ein Eingebettetes System kann auch ein Microcontroller mit fest verbundenem Speicher und Peripherie sein.</p>
+<p>Die charakteristischen Eigenschaft eines eingebetteten Systems ist die enge Verknüpfung eines Prozessors mit Peripherie, welche ein sehr Anwendungsspezifisches Computersystem realisiert.</p>
+<p>Eingebettete Systeme bieten durch die enge Integration Vorteile wie Energieeffizienz und reduzierte Herstellungskosten, oder erhöhte Performance durch wegfallen von generischen Schnittstellen, bringen aber den Nachteil der geringeren Flexibilität (außer im oben genannten FPGA Beispiel z.B.).</p>
+<p>Ein eingebettetes System kann aber auch ein klassischer PC sein, der z.B. durch besonders kleine Bauform in andere Anwendungen integriert ist, z.B. in industriellen Steuerungsanlagen oder Maschinen. Hier bezieht sich “eingebettet” auf den Kontext des Systems und nicht auf die einzelnen Rechnerkomponenten.</p>
+<h3 id="vorlesungsnotizen">Vorlesungsnotizen</h3>
+<h4 id="zeitleiste">Zeitleiste</h4>
+<ul>
+<li>ABS beim Flugzeug</li>
+<li>Verhindern des Blockieren der Räder beim Landen auf nasser Piste</li>
+<li>1927 entwickelt</li>
+<li>Realisierungstechnik: Mechanisches System</li>
+<li>Setzt sich auf Grund von Kosten nicht beim Auto durch</li>
+<li>Konrad Zuse
+<ul>
+<li>1936: Mechanische Rechenanlagen</li>
+<li>Später mit Relais</li>
+</ul></li>
+<li>Raketentechnik 1940-1950
+<ul>
+<li>A4: Steuerung erst durch Uhr</li>
+<li>Funkstation (Röhren) am Boden steuert Rakete
+<ul>
+<li>Funktechnik versagt aufgrund von Vibrationen in Rakete</li>
+</ul></li>
+</ul></li>
+<li>Transistor: 1947</li>
+<li>Computer mit Röhren (ENIAC)</li>
+<li>Transistoren erhöhen Zuverlässigkeit und ermöglichen mehr Komplexität</li>
+<li>Kalter Krieg: 1950
+<ul>
+<li>Minuteman Projekt: Interkontinentalrakete
+<ul>
+<li>Fernsteuerung funktioniert nicht aufgrund von Funkschatten</li>
+<li>Miniaturisierung eines Rechners (mit Transistoren) zur Integration in Rakete</li>
+<li>Integrierte Schaltung (IC)</li>
+</ul></li>
+</ul></li>
+<li>Mondlandeprogramm
+<ul>
+<li>Benötigt integrierte Steuerung</li>
+<li>Navigationscomputer AGC aus ICs (NOR-Gatter)
+<ul>
+<li>Nicht gelötet, sondern Wire-Wrap für Vibrationsschutz</li>
+<li>Prototyp jedes heutigen Eingebetteten Systems</li>
+</ul></li>
+</ul></li>
+<li>Kampfflugzeuge mit AGC
+<ul>
+<li>Technisches System (Rakete, Flugzeug, Auto) + Computer</li>
+</ul></li>
+</ul>
+<h4 id="definition">Definition</h4>
+<ul>
+<li>Computer bekommt Messdaten von Sensoren, steuert Aktoren &gt; Ein Eingebettetes System ist ein Computer der steuert, regelt, und in einen technischen Kontext eingebunden ist.</li>
+<li>Heutige Computer (z.B. ABS, Airbag) gehen direkt auf AGC zurück</li>
+</ul>
+<h2 id="vhdl">VHDL</h2>
+<h3 id="einführung">Einführung</h3>
+<ul>
+<li>Verhaltensbeschreibung einer Schaltung</li>
+<li>Simulation der Schaltung</li>
+</ul>
+<h3 id="motivation">Motivation</h3>
+<ul>
+<li>GdRA: Boolsche Funktionen mittels Wahrheitstabelle</li>
+<li>Umsetzung der Funktion mittels Gatter</li>
+<li>2 Varianten der Schaltungsbeschreibung
+<ul>
+<li>Schaltalgebraische Formel: <strong>Verhaltensbeschreibung</strong></li>
+<li>Schaltung aus Gattern: <strong>Strukturbeschreibung</strong></li>
+</ul></li>
+<li>Abstraktionsebenen, Verhaltensbeschreibung &lt;=&gt; Struktubreschreibung:
+<ul>
+<li>Algorithmusebene: Algorithmus &lt;=&gt; Speicher, Prozessor</li>
+<li>RTL (Registertransfer-Ebene): Datenfluss &lt;=&gt; Operatoonen, Register</li>
+<li>Logische Ebene: Boolsche Gleichung &lt;=&gt; Gatterschaltung</li>
+<li>Transistorebene: DGL &lt;=&gt; Transistor-Schaltplan -&gt; Y-Diagramm</li>
+</ul></li>
+</ul>
+<h4 id="vhdl---very-high-speed-hardware-description-language">VHDL - Very High Speed Hardware Description Language</h4>
+<h5 id="signale">Signale</h5>
+<ul>
+<li>Signalzuweisung: <code>f &lt;= ((not a) and b and c) or (...</code> -&gt; Verhaltensbeschreibung der boolschen Funktion
+<ul>
+<li>Auch: Datenflussbeschreibung</li>
+</ul></li>
+</ul>
+<h5 id="entity">Entity</h5>
+<p>Schnittstelle:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">entity</span> <span class="kw">DECO</span> <span class="kw">is</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="kw">port</span> (a<span class="ot">,</span>b<span class="ot">,</span>c<span class="ot">:</span> <span class="kw">in</span> <span class="dt">bit</span>;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>        f    <span class="ot">:</span> <span class="kw">out</span> <span class="dt">bit</span>);</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="kw">end</span> DECO</span></code></pre></div>
+<p>Implementierung</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">architecture</span> <span class="kw">BEHAVIOR</span> <span class="kw">of</span> <span class="kw">DECO</span> <span class="kw">is</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">begin</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  f <span class="ot">&lt;=</span> ((<span class="kw">not</span> a) <span class="kw">and</span> b <span class="kw">and</span> c) <span class="kw">or</span> <span class="ot">...</span>;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="er">end BEHAVIOR;</span></span></code></pre></div>
+<p>Struktur</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">architecture</span> <span class="kw">STRUCTURE</span> <span class="kw">of</span> <span class="kw">DECO</span> <span class="kw">is</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">component</span> <span class="kw">AND</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  <span class="kw">port</span> (a<span class="ot">,</span>b<span class="ot">,</span>c<span class="ot">:</span> <span class="kw">in</span> <span class="dt">bit</span>;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>            f<span class="ot">:</span> <span class="kw">out</span> <span class="dt">bit</span>);</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="kw">end component;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="kw">component</span> <span class="kw">OR</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  <span class="kw">port</span> (a<span class="ot">,</span>b<span class="ot">,</span>c<span class="ot">:</span> <span class="kw">in</span> <span class="dt">bit</span>;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>            f<span class="ot">:</span> <span class="kw">out</span> <span class="dt">bit</span>);</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="kw">end component;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="kw">begin</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a>  <span class="ot">signal</span> ia<span class="ot">,</span> ib<span class="ot">:</span> <span class="dt">bit</span>;</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>  <span class="ot">signal</span> ao1<span class="ot">:</span> <span class="dt">bit</span>;</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>  <span class="kw">I1</span><span class="ot">:</span> <span class="er">INV</span> <span class="kw">port map(</span>a<span class="ot">,</span> ia);</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>  <span class="kw">A1</span><span class="ot">:</span> <span class="kw">AND</span> <span class="kw">port map(</span>ia<span class="ot">,</span>b<span class="ot">,</span>c<span class="ot">,</span>ao1);</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>  <span class="kw">O</span><span class="ot">:</span>  <span class="kw">OR</span> <span class="kw">port map(</span><span class="ot">...</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
+<h3 id="komponenten">Komponenten</h3>
+<p>Komponenten sind <code>entity</code>s. Schnittstelle wird mit <code>port</code> spezifiziert. Port spezifiziert mehrere Eingänge <code>in</code>, an die Eingangssignale angeschlossen werden. Eingangssignale müssen spezifiziertem Typ (z.B. <code>bit</code>) entsprechen. Port spezifikation enthält auch Ausgänge <code>out</code> und Ein/Ausgänge <code>inout</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">entity</span> <span class="kw">Name</span> <span class="kw">is</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="kw">port</span> (i1<span class="ot">,</span> i2<span class="ot">,</span> i3<span class="ot">:</span> <span class="kw">in</span> <span class="dt">Bit</span>;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>        o1<span class="ot">,</span> o2<span class="ot">:</span>     <span class="kw">out</span> <span class="dt">Bit</span>;</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>        io1<span class="ot">:</span>        <span class="kw">inout</span> <span class="dt">Bit</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>       );</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="kw">end;</span></span></code></pre></div>
+<p>Komponenten können aus Unterkomponenten bestehen, die miteinander verbunden sind. Diese Unterkomponenten können aus einer Bibliothek kommen.</p>
+<p>Bibliothek wird genutzt mit</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">LIBRARY</span> IEEE;</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="kw">USE</span> ieee<span class="ot">.</span>std_logic_1164<span class="ot">.</span>all;</span></code></pre></div>
+<p>Der Inhalt einer Komponente wird spezifiziert mit der Anweisung <code>architecture</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">architecture</span> <span class="kw">behavior</span> <span class="kw">of</span> <span class="kw">Name</span> <span class="kw">is</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="kw">Begin</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="kw">End</span></span></code></pre></div>
+<p>Komponente kann mit Verhaltens- oder Strukturbeschreibung spezifiziert sein.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">architecture</span> <span class="kw">structure</span> <span class="kw">of</span> <span class="kw">Name</span> <span class="kw">is</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="kw">Begin</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="kw">End</span>;</span></code></pre></div>
+<p>Eine Entity kann aus mehreren Architekturen aufgebaut werden. Zuerst wird das Verhalten spezifiziert. Dieses Verhalten wird getestet, durch eine Testbench Entity. Dann kann die Komponente “gebaut” werden, also die Strukturbeschreibung.</p>
+<p>Das Verhalten stellt die Spezifikation dar, die Struktur stellt die Implementierung dar.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">configuration</span> <span class="kw">name</span> <span class="kw">of</span> <span class="kw">Entity</span> <span class="kw">is</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>end configuration</span></code></pre></div>
+<h3 id="verhalten">Verhalten</h3>
+<p>Das Konzept <code>process</code> kapselt algorithmisches Verhalten.</p>
+<p>Beispiel Multiplexer:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>MX<span class="ot">:</span> process (a<span class="ot">,</span>b<span class="ot">,</span>s)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>Begin</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>  if s<span class="ot">=</span><span class="bn">&#39;1&#39;</span> then</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>    o<span class="ot">&lt;=</span>a;</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>  else</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>    o<span class="ot">&lt;=</span>b;</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a>  endif;</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>end process;</span></code></pre></div>
+<p>Auch Schleifenkonstrukte wie <code>for</code>, <code>while</code> sind möglich.</p>
+<p>Ein <code>process</code> spezifiziert beliebige Algorithmen.</p>
+<p>Auch auf der Registertransferebene lässt sich Verhalten spezifizieren:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>architecture<span class="ot">...</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>begin</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>o<span class="ot">&lt;=</span>a when s<span class="ot">=</span><span class="bn">&#39;1&#39;</span> else</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>   b</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>end<span class="ot">...</span></span></code></pre></div>
+<p>Dies ist eine Datenflussbeschreibung.</p>
+<h3 id="struktur">Struktur</h3>
+<p>Spezifizieren einer Komponente aus Bibliothek:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>component NAND</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>  port (</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>    a<span class="ot">,</span>b<span class="ot">:</span> in  bit;</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>    c<span class="ot">:</span>   out bit</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>  );</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a>end component;</span></code></pre></div>
+<p>Aufrufen der Komponente:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>nand1<span class="ot">:</span> NAND portmap(t<span class="ot">,</span> s<span class="ot">,</span> o)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>                   (a<span class="ot">=&gt;</span>t<span class="ot">,</span> b<span class="ot">=&gt;</span>s<span class="ot">,</span> c<span class="ot">=&gt;</span>o)</span></code></pre></div>
+<h3 id="datentypen">Datentypen</h3>
+<ul>
+<li>Numerische Datentypen
+<ul>
+<li>Integer, Real</li>
+</ul></li>
+<li>Boolean <code>true</code>/<code>false</code></li>
+<li>Character</li>
+<li>String</li>
+<li>Time (fps oder s,h)</li>
+<li>Bit <code>'1'</code>/<code>'0'</code></li>
+<li>Bit_Vector <code>"10001"</code></li>
+</ul>
+<h4 id="ieee">IEEE</h4>
+<ul>
+<li>std_logic
+<ul>
+<li>Mehr logische Werte: <code>U, X, 0, 1, Z, L, H, W, -</code></li>
+</ul></li>
+<li>std_ulogic</li>
+<li>std_logic_vector</li>
+</ul>
+<h4 id="userdefiniert">Userdefiniert</h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>type int0 is range 0 to 100;</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>type int1 is range <span class="ot">-</span>100 to 1000;</span></code></pre></div>
+<h4 id="subtypes">Subtypes</h4>
+<p>“Vererbung”:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>subtype int5 is Integer range <span class="ot">-</span>5 to 5;</span></code></pre></div>
+<h4 id="aufzählungen">Aufzählungen</h4>
+<div class="sourceCode" id="cb15"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>type state is (locked<span class="ot">,</span> unlocked<span class="ot">,</span> <span class="ot">...</span>);</span></code></pre></div>
+<h4 id="komplexere-datentypen">Komplexere Datentypen</h4>
+<p>4-bit breiter Bus:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>type BUS is array(0 to 3) of bit;</span></code></pre></div>
+<p>Äquivalent zu c-struct:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>type INTERFACE is record</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>  bus<span class="ot">:</span> BUS;</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a>  ctrl<span class="ot">:</span> BIT;</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>  date<span class="ot">:</span> BUS;</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a>end record;</span></code></pre></div>
+<h3 id="simulationssemantik">Simulationssemantik</h3>
+<p>In der Realität treten Effekte wie Verzögerungszeiten auf. Diese können modelliert werden:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a>x <span class="ot">&lt;=</span> Not In after 10ns</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a>x <span class="ot">&lt;=</span> Regejt 10ns Inertial Not In after 10ns</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode vhdl"><code class="sourceCode vhdl"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>x <span class="ot">&lt;=</span> Reject 0ns Inertial Not In after 10ns</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a>x <span class="ot">&lt;=</span> Transport Not In after 10ns</span></code></pre></div>
+<p>Diese Konstrukte können nur für die Modellierung, nicht bei der Synthetisierung verwendet werden.</p>
+<p>Die Transaktionsliste gibt die Zustände aller Signale zu jedem Zeitschritt an. Dabei werden Verzögerungen für jedes Gatter angenommen.</p>
+<p>Bei sequentiellen Schaltungen werden zum Auflösen von Rückkopplungen künstliche Zeitschritte mit “delta-Zeitschritten” angegeben.</p>
+<h2 id="architektur-der-komponenten">Architektur der Komponenten</h2>
+<h3 id="instruction-set-processor-isp">Instruction Set Processor ISP</h3>
+<ul>
+<li>Struktur:
+<ul>
+<li>Mikroarchitektur
+<ul>
+<li>Register</li>
+<li>ALU</li>
+<li>Speicher</li>
+</ul></li>
+</ul></li>
+<li>Verhalten
+<ul>
+<li>Befehle
+<ul>
+<li><code>add z, x, y</code></li>
+<li><code>load</code>, <code>store</code></li>
+</ul></li>
+<li>Befehlszyklus
+<ul>
+<li>Instruction Fetch</li>
+<li>Instruction Decode</li>
+<li>Operand Fetch</li>
+<li>Execute</li>
+<li>Store to Memory</li>
+<li>Operand Store</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="application-specific-instructionset-processor-asip">Application Specific Instructionset Processor ASIP</h3>
+<ul>
+<li>z.B. Vektorrechner (SIMD), DSP</li>
+<li>Applikationsspezifische Befehle</li>
+<li>Spezifische Komponenten
+<ul>
+<li>Hardware Multiplizierer</li>
+</ul></li>
+</ul>
+<h3 id="application-specific-processor-asp">Application Specific Processor ASP</h3>
+<ul>
+<li>Fur eine genz bestimmte Operation gebaut, z.B. FFT</li>
+<li>Mikroarchitektur
+<ul>
+<li>Special Purpose Register</li>
+<li>Special Purpose Hardware</li>
+<li>Durch Operation spezifiziert</li>
+</ul></li>
+<li>Verhalten
+<ul>
+<li>Keine Befehle</li>
+</ul></li>
+</ul>
+<h2 id="logic-fabrics">Logic Fabrics</h2>
+<h3 id="entwurfsprozess">Entwurfsprozess</h3>
+<ul>
+<li>Y-Diagramm
+<ul>
+<li>Achsen Struktur, Verhalten, Geometrie</li>
+</ul></li>
+<li>Festlegen der Algorithmen: Verhalten</li>
+<li>Bindung zur Struktur Achse (Prozessor)</li>
+<li>Algorithmus -&gt; Registertransferbeschreibung -&gt; Register/Operationen -&gt; Schaltalgebra -&gt; Gatter -&gt; Transistorschaltung -&gt; Transistorlayout -&gt; Zellen -&gt; SOC Komponenten</li>
+<li>BSP: Regler
+<ul>
+<li>Algorithmus in VHDL (<code>process</code>)</li>
+<li>Speicher in Strukturebene</li>
+<li>-&gt; Ausführbare Spezifikation</li>
+<li>Weitere Architecture in Registertransferebene/Gatterebene/…
+<ul>
+<li>Kann getestet werden mit Testbench, die anhand der Verhaltensbeschreibung konstruiert wird</li>
+</ul></li>
+<li>-&gt; Schrittweise Verfeinerung</li>
+</ul></li>
+</ul>
+<h3 id="synthese-digitaler-schaltungen">Synthese digitaler Schaltungen</h3>
+<ul>
+<li>Verhalten -&gt; Boolsche Gleichung
+<ul>
+<li>RTL Synthese</li>
+</ul></li>
+<li>Boolsche Gleichung -&gt; Gatter Netzliste
+<ul>
+<li>Logiksynthese
+<ul>
+<li>Erst zu logischen Komponenten (minimierung), dann Gatter (Technologie)</li>
+</ul></li>
+</ul></li>
+<li>Silicon Synthese
+<ul>
+<li>Automatische Erzeugung des Layouts</li>
+</ul></li>
+</ul>
+<h3 id="chip-technologie">Chip Technologie</h3>
+<h4 id="full-custom-entwurf">Full-Custom-Entwurf</h4>
+<ul>
+<li>Layout und Schaltung spezifiziert ## Semi-Custom-Entwurf</li>
+<li>Nutzen von Standardzellen (z.B. Addierer als fertige Komponente)</li>
+<li>ASIC</li>
+<li>Gate Arrays / Sea of Gates</li>
+<li>FPGA</li>
+</ul>
+<h3 id="asic-entwurf">ASIC Entwurf</h3>
+<h4 id="standardzellenentwurf">Standardzellenentwurf</h4>
+<ul>
+<li>Komponenten aus Bibliotheken (vorgefertigte Layouts)</li>
+<li>Bibliotheken enthalten auch Verhaltensbeschreibungen zur Simulation</li>
+</ul>
+<h4 id="gate-array">Gate Array</h4>
+<ul>
+<li>Array von Logikgattern</li>
+<li>Durch entsprechende Verdrahtungen (mittels Layoutsynthese) entstehen Schaltungen</li>
+<li>Braucht mehr Fläche als Full-Custom-Entwurf</li>
+</ul>
+<h4 id="sea-of-gates">Sea of Gates</h4>
+<ul>
+<li>Metallisierung nicht zwischen Gates, sondern beliebig über Gates</li>
+</ul>
+<h4 id="zusammenfassung">Zusammenfassung</h4>
+<ul>
+<li>Tradeoff Fläche&lt;-&gt;Komplexität</li>
+</ul>
+<h3 id="fpgas">FPGAs</h3>
+<p>Field Programmable Gate Array * Zusammengesetzt aus Arraystrukturen * In Arrayelementen befindet sich programmierbare Schaltung * n -&gt; 1 Auswahllogik, Speicher realisiert LUT</p>
+<h2 id="sensoren-und-aktoren-i">Sensoren und Aktoren I</h2>
+<p>Beispiel Flugzeug: * Sensoren * ADC * Eingebetteter Computer * DAC * Aktoren</p>
+<h3 id="sensoren">Sensoren</h3>
+<ul>
+<li>z.B. Gyroskop um Lage und Drehbeschleunigung eines Objektes zu messen</li>
+<li>z.B. Staurohr für Airspeed Messung</li>
+<li>Wandelt physikalische in elektrische Größe um (Strom, Spannung)</li>
+<li>Umwandlung folge einem <em>Messprinzip</em>:
+<ul>
+<li>Resistiv</li>
+<li>Kapazitiv</li>
+<li>Induktiv</li>
+<li>Magnetfeld (z.B. Hallsensor)</li>
+<li>Piezoelektrischer Effekt</li>
+<li>Temperatur (-&gt; Leitfähigkeit)</li>
+<li>Optoelektronisch (z.B. Photodiode)</li>
+<li>CCD Kamera</li>
+<li>Radar, Sonar</li>
+</ul></li>
+<li>Messwandler:
+<ul>
+<li>z.B. Transformator</li>
+</ul></li>
+<li>Messumformer, Messverstärker -&gt; OPV</li>
+<li>Messumsetzer: ADC</li>
+</ul>
+<h3 id="aktoren">Aktoren</h3>
+<ul>
+<li>Klappen</li>
+<li>Triebwerke</li>
+<li>z.B. Elektrischer Motor</li>
+</ul>
+<h3 id="bauteile">Bauteile</h3>
+<h4 id="operationsverstärker">Operationsverstärker</h4>
+<ul>
+<li>Verstärkt Differenzspannung</li>
+<li>Eingangswiderstand unendlich -&gt; Eingangsstrom = 0</li>
+<li>Meist rückgekoppelte Beschaltung, damit Realisierung verschiedener mathematischer Operationen</li>
+</ul>
+<h4 id="komparator">Komparator</h4>
+<ul>
+<li>Ausgang = sgn(Eingang)</li>
+</ul>
+<h3 id="verstärkerschaltungen">Verstärkerschaltungen</h3>
+<ul>
+<li>Invertierende und Nichtinvertierende Verstärker</li>
+<li>Integrierer, Differenzierer</li>
+<li>Addierer, Subtrahierer</li>
+</ul>
+<h3 id="brückenschaltung">Brückenschaltung</h3>
+<ul>
+<li>Häufiges Problem: Genaue Messung eines veränderlichen Widerstands (Sensor)</li>
+<li>Wheatstone Brücke wandelt Widerstandsänderung in größere Spannungsdifferenz um als einfache Spannungsteiler-Schaltung.</li>
+<li>Auslesen der Wheatstone Brücke mit OPV möglich</li>
+</ul>
+<h2 id="sensoren-und-aktoren-ii">Sensoren und Aktoren II</h2>
+<h3 id="komparator-1">Komparator</h3>
+<ul>
+<li>Kennlinie <span class="math inline">\(\approx sgn(U_e)\)</span></li>
+<li>Auch Vergleich zu Referenzspannung, statt direkt Differenz zu vergleichen</li>
+</ul>
+<h4 id="fensterkomparator">Fensterkomparator</h4>
+<ul>
+<li>2 OPVs mit verundetem Ausgang realisieren Vergleich, ob Spannung in einem bestimmten Bereich liegt.</li>
+<li>Bereich kann auch symmetrisch um <span class="math inline">\(0V\)</span> gelegt werden.</li>
+<li>Ersetzen des Und-Gatters durch RS fliopflop realisiert hysterese-verhalten (<strong>Schmitt-Trigger</strong>)
+<ul>
+<li>Einschalten und Ausschalten des Ausgangs bei unterschiedlichen Spannungswerten</li>
+</ul></li>
+</ul>
+<h3 id="sensor-zur-geschwindigkeitsmessung">Sensor zur Geschwindigkeitsmessung</h3>
+<ul>
+<li>Messen des statischen Drucks und des dynamischen Staudrucks: <span class="math inline">\(p_s, p_d\)</span></li>
+<li>Bernoulli Gleichung ergibt: <span class="math inline">\(v_d = \sqrt{\frac{2 \cdot \Delta p}{\rho}}\)</span></li>
+<li>Differentieller Drucksensor
+<ul>
+<li>Membran zwischen beiden Bereichen</li>
+<li>Membran enthält Dehnungsmessstreifen mit längenabhängigem Widerstand <span class="math inline">\(\implies\)</span> Messbrücke</li>
+</ul></li>
+</ul>
+<h3 id="drehratensensor">Drehratensensor</h3>
+<ul>
+<li>Lichtschranken durch sich drehende, teils transparente Scheibe</li>
+<li>Magnetfeldsensor und sich drehende Magneten
+<ul>
+<li>Sinusförmiges Signal -&gt; Schmitttrigger -&gt; Pulszähler</li>
+</ul></li>
+</ul>
+<h3 id="radar">Radar</h3>
+<ul>
+<li>Aussenden eines gepulsten Funksignal</li>
+</ul>
+<h3 id="sonar">Sonar</h3>
+<ul>
+<li>Messen von reflektierten Schallwellen (z.B. mit Piezoelement)</li>
+<li>Richtungsmessung durch Bewegen der Antenne oder durch Laufzeitunterschiede bei vielen Empfängern</li>
+</ul>
+<h3 id="aktoren-1">Aktoren</h3>
+<ul>
+<li>Fly By Wire</li>
+<li>Messung der Klappenstellung mit Potentiometer, Regelung der Position</li>
+</ul>
+<h3 id="anschluss-von-sensoren">Anschluss von Sensoren</h3>
+<ul>
+<li>Problem: Position der A/D, D/A Wandler
+<ul>
+<li>Neben Chip, Im Chip integriert
+<ul>
+<li>Analoge Übertragung hat Problem des Spannungsabfalls</li>
+<li>Lösung: 4-Wire Messung</li>
+<li>Low Voltage Differential Signaling LVDS:
+<ul>
+<li>Sender: H-Brücke</li>
+<li>Differentielle Übertragung</li>
+</ul></li>
+</ul></li>
+<li>Beim Sensor (digitale Übertragung zum Controller)</li>
+</ul></li>
+</ul>
+<h2 id="adcdac">ADC/DAC</h2>
+<h3 id="abtasttheorem">Abtasttheorem</h3>
+<ul>
+<li>TODO (oder auch nicht)</li>
+</ul>
+<h3 id="dac---digital-analog-umsetzer">DAC - Digital-Analog-Umsetzer</h3>
+<h4 id="parallele-verfahren">Parallele Verfahren</h4>
+<ul>
+<li>Spannungsteiler:
+<ul>
+<li>Viele in Reihe geschaltete Widerstände erzeugen mehrere verschiedene Spannungen</li>
+<li>Auswahl der passenden Spannung (genau eine)</li>
+</ul></li>
+</ul>
+<h4 id="wägeverfahren">Wägeverfahren</h4>
+<ol type="1">
+<li><ul>
+<li>Referenzspannung <span class="math inline">\(U_0\)</span></li>
+<li>Widerstandsnetzwerk (parallel) erzeugt Ströme proportional zu den Wertigkeiten der Bits (2R, 4R, 8R, 16R, …)</li>
+<li>Schließen der Schalter entsprechend der Bits</li>
+<li>Umwandeln des (summierten) Stroms in Spannung mittels OPV (Addierschaltung)</li>
+<li>Nachteil: Potentialveränderung zwischen benachbarten Widerständen</li>
+</ul></li>
+<li><ul>
+<li>Modifizierte Version:</li>
+<li>Wechselschalter (durch “Transmission Gates”) zu GND statt einzelner Schalter, sodass Strom durch Widerstände konstant ist</li>
+</ul></li>
+<li>Leiternetzwerk:
+<ul>
+<li>Gleiche Widerstände</li>
+<li>TODO: Bild</li>
+<li>Widerstandswert kürzt sich raus -&gt; Schaltung nicht empfindlich gegenüber Schwankungen</li>
+</ul></li>
+</ol>
+<h4 id="zählverfahren">Zählverfahren</h4>
+<h3 id="adc">ADC</h3>
+<h4 id="parallele-verfahren-1">Parallele Verfahren</h4>
+<p>“Word at a time”</p>
+<ul>
+<li>Spannungsteiler mit vielen Widerständen</li>
+<li>Vergleichen der Spannungspegel mit der zu messenden Spannung <span class="math inline">\(U_x\)</span> mittels Komparatoren</li>
+<li>“Schablonenumsetzer”</li>
+<li>Register mit Clock nach Auslese zur Zeitdiskretisierung</li>
+<li>Nachteile:
+<ul>
+<li>Viele Komparatoren benötigt</li>
+</ul></li>
+<li>Alternative: Kaskadenverfahren
+<ul>
+<li>Sample and Hold</li>
+<li>ADC (Schablonenumsetzer)</li>
+<li>DAC</li>
+<li>Subtraktion vom Eingangssignal</li>
+<li>Verstärkung</li>
+<li>ADC</li>
+<li>Durch Überlappung der Messbereiche Fehlerkorrektur möglich</li>
+<li>Pipelineverfahren möglich:
+<ul>
+<li>Mehrere Stufen nach gleichem Verfahren</li>
+<li>Anlegen neuen Messwertes an ersten Stufen während spätere Stufen alten Messwert verarbeiten</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="wägeverfahren-1">Wägeverfahren</h4>
+<p>“Digit at a time”</p>
+<ul>
+<li>Sample and Hold</li>
+<li>Komparator</li>
+<li>Vergleichsspannung mittels DAC</li>
+<li>Iteration über alle Bits, beginnend mit MSB</li>
+<li>Entscheidungsbaum mittels Komparator-Ausgang</li>
+<li>Vorteil:
+<ul>
+<li>Entscheidungsverfahren in Software spart Hardware</li>
+</ul></li>
+</ul>
+<h4 id="zählverfahren-1">Zählverfahren</h4>
+<p>“Level at a time”</p>
+<ul>
+<li>Prinzip: Erhöhung der Genauigkeit durch Messung einer Frequenz</li>
+</ul>
+<ol type="1">
+<li>Sägezahnumsetzer
+<ul>
+<li>Sägezahngenerator generiert <span class="math inline">\(U_s\)</span></li>
+<li><span class="math inline">\(U_s\)</span> an Fensterkomparator zwischen 0V und <span class="math inline">\(U_x\)</span></li>
+<li>Zeitmessung (durch Zähler) des Ausgangs</li>
+</ul></li>
+<li>Dual Slope
+<ul>
+<li><span class="math inline">\(U_x\)</span> an Wechselschalter mit <span class="math inline">\(+U_0\)</span> und <span class="math inline">\(-U_0\)</span></li>
+<li>Integratorschaltung</li>
+<li>Komparator</li>
+<li>Steuerschaltung steuert Wechselschalter mittels Komparatorausgang:
+<ul>
+<li>Integration über feste Zeit</li>
+<li>Integration konstanter Referenzspannung (mit anderem Vorzeichen als <span class="math inline">\(U_x\)</span>) bis Ausgangsspannung 0 ist</li>
+<li>Messung der Zeitdauer der zweiten Integration</li>
+</ul></li>
+</ul></li>
+</ol>
+<h4 id="delta-sigma">Delta-Sigma</h4>
+<ul>
+<li>Eingangsspannung <span class="math inline">\(U_x\)</span></li>
+<li>Subtraktion <span class="math inline">\(U_x-U_{DAC} = \Delta\)</span></li>
+<li>Integration (<span class="math inline">\(\Sigma\)</span>)</li>
+<li>ADC (n-bit)</li>
+<li>n-bit DAC erzeugt daraus $U_{DAC}</li>
+<li>Abtastrate der Wandler mit hoher Abtastrate</li>
+<li>Tiefpassfilter</li>
+</ul>
+<h2 id="programmierung-eingebetteter-systeme">Programmierung eingebetteter Systeme</h2>
+<h3 id="programmieren-von-treibern-in-c">Programmieren von Treibern in C</h3>
+<h4 id="architektur">Architektur</h4>
+<ul>
+<li>Instruction Set Processor</li>
+<li>Speicher</li>
+<li>Datenbus</li>
+<li>Port-mapped I/O: I/O wird über spezielle Befehle realisiert</li>
+<li>Memory-mapped I/O: I/O wird über spezielle Speicherbereiche angesteuert</li>
+<li>I/O Baustein hat Status-register</li>
+<li>I/O Baustein hat Control-register</li>
+</ul>
+<h4 id="c-programm">C-Programm</h4>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a>sSlaveDev <span class="kw">struct</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a>  <span class="dt">uint8_t</span> status;</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a>  <span class="dt">uint8_t</span> control;</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a>  <span class="dt">uint8_t</span> tx;</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a>  <span class="dt">uint8_t</span> rx;</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="pp">#define STS_NOP_TX 0xF0</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a><span class="pp">#define STS_NOP_RX 0x0F</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a><span class="pp">#define STS_FULL_TX 0xF0</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a><span class="pp">#define STS_EMPTY_TX 0x00</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a><span class="pp">#define SUCCESS 0</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a><span class="pp">#define FAIL 1</span></span></code></pre></div>
+<p>(<code>NOP</code> = “Number Of Packets”)</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="dt">const</span> <span class="dt">int</span> size = <span class="dv">100</span>;</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="dt">uint8_t</span> rxBuf[size];</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a><span class="dt">uint8_t</span> txBuf[size];</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true"></a>sSlaveDev *devPtr = <span class="bn">0x8000</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="dt">int</span> put(sSlaveDev *dev, <span class="dt">uint8_t</span> *txBuf){</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a>  <span class="cf">if</span> (dev-&gt;status &lt; STS_FULL_TX) {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a>    def-&gt;tx = txBuf;</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a>    <span class="cf">return</span> SUCCESS;</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a>    <span class="cf">return</span> FAIL;</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a>  }</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true"></a>}</span></code></pre></div>
+<p>usw (<code>put</code>, <code>write</code>, <code>read</code>) , kann man sich ja vorstellen oder auch lieber nicht.</p>
+<h3 id="unterbrechungen">Unterbrechungen</h3>
+<p>Damit man nicht pollen muss, sollte das I/O Gerät sich melden, sobald es z.B. Daten empfangen hat.</p>
+<h4 id="architektur-1">Architektur</h4>
+<ul>
+<li>+Interrupt Controller
+<ul>
+<li>Kann mehrere Interrupt-fähige Geräte an einen Prozessor anschließen</li>
+<li>Tabelle Interrupt Nummer -&gt; ISR</li>
+</ul></li>
+</ul>
+<h4 id="c">C</h4>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a><span class="dt">void</span> isr0(){</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a>  iodev-&gt;ctrl = ...;</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a>  status = iodev-&gt;status;</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true"></a>  ...</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a><span class="dt">void</span> main(){</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>  initInterruptHandler(&amp;isr0, <span class="dv">0</span>); <span class="co">// Initialisiert oben erwähnte Tabelle</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a>  ...</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a>}</span></code></pre></div>
+<p>Dies nennt man auch <em>Foreground/Background</em> System: Main-Loop im Hintergrund, Interrupts im Vordergrund.</p>
+<h3 id="programmieren-von-treibern-in-ada">Programmieren von Treibern in ADA</h3>
+<p>Mangels Motivation und aufgrund von Unwillen, die Software des Eurofighters näher zu betrachten, bleibt dieser Abschnitt leer.</p>
+<h3 id="ea-architekturen">EA Architekturen</h3>
+<ol type="1">
+<li>I2C</li>
+</ol>
+<ul>
+<li>ADC an I2C Baustein (Target)</li>
+<li>Interrupt Controller mit I2C Initiator verbunden</li>
+<li>I2C Initiator Baustein hängt am Microcontroller Bus
+<ul>
+<li>Sende- und Empfangswarteschlange</li>
+<li>Zusammenfassen von Messungen in Pakete</li>
+<li>-&gt; Interrupt nicht bei jedem empfangenen Byte</li>
+</ul></li>
+<li>I2C erlaubt z.B. Konfiguration des ADC</li>
+</ul>
+<ol start="2" type="1">
+<li>+DMA</li>
+</ol>
+<ul>
+<li>Prozessor programmiert DMA Controller</li>
+<li>ISA hat Cache und kann unabhängig vom Bus laufen</li>
+</ul>
+<h2 id="echtzeitsysteme">Echtzeitsysteme</h2>
+<h3 id="beispiel-steuercomputer-eines-flugzeugs">Beispiel: Steuercomputer eines Flugzeugs</h3>
+<ul>
+<li>Mehrere Sensoren:
+<ul>
+<li>z.B. Beschleunigung, mit Signalverarbeitung:
+<ul>
+<li>A/D Wandlung</li>
+<li>z.B. Integration zu Geschwindigkeit, Ort</li>
+</ul></li>
+<li>analog dazu Drehratensensor</li>
+<li>Drucksensor
+<ul>
+<li>Signalverarbeitung: Umrechnung zur Höhe</li>
+<li>Geschwindigkeit mittels differenzieller Messung</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Diese Sensordaten werden teils direkt auf Instrumente geführt, aber im Allgemeinen auf einen gemeinsamen Systembus geführt. Auf diesen Systembus werden auch die Nutzereingabe von z.B Steuerknüppel und Pedalen geführt.</p>
+<p>Ein Zustandsregler erzeugt daraus Steuerdignale, die mittels D/A Wandler an Triebwerke und Klappen geführt werden.</p>
+<p>Man stellt fest, dass hier viele voneinander unabhängige Operationen spezifiziert wurden. Diese nennen wir <em>Tasks</em>, die ständig voneinander unabhängig laufen.</p>
+<p>Eine Anforderung an das Gesamtsystem ist, dass die gesamte Zeit von Eingang zum Ausgang begrenzt ist. Diese Begrenzung ergibt sich aus der Dynamik des Physikalischen systems, ein Überschreiten kann zur Instabilität führen.</p>
+<p>Die Dynamik des Flugzeugs beeinflusst das Zeitverhalten des Rechensystems.</p>
+<p>Der Rechner muss also so schnell wie nötig sein, allerdings wirken andere Anforderungen wie Größe und Kosten dem entgegen.</p>
+<p>Ein solcher Rechner heißt <em>Echtzeitsystem</em>.</p>
+<h3 id="zeit-und-echtzeitsysteme">Zeit und Echtzeitsysteme</h3>
+<p>Ein Programm in einem Rechner läuft i.A. sequentiell ab. Diese Ausführung wird von einem Takt vorgegeben. Hier wird von <em>Logischer Zeit</em> gesprochen. Bei einer <em>Logischen Uhr</em> wird nur gefordert, dass die Ursache eines Ereignisses vor dessen Wirkung stattfindet.</p>
+<p>In der reellen Welt wird durch die Zeit z.B. eine Bewegung beschrieben. Zur Messung der Zeit benötigen wir eine Uhr, die z.B. auf einer periodischen Bewegung basieren.</p>
+<p>Ein Ereignis (in der VL dargestellt durch einen Blitz ⚡) ist ein zeitloser Zustandswechsel.</p>
+<p>Die echte Zeit nennen wir <em>Realzeit</em> oder <em>Echtzeit</em>. Diese läuft unabhängig von den Vorgängen im Rechner.</p>
+<p>Innerhalb unseres Rechners (zwischen A/D und D/A) herrscht die <em>Logische Zeit</em>. Wir definieren eine Frist, in der die Berechnung abgeschlossen sein muss.</p>
+<h4 id="echtzeitssystem">Echtzeitssystem</h4>
+<p>Ein einegebetter Rechner, der durch externe Ereignisse ausgelöste Berechnungnen rechtzeitig ausführt. Das beinhaltet sowohl das Bereitstellen von Ergebnissen zu festen, vorgegebenen Zeitpunken als auch die rechtzeitige Fertigstellung von Berechnungen.</p>
+<p>Diese Rechtzeitigkeit ist vorgegeben durch die <em>Reale Zeit</em>, nicht die <em>Logische Zeit</em> im Rechner.</p>
+<p>Wir unterscheiden zwischen harten und weichen Echtzeitsystemen.</p>
+<h4 id="harte-echtzeitsysteme">Harte Echtzeitsysteme</h4>
+<p>Keine Echtzeitverletzung wird toleriert.</p>
+<p>Beispiele:</p>
+<ul>
+<li>ABS</li>
+<li>Steuerung eines AKW</li>
+<li>Flugzeugregelung</li>
+</ul>
+<h4 id="weiche-echtzeitsysteme">Weiche Echtzeitsysteme</h4>
+<p>Kostenfunktion für Berechnungsdauer fällt langsam, flach ab. Rechnungen, die das Zeitlimit überschreiten sind nicht immer problematisch.</p>
+<p>Beispiele:</p>
+<ul>
+<li>Telefonnetz</li>
+<li>Streaming</li>
+</ul>
+<h3 id="nebenläufigkeit-in-echtzeitsystemen">Nebenläufigkeit in Echtzeitsystemen</h3>
+<ul>
+<li>Zeitgesteuertes Echtzeitsystem
+<ul>
+<li>Englisch: <em>Time triggered System</em></li>
+<li>Ereignisse werden von periodischen Zeitimpulsen ausgelöst</li>
+</ul></li>
+<li>Ereignisgesteuertes Echtzeitsystem
+<ul>
+<li>Ereignisse treten sporadisch auf</li>
+</ul></li>
+</ul>
+<p>Wir erinnern uns daran, dass wir viele zeitlich unabhängige Abläufe spezifiziert haben. Das Ausführungsmodell der Tasks ist <em>Nebenläufig</em>.</p>
+<ul>
+<li>Wahre Nebenläufigkeit
+<ul>
+<li>Aufgaben können gleichzeitig ausgeführt werden</li>
+<li>Dies ist nicht unbedingt immer der Fall</li>
+</ul></li>
+<li>Scheinbare Nebenläufigkeit
+<ul>
+<li>Zeitlich unabhängige Aufgaben, die scheinbar gleichzeitig ausgeführt werden</li>
+</ul></li>
+<li>Sequentielle Abarbeitung</li>
+</ul>
+<p>Es soll eine scheinbare Nebenläufigkeit auf einem sequentiellen Prozessor implementiert werden.</p>
+<p>Ein <em>Ablaufplan</em> legt die Ausführungsreihenfolge der Aufgaben fest. Dieser kann fest einprogrammiert sein, oder durch Regeln spezifiziert sein. Ersteres nennt man ein <em>statisches</em>, zweiteres ein <em>dynamisches Echtzeitsystem</em>.</p>
+<p>Ein dynamisches System können Aufgaben unterbrechbar (<em>preemptive</em>) sein, so kann flexibel auf externe Ereignisse reagiert werden.</p>
+<p>Es muss eine Ablaufreihenfolge festgelegt werden. Dafür werden den Aufgaben <em>Prioritäten</em> zugewiesen, die wiederum statisch oder dynamisch sein können.</p>
+<h3 id="ausführungsmodelle">Ausführungsmodelle</h3>
+<p>Wie synchronisieren wir den Rechenablauf mit der externen Zeit*</p>
+<h4 id="physical-execution-time-programming-pet">Physical execution time programming <em>PET</em></h4>
+<ul>
+<li>Für jedes Ereignis wird eine feste Menge Programmzeit <span class="math inline">\(c\)</span> angefordert.</li>
+<li>Ein Ereignis bei <span class="math inline">\(t_\epsilon\)</span> ist zum Zeitpunkt <span class="math inline">\(t_\epsilon + c\)</span> fertig.</li>
+<li>Nachteil: Software ist nicht portabel, z.B. auf einen langsameren Prozessor.</li>
+</ul>
+<h4 id="logical-execution-time-programming-let">Logical execution time programming <em>LET</em></h4>
+<ul>
+<li>Synchronisation zur Realzeit mittels Timer</li>
+<li>Task wird immer zu fester Zeit (periodisch) ausgeführt</li>
+<li>Lesen und Schreiben immer bei Zeit <span class="math inline">\(n \cdot T\)</span></li>
+</ul>
+<h4 id="zero-execution-time-programming-zet">Zero execution time programming <em>ZET</em></h4>
+<ul>
+<li>Annahme: Prozessor ist sehr schnell vgl. zur Anwendung</li>
+<li>Ausführung eines Tasks in immer genau 1 Zeitschritt</li>
+</ul>
+<p>Bei <em>LET</em> und <em>ZET</em> können statische Ablaufpläne erstellt werden.</p>
+<h4 id="bounded-execution-time-programming-bet">Bounded execution time programming <em>BET</em></h4>
+<ul>
+<li>Sporadische Ereignisse</li>
+<li>Nach Eintreffen eines Ereignisses startet Ausführungsfrist</li>
+</ul>
+<p>Ausführungsplan des scheinbar nebenläufigen Systems ist <em>vorhersehbar</em>!</p>
+<h4 id="rtos">RTOS</h4>
+<p>Nebenläufigkeitsmodelle werden durch einen <strong>Scheduler</strong> implementiert. Zwischen Tasks und ISA liegt ein <em>OS</em> oder <em>RTOS</em>.</p>
+<p>Ein <em>RTOS</em> hat die Eigenschaften:</p>
+<ul>
+<li>Geringe Interruptlatentz</li>
+<li>Vorhersehbarkeit</li>
+<li>Deterministische Ablaufpläne</li>
+</ul>
+<h2 id="echtzeitbetriebssysteme">Echtzeitbetriebssysteme</h2>
+<h3 id="aufgaben-eines-rtos">Aufgaben eines RTOS</h3>
+<h4 id="kernel-implementierung-eines-rtos">Kernel Implementierung eines RTOS</h4>
+<ul>
+<li>Nebenläufigkeit</li>
+<li>Ein Prozess wird hier <em>task</em> genannt.</li>
+<li>Ein Prozess ist ein Programm und die dazugehörigen Daten.</li>
+<li>Leichtgewichtige Prozesse heißen threads</li>
+<li>Resourcenverwaltung:
+<ul>
+<li>Zeit (Prozessorzeit, Echtzeit durch Timer-Baustein)
+<ul>
+<li>Timer erzeugt Interrupt, ISR wird ausgeführt, unterbricht aktuellen Task</li>
+<li>Externe Ereignisse erzeugen Interrupts</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Ziel ist Unterstützung von nested Interrupts. Nach der ISR kann der Scheduler aufgerufen werden. Nach dem Scheduler wird der Dispatcher aufgerufen, welcher feststellt, welcher Task als nächstes ausgeführt werden soll.</p>
+<p>Besonders in Echtzeitbetriebssystemen kann ein Task einen zusätzlichen Zustand “Zombie” annehmen, welcher z.B. angenommen wird, wenn der Task Fristen (Echtzeitbedingung) nicht einhält.</p>
+<h4 id="echtzeitkernel">Echtzeitkernel</h4>
+<ul>
+<li><p>Task Control Block</p>
+<ul>
+<li>PID</li>
+<li>Registerinhalt (<em>Prozessorkontext</em>)
+<ul>
+<li>Register</li>
+<li>PC</li>
+<li>SP</li>
+<li>…</li>
+</ul></li>
+<li>Zustand (<em>State</em>: Ready, Idle, …)</li>
+<li>Memory</li>
+<li>Priority</li>
+<li>Deadline</li>
+<li>…</li>
+<li>Next Pointer</li>
+<li>Previous Pointer</li>
+</ul></li>
+<li><p>Ready List als (Doubly) Linked List von TCBs</p></li>
+<li><p>Analog Idle List, Zombie List, etc</p></li>
+<li><p>Scheduling:</p>
+<ul>
+<li>Round Robin</li>
+<li>Earliest Deadline First
+<ul>
+<li>Sortierung der Tasks im Scheduler</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Mit statischen Prioritäten: * Mehrere Ready Lists (für jede Priorität) * Komische redundante Datenstruktur (Bitmap) zum cachen der belegten Einträge</p>
+<p>IPC mit Mailboxen für jede PID und Ringbuffer</p>
+</body>
+</html>
